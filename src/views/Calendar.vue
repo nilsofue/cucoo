@@ -1,5 +1,12 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="calendar">
+    <h1>Hier kommt der Kalender hin ;)</h1>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Calendar",
+  components: {}
+};
+</script>
