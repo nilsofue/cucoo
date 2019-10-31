@@ -1,6 +1,6 @@
 <template>
   <div class="indexCardHandler">
-    <IndexCard />
+    <IndexCard v-for="n in 10" v-bind:key="n"></IndexCard>
   </div>
 </template>
 
