@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Overview.vue";
+import Overview from "../views/Overview.vue";
 import Calendar from "../views/Calendar.vue";
 
 Vue.use(VueRouter);
@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "overview",
-    component: Home
+    component: Overview
   },
   {
     path: "/calendar",
