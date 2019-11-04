@@ -7,7 +7,7 @@
 
 <script>
 //@ is an alias to /src
-import ToolBar from "@/components/ToolBar.vue";
+import ToolBar from "@/components/ToolBar/ToolBar.vue";
 import IndexCardHandler from "@/components/IndexCard/IndexCardHandler.vue";
 
 export default {
