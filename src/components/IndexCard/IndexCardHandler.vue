@@ -1,6 +1,10 @@
 <template>
   <div class="indexCardHandler">
-    <IndexCard v-for="n in 10" v-bind:key="n"></IndexCard>
+    <IndexCard
+      v-for="(indexCardData, index) in indexCardDataArray"
+      :key="index"
+      :index-card-data="indexCardData"
+    ></IndexCard>
   </div>
 </template>
 
@@ -12,7 +16,9 @@ export default {
   components: {
     IndexCard
   },
-  props: {}
+  props: {
+    indexCardDataArray: Array
+  }
 };
 </script>
 
