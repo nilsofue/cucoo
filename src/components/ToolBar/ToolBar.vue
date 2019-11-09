@@ -28,11 +28,18 @@
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
-          <date-pick v-model="dateSearchValue" :displayFormat="'DD.MM.YYYY'"></date-pick>
+          <date-pick
+            :weekdays="weekdays"
+            :months="month"
+            v-model="dateSearchValue"
+            :displayFormat="'DD.MM.YYYY'"
+          ></date-pick>
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Erster Besuch:</b-nav-text>
           <date-pick
+            :months="month"
+            :weekdays="weekdays"
             v-model="firstVisitSearchValue"
             @click="handleSearch()"
             :displayFormat="'DD.MM.YYYY'"
@@ -66,7 +73,22 @@ export default {
       streetSearchValue: "",
       citySearchValue: "",
       dateSearchValue: "",
-      firstVisitSearchValue: ""
+      firstVisitSearchValue: "",
+      weekdays: ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"],
+      month: [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember"
+      ]
     };
   },
   mounted: function() {
