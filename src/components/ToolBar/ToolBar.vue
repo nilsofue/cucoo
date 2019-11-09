@@ -7,12 +7,15 @@
             v-for="(status, i) in statusData"
             :key="i"
             @click="
-              $emit('update-Index-Cards', status.entries);
               handleSelection(status);
             "
-            >{{ status.name }}</b-dropdown-item
-          >
+          >{{ status.name }}</b-dropdown-item>
         </b-nav-item-dropdown>
+
+        <b-nav-form>
+          <b-nav-text>Straße:</b-nav-text>
+          <b-form-input size="sm" class="mr-sm-2"></b-form-input>
+        </b-nav-form>
       </b-navbar-nav>
     </b-navbar>
   </div>
@@ -35,11 +38,15 @@ export default {
     };
   },
   mounted: function() {
-    console.log(this.statusData);
+    // selection of first status value
+    if (this.statusData.length) {
+      this.handleSelection(this.statusData[0]);
+    }
   },
   methods: {
     handleSelection(selectedData) {
       this.selectedStatus = selectedData.name;
+      this.$emit("update-Index-Cards", selectedData.entries);
     }
   }
 };
