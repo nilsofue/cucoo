@@ -11,9 +11,10 @@
             "
           >{{ status.name }}</b-dropdown-item>
         </b-nav-item-dropdown>
-
+      </b-navbar-nav>
+      <b-navbar-nav class="ml-auto">
         <b-nav-form>
-          <b-nav-text>Straße:</b-nav-text>
+          <b-nav-text class="toolbarTextLabelClass">Straße:</b-nav-text>
           <b-form-input
             v-model="streetSearchValue"
             size="sm"
@@ -22,31 +23,30 @@
           ></b-form-input>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text>Ort:</b-nav-text>
+          <b-nav-text class="toolbarTextLabelClass">Ort:</b-nav-text>
           <b-form-input v-model="citySearchValue" size="sm" class="mr-sm-2" @keyup="handleSearch()"></b-form-input>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text>Termin:</b-nav-text>
-          <b-form-input v-model="dateSearchValue" size="sm" class="mr-sm-2" @keyup="handleSearch()"></b-form-input>
+          <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
+          <date-pick v-model="dateSearchValue" :displayFormat="'DD.MM.YYYY'"></date-pick>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text>Erster Besuch:</b-nav-text>
-          <b-form-input
+          <b-nav-text class="toolbarTextLabelClass">Erster Besuch:</b-nav-text>
+          <date-pick
             v-model="firstVisitSearchValue"
-            size="sm"
-            class="mr-sm-2"
-            @keyup="handleSearch()"
-          ></b-form-input>
+            @click="handleSearch()"
+            :displayFormat="'DD.MM.YYYY'"
+          ></date-pick>
         </b-nav-form>
       </b-navbar-nav>
     </b-navbar>
-    <date-pick v-model="date" :displayFormat="'DD.MM.YYYY'"></date-pick>
   </div>
 </template>
 
 <script>
 import DatePick from "vue-date-pick";
-import "vue-date-pick/dist/vueDatePick.css";
+//import "vue-date-pick/dist/vueDatePick.css";
+import "./vueDatePick.css";
 
 export default {
   name: "ToolBar",
@@ -66,8 +66,7 @@ export default {
       streetSearchValue: "",
       citySearchValue: "",
       dateSearchValue: "",
-      firstVisitSearchValue: "",
-      date: "2019-01-01"
+      firstVisitSearchValue: ""
     };
   },
   mounted: function() {
@@ -109,10 +108,52 @@ export default {
           .indexOf(this.streetSearchValue.toLowerCase()) === -1
       )
         return false;
+      if (!this.isSameDate(this.dateSearchValue, indexCardData.date))
+        return false;
+      if (
+        !this.isSameDate(this.firstVisitSearchValue, indexCardData.createTime)
+      )
+        return false;
       return true;
+    },
+    isSameDate(selectedDate, indexCardDate) {
+      if (!selectedDate || !indexCardDate) return true;
+      selectedDate = new Date(selectedDate);
+      indexCardDate = new Date(indexCardDate);
+      let selectedDateDay = selectedDate.getDate();
+      let selectedDateMonth = selectedDate.getMonth();
+      let selectedDateYear = selectedDate.getFullYear();
+      let indexCardDateDay = indexCardDate.getDate();
+      let indexCardDateMonth = indexCardDate.getMonth();
+      let indexCardDateYear = indexCardDate.getFullYear();
+
+      if (
+        selectedDateDay === indexCardDateDay &&
+        selectedDateMonth === indexCardDateMonth &&
+        selectedDateYear === indexCardDateYear
+      )
+        return true;
+      else return false;
+    }
+  },
+  watch: {
+    firstVisitSearchValue: function() {
+      this.handleSearch();
+    },
+    dateSearchValue: function() {
+      this.handleSearch();
     }
   }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.mr-sm-2 {
+  width: 120px !important;
+  margin-left: 0.5rem !important;
+}
+
+.toolbarTextLabelClass {
+  margin-left: 0.5rem !important;
+}
+</style>
