@@ -6,10 +6,9 @@
           <b-dropdown-item
             v-for="(status, i) in statusData"
             :key="i"
-            @click="
-              handleSelection(status);
-            "
-          >{{ status.name }}</b-dropdown-item>
+            @click="handleSelection(status)"
+            >{{ status.name }}</b-dropdown-item
+          >
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -24,25 +23,30 @@
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Ort:</b-nav-text>
-          <b-form-input v-model="citySearchValue" size="sm" class="mr-sm-2" @keyup="handleSearch()"></b-form-input>
+          <b-form-input
+            v-model="citySearchValue"
+            size="sm"
+            class="mr-sm-2"
+            @keyup="handleSearch()"
+          ></b-form-input>
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
           <date-pick
+            v-model="dateSearchValue"
             :weekdays="weekdays"
             :months="month"
-            v-model="dateSearchValue"
-            :displayFormat="'DD.MM.YYYY'"
+            :display-format="'DD.MM.YYYY'"
           ></date-pick>
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Erster Besuch:</b-nav-text>
           <date-pick
+            v-model="firstVisitSearchValue"
             :months="month"
             :weekdays="weekdays"
-            v-model="firstVisitSearchValue"
+            :display-format="'DD.MM.YYYY'"
             @click="handleSearch()"
-            :displayFormat="'DD.MM.YYYY'"
           ></date-pick>
         </b-nav-form>
       </b-navbar-nav>
@@ -90,6 +94,14 @@ export default {
         "Dezember"
       ]
     };
+  },
+  watch: {
+    firstVisitSearchValue: function() {
+      this.handleSearch();
+    },
+    dateSearchValue: function() {
+      this.handleSearch();
+    }
   },
   mounted: function() {
     // selection of first status value
@@ -156,14 +168,6 @@ export default {
       )
         return true;
       else return false;
-    }
-  },
-  watch: {
-    firstVisitSearchValue: function() {
-      this.handleSearch();
-    },
-    dateSearchValue: function() {
-      this.handleSearch();
     }
   }
 };
