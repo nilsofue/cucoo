@@ -40,12 +40,17 @@
         </b-nav-form>
       </b-navbar-nav>
     </b-navbar>
+    <date-pick v-model="date" :displayFormat="'DD.MM.YYYY'"></date-pick>
   </div>
 </template>
 
 <script>
+import DatePick from "vue-date-pick";
+import "vue-date-pick/dist/vueDatePick.css";
+
 export default {
   name: "ToolBar",
+  components: { DatePick },
   props: {
     statusData: {
       type: Array,
@@ -61,7 +66,8 @@ export default {
       streetSearchValue: "",
       citySearchValue: "",
       dateSearchValue: "",
-      firstVisitSearchValue: ""
+      firstVisitSearchValue: "",
+      date: "2019-01-01"
     };
   },
   mounted: function() {
