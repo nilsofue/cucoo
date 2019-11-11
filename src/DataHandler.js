@@ -9,12 +9,12 @@ export default new (class {
   async getData() {
     if (this.useBackend) {
       try {
-        const response = await axios.get("localhost:3000/");
+        const response = await axios.get("http://localhost:3000/");
         console.log(response);
+        return response.data;
       } catch (error) {
         console.error(error);
       }
-      return inputData; //only for testing
     } else {
       return inputData; //only for testing
     }

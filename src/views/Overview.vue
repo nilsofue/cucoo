@@ -18,9 +18,12 @@ export default {
   },
   data() {
     return {
-      data: this.DataHandler.getData(),
+      data: {},
       indexCardArray: null
     };
+  },
+  mounted() {
+    this.DataHandler.getData().then(result => (this.data = result));
   },
   methods: {
     updateIndexCards(indexCardArray) {

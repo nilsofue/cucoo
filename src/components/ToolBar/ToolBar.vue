@@ -95,6 +95,11 @@ export default {
     },
     dateSearchValue: function() {
       this.handleSearch();
+    },
+    statusData: function() {
+      if (this.statusData.length) {
+        this.handleSelection(this.statusData[0]);
+      }
     }
   },
   mounted: function() {
