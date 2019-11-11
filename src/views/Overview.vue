@@ -1,9 +1,6 @@
 <template>
   <div class="overview">
-    <ToolBar
-      :status-data="data.status"
-      @update-Index-Cards="updateIndexCards"
-    />
+    <ToolBar :status-data="data.status" @update-Index-Cards="updateIndexCards" />
     <IndexCardHandler :index-card-data-array="indexCardArray" />
   </div>
 </template>
@@ -12,7 +9,6 @@
 //@ is an alias to /src
 import ToolBar from "@/components/ToolBar/ToolBar.vue";
 import IndexCardHandler from "@/components/IndexCard/IndexCardHandler.vue";
-import inputData from "../assets/sampleData.json";
 
 export default {
   name: "Overview",
@@ -22,7 +18,7 @@ export default {
   },
   data() {
     return {
-      data: inputData,
+      data: this.DataHandler.getData(),
       indexCardArray: null
     };
   },
