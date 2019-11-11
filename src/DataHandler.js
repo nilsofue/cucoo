@@ -2,11 +2,22 @@ import axios from "axios";
 import inputData from "./assets/sampleData.json"; //only for testing
 
 export default new (class {
-  constructor() {}
+  constructor() {
+    this.useBackend = true;
+  }
 
-  getData() {
-    axios.get("https://site.com/?name=Flavio");
-    return inputData; //only for testing
+  async getData() {
+    if (this.useBackend) {
+      try {
+        const response = await axios.get("localhost:3000/");
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+      return inputData; //only for testing
+    } else {
+      return inputData; //only for testing
+    }
   }
 
   changeData(dataSetId, statusId, indexCardId) {
