@@ -7,8 +7,7 @@
             v-for="(status, i) in statusData"
             :key="i"
             @click="handleSelection(status)"
-            >{{ status.name }}</b-dropdown-item
-          >
+          >{{ status.name }}</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -23,12 +22,7 @@
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Ort:</b-nav-text>
-          <b-form-input
-            v-model="citySearchValue"
-            size="sm"
-            class="mr-sm-2"
-            @keyup="handleSearch()"
-          ></b-form-input>
+          <b-form-input v-model="citySearchValue" size="sm" class="mr-sm-2" @keyup="handleSearch()"></b-form-input>
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
@@ -111,7 +105,6 @@ export default {
   },
   methods: {
     handleSelection(selectedData) {
-      console.log("clear");
       //clear search inputs
       this.streetSearchValue = "";
       this.citySearchValue = "";
@@ -129,7 +122,6 @@ export default {
       );
     },
     filterElements(indexCardData) {
-      console.log(indexCardData);
       if (
         indexCardData.adress.city
           .toLowerCase()
