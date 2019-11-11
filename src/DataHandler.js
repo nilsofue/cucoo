@@ -1,9 +1,11 @@
+import axios from "axios";
 import inputData from "./assets/sampleData.json"; //only for testing
 
 export default new (class {
   constructor() {}
 
   getData() {
+    axios.get("https://site.com/?name=Flavio");
     return inputData; //only for testing
   }
 
