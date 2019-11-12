@@ -4,12 +4,13 @@ import inputData from "./assets/sampleData.json"; //only for testing
 export default new (class {
   constructor() {
     this.useBackend = true;
+    this.pathToBackend = "http://localhost:3000/";
   }
 
   async getData() {
     if (this.useBackend) {
       try {
-        const response = await axios.get("http://localhost:3000/");
+        const response = await axios.get(this.pathToBackend);
         console.log(response);
         return response.data;
       } catch (error) {
@@ -20,15 +21,25 @@ export default new (class {
     }
   }
 
-  changeData(dataSetId, statusId, indexCardId) {
-    console.log("Change data" + dataSetId, statusId, indexCardId);
+  changeData(dataSetId, statusId, indexCardId, indexCardData) {
+    console.log(
+      "Change data" + dataSetId,
+      statusId,
+      indexCardId,
+      indexCardData
+    );
   }
 
-  addData(dataSetId, statusId, indexCardId) {
-    console.log("Add data" + dataSetId, statusId, indexCardId);
+  addData(dataSetId, statusId, indexCardId, indexCardData) {
+    console.log("Add data" + dataSetId, statusId, indexCardId, indexCardData);
   }
 
-  deleteData(dataSetId, statusId, indexCardId) {
-    console.log("Delete data" + dataSetId, statusId, indexCardId);
+  deleteData(dataSetId, statusId, indexCardId, indexCardData) {
+    console.log(
+      "Delete data" + dataSetId,
+      statusId,
+      indexCardId,
+      indexCardData
+    );
   }
 })();
