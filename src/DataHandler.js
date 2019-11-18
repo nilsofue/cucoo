@@ -3,7 +3,7 @@ import inputData from "./assets/sampleData.json"; //only for testing
 
 export default new (class {
   constructor() {
-    this.useBackend = true;
+    this.useBackend = false;
     this.pathToBackend = "http://localhost:3000/";
   }
 
