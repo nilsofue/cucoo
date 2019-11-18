@@ -1,21 +1,30 @@
 import inputData from "./assets/sampleData.json"; //only for testing
+import DataManipulator from "./DataManipulator.js";
 
 export default new (class {
-  constructor() {}
+  constructor() {
+    this.data = null;
+  }
 
   getData() {
+    this.data = inputData;
     return inputData; //only for testing
   }
 
-  changeData(dataSetId, statusId, indexCardId) {
-    console.log("Change data" + dataSetId, statusId, indexCardId);
+  changeData(statusId, indexCardId, newIndexCardData) {
+    DataManipulator.changeIndexCardData(
+      this.data,
+      statusId,
+      indexCardId,
+      newIndexCardData
+    );
   }
 
-  addData(dataSetId, statusId, indexCardId) {
-    console.log("Add data" + dataSetId, statusId, indexCardId);
+  addIndexCard(statusId, indexCardData) {
+    DataManipulator.addIndexCard(this.data, statusId, indexCardData);
   }
 
-  deleteData(dataSetId, statusId, indexCardId) {
-    console.log("Delete data" + dataSetId, statusId, indexCardId);
+  deleteIndexCard(statusId, indexCardId) {
+    DataManipulator.deleteIndexCard(this.data, statusId, indexCardId);
   }
 })();
