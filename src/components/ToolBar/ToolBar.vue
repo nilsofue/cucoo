@@ -7,7 +7,8 @@
             v-for="(status, i) in statusData"
             :key="i"
             @click="handleSelection(status)"
-          >{{ status.name }}</b-dropdown-item>
+            >{{ status.name }}</b-dropdown-item
+          >
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -22,7 +23,12 @@
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Ort:</b-nav-text>
-          <b-form-input v-model="citySearchValue" size="sm" class="mr-sm-2" @keyup="handleSearch()"></b-form-input>
+          <b-form-input
+            v-model="citySearchValue"
+            size="sm"
+            class="mr-sm-2"
+            @keyup="handleSearch()"
+          ></b-form-input>
         </b-nav-form>
         <b-nav-form>
           <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
@@ -95,6 +101,11 @@ export default {
     },
     dateSearchValue: function() {
       this.handleSearch();
+    },
+    statusData: function() {
+      if (this.statusData.length) {
+        this.handleSelection(this.statusData[0]);
+      }
     }
   },
   mounted: function() {

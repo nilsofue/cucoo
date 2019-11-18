@@ -1,6 +1,9 @@
 <template>
   <div class="overview">
-    <ToolBar :status-data="data.status" @update-Index-Cards="updateIndexCards" />
+    <ToolBar
+      :status-data="data.status"
+      @update-Index-Cards="updateIndexCards"
+    />
     <IndexCardHandler :index-card-data-array="indexCardArray" />
   </div>
 </template>
@@ -18,9 +21,12 @@ export default {
   },
   data() {
     return {
-      data: this.DataHandler.getData(),
+      data: {},
       indexCardArray: null
     };
+  },
+  mounted() {
+    this.DataHandler.getData().then(result => (this.data = result));
   },
   methods: {
     updateIndexCards(indexCardArray) {
