@@ -11,6 +11,13 @@ export default class DataManipulator {
     indexCardEntries.push(newIndexCardData);
   }
 
+  static deleteIndexCard(dataSet, statusId, indexCardId) {
+    let indexCardEntries = this.getStatusInDataSetById(dataSet, statusId)
+      .entries;
+    let foundIndex = indexCardEntries.findIndex(x => x.id === indexCardId);
+    indexCardEntries.splice(foundIndex, 1);
+  }
+
   static getStatusInDataSetById(dataSet, statusId) {
     return dataSet.status.find(x => x.id === statusId);
   }

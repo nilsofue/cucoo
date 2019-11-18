@@ -20,11 +20,11 @@ export default new (class {
     );
   }
 
-  addData(statusId, indexCardData) {
+  addIndexCard(statusId, indexCardData) {
     DataManipulator.addIndexCard(this.data, statusId, indexCardData);
   }
 
-  deleteData(statusId, indexCardId) {
-    console.log("Delete data" + statusId, indexCardId);
+  deleteIndexCard(statusId, indexCardId) {
+    DataManipulator.deleteIndexCard(this.data, statusId, indexCardId);
   }
 })();
