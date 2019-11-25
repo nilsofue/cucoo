@@ -12,7 +12,6 @@
 //@ is an alias to /src
 import ToolBar from "@/components/ToolBar/ToolBar.vue";
 import IndexCardHandler from "@/components/IndexCard/IndexCardHandler.vue";
-import inputData from "../assets/sampleData.json";
 
 export default {
   name: "Overview",
@@ -22,13 +21,15 @@ export default {
   },
   data() {
     return {
-      data: inputData,
+      data: {},
       indexCardArray: null
     };
   },
+  mounted() {
+    this.DataHandler.getData().then(result => (this.data = result));
+  },
   methods: {
     updateIndexCards(indexCardArray) {
-      console.log(indexCardArray);
       this.indexCardArray = indexCardArray;
     }
   }
