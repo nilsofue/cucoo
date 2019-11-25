@@ -7,6 +7,11 @@
         <br />
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </p>
+      <b-dropdown id="dropdown-1" :text="cardStatusICD" class="m-md-2">
+        <b-dropdown-item>{{ cardStatusICD }}</b-dropdown-item>
+        <b-dropdown-item>Termin</b-dropdown-item>
+        <b-dropdown-item>kein Interesse</b-dropdown-item>
+      </b-dropdown>
     </b-modal>
   </div>
 </template>
@@ -15,9 +20,12 @@
 export default {
   name: "IndexCardDetail",
   props: {
-    indexCardData: Object
+    indexCardData: Object,
+    cardStatusICD: String
   }
 };
+
+// timestamp: new Date().getTime()
 </script>
 
 <style scoped lang="scss"></style>

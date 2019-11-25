@@ -125,6 +125,7 @@ export default {
       this.selectedStatusData = selectedData;
       this.selectedStatusName = selectedData.name;
       this.$emit("update-Index-Cards", selectedData.entries);
+      this.$emit("update-Card-Status", selectedData.id);
     },
     handleSearch() {
       this.$emit(

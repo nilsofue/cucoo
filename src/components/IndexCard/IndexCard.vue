@@ -11,7 +11,10 @@
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </b-card-text>
     </b-card>
-    <indexCardDetail :index-card-data="indexCardData"></indexCardDetail>
+    <indexCardDetail
+      :index-card-data="indexCardData"
+      :card-status-i-c-d="cardStatusIC"
+    ></indexCardDetail>
   </div>
 </template>
 
@@ -24,7 +27,13 @@ export default {
     IndexCardDetail
   },
   props: {
-    indexCardData: Object
+    indexCardData: Object,
+    cardStatusIC: String
+  },
+  data() {
+    return {
+      cardStatusICD: String
+    };
   },
   methods: {
     openModal: function() {

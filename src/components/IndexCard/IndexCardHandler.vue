@@ -4,6 +4,7 @@
       v-for="(indexCardData, index) in indexCardDataArray"
       :key="index"
       :index-card-data="indexCardData"
+      :card-status-i-c="cardStatusID"
     ></IndexCard>
   </div>
 </template>
@@ -17,7 +18,14 @@ export default {
     IndexCard
   },
   props: {
-    indexCardDataArray: Array
+    indexCardDataArray: Array,
+    cardStatusID: String
+  },
+  data() {
+    return {
+      cardStatusIC: String,
+      indexCardArray: null
+    };
   }
 };
 </script>

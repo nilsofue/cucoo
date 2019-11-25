@@ -3,8 +3,12 @@
     <ToolBar
       :status-data="data.status"
       @update-Index-Cards="updateIndexCards"
+      @update-Card-Status="updateCardStatus"
     />
-    <IndexCardHandler :index-card-data-array="indexCardArray" />
+    <IndexCardHandler
+      :index-card-data-array="indexCardArray"
+      :card-status-i-d="cardStatus"
+    />
   </div>
 </template>
 
@@ -22,6 +26,7 @@ export default {
   data() {
     return {
       data: {},
+      cardStatus: String,
       indexCardArray: null
     };
   },
@@ -31,6 +36,9 @@ export default {
   methods: {
     updateIndexCards(indexCardArray) {
       this.indexCardArray = indexCardArray;
+    },
+    updateCardStatus(id) {
+      this.cardStatus = id;
     }
   }
 };
