@@ -1,6 +1,10 @@
 <template>
   <div class="noticeComponent">
-    Ich bin eine Notiz..
+    <b-list-group>
+      <b-list-group-item v-for="note in noticeDataArray" v-bind:key="note.text"
+        >{{ note.text }}
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 
