@@ -7,13 +7,19 @@
         <br />
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </p>
+      <NoticeComponent></NoticeComponent>
     </b-modal>
   </div>
 </template>
 
 <script>
+import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
+
 export default {
   name: "IndexCardDetail",
+  components: {
+    NoticeComponent
+  },
   props: {
     indexCardData: Object
   }
