@@ -1,9 +1,10 @@
 <template>
   <div class="overview">
-    <ToolBar
-      :status-data="data.status"
-      @update-Index-Cards="updateIndexCards"
-    />
+    <ToolBar :status-data="data.status" @update-Index-Cards="updateIndexCards" />
+    <div class="loadingSpinner" v-if="loading">
+      <b-spinner variant="primary" label="Spinning"></b-spinner>
+      <p>Lade Daten...</p>
+    </div>
     <IndexCardHandler :index-card-data-array="indexCardArray" />
   </div>
 </template>
@@ -22,11 +23,15 @@ export default {
   data() {
     return {
       data: {},
-      indexCardArray: null
+      indexCardArray: null,
+      loading: true
     };
   },
   mounted() {
-    this.DataHandler.getData().then(result => (this.data = result));
+    this.DataHandler.getData().then(result => {
+      this.loading = false;
+      this.data = result;
+    });
   },
   methods: {
     updateIndexCards(indexCardArray) {
@@ -35,3 +40,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.loadingSpinner {
+  text-align: center;
+  padding: 40px;
+}
+</style>
