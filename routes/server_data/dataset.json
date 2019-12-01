@@ -22,10 +22,12 @@
           "phone": "0351885280",
           "notes": [
             {
+              "id": "id_note123",
               "time": 1571773063644,
               "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen"
             },
             {
+              "id": "id_note125",
               "time": 1571773064321,
               "text": "Nur Azubi angetroffen, konnte Info geben"
             }
@@ -45,54 +47,9 @@
           "phone": "0351885123",
           "notes": [
             {
+              "id": "id_note1563",
               "time": 1571773063644,
               "text": "Nächste Woche nochmal nachfragen"
-            }
-          ]
-        },
-        {
-          "id": "id_entry123345",
-          "createTime": 1571773063655,
-          "date": 1571773063655,
-          "company": "Raketenfabrik GmbH",
-          "adress": {
-            "street": "Am Stern",
-            "houseNumber": "74",
-            "postCode": "01109",
-            "city": "Leipzig"
-          },
-          "phone": "0351885280",
-          "notes": [
-            {
-              "time": 1571773063644,
-              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen"
-            },
-            {
-              "time": 1571773064321,
-              "text": "Nur Azubi angetroffen, konnte Info geben"
-            }
-          ]
-        },
-        {
-          "id": "id_entry123434",
-          "createTime": 1571773063655,
-          "date": 1571773063655,
-          "company": "Dalaman GmbH",
-          "adress": {
-            "street": "Trachenberger Platz",
-            "houseNumber": "4",
-            "postCode": "01127",
-            "city": "Dresden"
-          },
-          "phone": "0351885280",
-          "notes": [
-            {
-              "time": 1571773063644,
-              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen"
-            },
-            {
-              "time": 1571773064321,
-              "text": "Nur Azubi angetroffen, konnte Info geben"
             }
           ]
         }
@@ -117,10 +74,12 @@
           "phone": "0351885280",
           "notes": [
             {
+              "id": "id_note12df3",
               "time": 1571773063644,
               "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen"
             },
             {
+              "id": "id_note1dsdsa23",
               "time": 1571773064321,
               "text": "Nur Azubi angetroffen, konnte Info geben"
             }
@@ -140,6 +99,7 @@
           "phone": "0351885123",
           "notes": [
             {
+              "id": "id_note12hfgh3",
               "time": 1571773063644,
               "text": "Nächste Woche nochmal nachfragen"
             }

@@ -20,8 +20,8 @@ router.get("/data", function(req, res, next) {
 });
 
 router.post("/dataPost", function(req, res) {
-  console.log(req.body);
-  res.send("Alles super!");
+  updateUserData(req.body);
+  //console.log(req.body);
 });
 
 module.exports = router;

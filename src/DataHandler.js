@@ -15,7 +15,6 @@ export default new (class {
         const response = await axios.get(this.pathToBackend + "data");
         console.log(response);
         this.data = inputData;
-        this.changeData(2, 2, 2);
         return response.data;
       } catch (error) {
         console.error(error);
@@ -26,31 +25,24 @@ export default new (class {
     }
   }
 
-  async changeData(statusId, indexCardId, newIndexCardData) {
+  async saveData() {
     if (this.useBackend) {
+      console.log(this.data);
       try {
-        await axios
-          .post(this.pathToBackend + "dataPost", newIndexCardData)
-          .then(
-            response => {
-              console.log(response);
-            },
-            error => {
-              console.log(error);
-            }
-          );
+        await axios.post(this.pathToBackend + "dataPost", this.data).then(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          }
+        );
       } catch (error) {
         console.error(error);
       }
     } else {
-      console.warn("Change data is only available if backend is used!");
+      console.warn("Saving data is only available if backend is used!");
     }
-    DataManipulator.changeIndexCardData(
-      this.data,
-      statusId,
-      indexCardId,
-      newIndexCardData
-    );
   }
 
   addIndexCard(statusId, indexCardData) {
@@ -59,5 +51,13 @@ export default new (class {
 
   deleteIndexCard(statusId, indexCardId) {
     DataManipulator.deleteIndexCard(this.data, statusId, indexCardId);
+  }
+
+  uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 })();
