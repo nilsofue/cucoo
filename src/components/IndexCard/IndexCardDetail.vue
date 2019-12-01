@@ -7,7 +7,7 @@
         <br />
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </p>
-      <NoticeComponent :noticeDataArray="indexCardData.notes"></NoticeComponent>
+      <NoticeComponent :noticeDataArray="indexCardData.notes" :editMode="true"></NoticeComponent>
     </b-modal>
   </div>
 </template>
