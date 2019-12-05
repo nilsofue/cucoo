@@ -15,6 +15,7 @@ export default new (class {
         const response = await axios.get(this.pathToBackend + "data");
         console.log(response);
         this.data = inputData;
+        DataManipulator.getIndexCardById(this.data, "id_entry456");
         return response.data;
       } catch (error) {
         console.error(error);
@@ -51,6 +52,10 @@ export default new (class {
 
   deleteIndexCard(statusId, indexCardId) {
     DataManipulator.deleteIndexCard(this.data, statusId, indexCardId);
+  }
+
+  addNoteByIndexCardId(indexCardId, noteData) {
+    DataManipulator.addNoteByIndexCardId(this.data, indexCardId, noteData);
   }
 
   uuidv4() {

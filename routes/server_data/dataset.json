@@ -22,12 +22,10 @@
           "phone": "0351885280",
           "notes": [
             {
-              "id": "id_note123",
               "time": 1571773063644,
               "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen"
             },
             {
-              "id": "id_note125",
               "time": 1571773064321,
               "text": "Nur Azubi angetroffen, konnte Info geben"
             }
@@ -47,7 +45,6 @@
           "phone": "0351885123",
           "notes": [
             {
-              "id": "id_note1563",
               "time": 1571773063644,
               "text": "Nächste Woche nochmal nachfragen"
             }
@@ -74,12 +71,10 @@
           "phone": "0351885280",
           "notes": [
             {
-              "id": "id_note12df3",
               "time": 1571773063644,
               "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen"
             },
             {
-              "id": "id_note1dsdsa23",
               "time": 1571773064321,
               "text": "Nur Azubi angetroffen, konnte Info geben"
             }
@@ -99,7 +94,6 @@
           "phone": "0351885123",
           "notes": [
             {
-              "id": "id_note12hfgh3",
               "time": 1571773063644,
               "text": "Nächste Woche nochmal nachfragen"
             }

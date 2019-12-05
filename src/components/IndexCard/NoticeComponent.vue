@@ -40,7 +40,7 @@ export default {
   name: "NoticeComponent",
   props: {
     noticeDataArray: Array,
-
+    indexCardId: String,
     editMode: Boolean
   },
   methods: {
@@ -67,12 +67,12 @@ export default {
       );
     },
     saveNote() {
-      this.noticeDataArray.push({
+      this.DataHandler.addNoteByIndexCardId(this.indexCardId, {
         text: this.message,
         time: new Date().getTime(),
         id: this.DataHandler.uuidv4()
       });
-      this.DataHandler.saveData();
+      //this.DataHandler.saveData();
     }
   },
   data() {
