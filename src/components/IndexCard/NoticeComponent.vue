@@ -1,13 +1,16 @@
 <template>
   <div class="noticeComponent">
-    <h2>Notizen</h2>
-    <b-button
-      v-if="editMode && !createNote"
-      :pressed.sync="createNote"
-      class="addButtonClass"
-      variant="outline-success"
-      >Neue Notiz</b-button
-    >
+    <div class="noticeOverviewHead">
+      <h3>Notizen</h3>
+      <b-button
+        v-if="editMode && !createNote"
+        :pressed.sync="createNote"
+        class="addButtonClass"
+        variant="outline-success"
+        ><font-awesome-icon icon="plus"
+      /></b-button>
+    </div>
+
     <b-form-textarea
       v-if="createNote"
       id="textarea-default"
@@ -31,7 +34,13 @@
     >
     <b-list-group>
       <b-list-group-item v-for="note in noticeDataArray" :key="note.text">
-        <p class="timeclass">{{ getDate(note.time) }}</p>
+        <div class="noticeHeadlineClass">
+          <p class="timeclass">{{ getDate(note.time) }}</p>
+          <b-button class="deleteButtonClass" variant="outline-danger"
+            ><font-awesome-icon icon="trash"
+          /></b-button>
+        </div>
+
         {{ note.text }}
       </b-list-group-item>
     </b-list-group>
@@ -40,6 +49,10 @@
 
 <script>
 import { mapActions } from "vuex";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPlus, faTrash]);
 
 export default {
   name: "NoticeComponent",
@@ -88,7 +101,6 @@ export default {
         noteData: newNote,
         indexCardId: this.indexCardId
       });
-      //this.DataHandler.saveData();
     }
   }
 };
@@ -102,11 +114,25 @@ export default {
 }
 
 .addButtonClass {
-  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 .createNoteButton {
   margin: 12px;
   margin-left: 0px;
+}
+
+.noticeHeadlineClass {
+  display: flex;
+}
+.deleteButtonClass {
+  line-height: 3px;
+  font-size: 10px;
+  margin-left: 20px;
+}
+
+.noticeOverviewHead {
+  display: flex;
+  margin-bottom: 10px;
 }
 </style>
