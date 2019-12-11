@@ -2,15 +2,16 @@
   <div class="noticeComponent">
     <h2>Notizen</h2>
     <b-button
+      v-if="editMode && !createNote"
       :pressed.sync="createNote"
       class="addButtonClass"
-      v-if="editMode && !createNote"
       variant="outline-success"
-    >Neue Notiz</b-button>
+      >Neue Notiz</b-button
+    >
     <b-form-textarea
-      v-model="message"
       v-if="createNote"
       id="textarea-default"
+      v-model="message"
       placeholder="Neue Notiz..."
     ></b-form-textarea>
     <b-button
@@ -18,17 +19,19 @@
       :pressed.sync="createNote"
       variant="outline-danger"
       class="createNoteButton"
-    >Verwerfen</b-button>
+      >Verwerfen</b-button
+    >
     <b-button
       v-if="createNote"
       :pressed.sync="createNote"
       variant="primary"
       class="createNoteButton"
-      v-on:click="saveNote()"
-    >Speichern</b-button>
+      @click="saveNote()"
+      >Speichern</b-button
+    >
     <b-list-group>
-      <b-list-group-item v-for="note in noticeDataArray" v-bind:key="note.text">
-        <p class="timeclass">{{ getDate(note.time)}}</p>
+      <b-list-group-item v-for="note in noticeDataArray" :key="note.text">
+        <p class="timeclass">{{ getDate(note.time) }}</p>
         {{ note.text }}
       </b-list-group-item>
     </b-list-group>
@@ -36,6 +39,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "NoticeComponent",
   props: {
@@ -43,7 +48,14 @@ export default {
     indexCardId: String,
     editMode: Boolean
   },
+  data() {
+    return {
+      createNote: false,
+      message: ""
+    };
+  },
   methods: {
+    ...mapActions(["addNoteByIndexCardId"]),
     getDate(dateObject) {
       dateObject = new Date(dateObject);
       let hours = dateObject.getHours();
@@ -67,19 +79,17 @@ export default {
       );
     },
     saveNote() {
-      this.DataHandler.addNoteByIndexCardId(this.indexCardId, {
+      var newNote = {
         text: this.message,
         time: new Date().getTime(),
         id: this.DataHandler.uuidv4()
+      };
+      this.addNoteByIndexCardId({
+        noteData: newNote,
+        indexCardId: this.indexCardId
       });
       //this.DataHandler.saveData();
     }
-  },
-  data() {
-    return {
-      createNote: false,
-      message: ""
-    };
   }
 };
 </script>
