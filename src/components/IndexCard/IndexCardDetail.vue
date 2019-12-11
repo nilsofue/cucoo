@@ -8,9 +8,9 @@
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </p>
       <NoticeComponent
-        :noticeDataArray="indexCardData.notes"
-        :indexCardId="indexCardData.id"
-        :editMode="true"
+        :notice-data-array="indexCardData.notes"
+        :index-card-id="indexCardData.id"
+        :edit-mode="true"
       ></NoticeComponent>
     </b-modal>
   </div>
