@@ -36,7 +36,10 @@
       <b-list-group-item v-for="note in noticeDataArray" :key="note.text">
         <div class="noticeHeadlineClass">
           <p class="timeclass">{{ getDate(note.time) }}</p>
-          <b-button class="deleteButtonClass" variant="outline-danger"
+          <b-button
+            class="deleteButtonClass"
+            variant="outline-danger"
+            @click="deleteNote(note.id)"
             ><font-awesome-icon icon="trash"
           /></b-button>
         </div>
@@ -68,7 +71,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNoteByIndexCardId"]),
+    ...mapActions(["addNoteByIndexCardId", "deleteNoteByNoteId"]),
     getDate(dateObject) {
       dateObject = new Date(dateObject);
       let hours = dateObject.getHours();
@@ -90,6 +93,12 @@ export default {
         "." +
         dateObject.getFullYear()
       );
+    },
+    deleteNote(id) {
+      this.deleteNoteByNoteId({
+        noteId: id,
+        indexCardId: this.indexCardId
+      });
     },
     saveNote() {
       var newNote = {
