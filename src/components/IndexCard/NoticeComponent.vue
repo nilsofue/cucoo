@@ -7,8 +7,9 @@
         :pressed.sync="createNote"
         class="addButtonClass"
         variant="outline-success"
-        ><font-awesome-icon icon="plus"
-      /></b-button>
+      >
+        <font-awesome-icon icon="plus" />
+      </b-button>
     </div>
 
     <b-form-textarea
@@ -40,10 +41,10 @@
             class="deleteButtonClass"
             variant="outline-danger"
             @click="deleteNote(note.id)"
-            ><font-awesome-icon icon="trash"
-          /></b-button>
+          >
+            <font-awesome-icon icon="times" />
+          </b-button>
         </div>
-
         {{ note.text }}
       </b-list-group-item>
     </b-list-group>
@@ -53,9 +54,9 @@
 <script>
 import { mapActions } from "vuex";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-library.add([faPlus, faTrash]);
+library.add([faPlus, faTimes]);
 
 export default {
   name: "NoticeComponent",
@@ -124,6 +125,8 @@ export default {
 
 .addButtonClass {
   margin-left: 10px;
+  border: none;
+  margin-top: -4px;
 }
 
 .createNoteButton {
@@ -135,13 +138,14 @@ export default {
   display: flex;
 }
 .deleteButtonClass {
-  line-height: 3px;
-  font-size: 10px;
-  margin-left: 20px;
+  margin-left: auto;
+  border: none;
+  margin-right: -18px;
+  margin-top: -8px;
 }
 
 .noticeOverviewHead {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
 }
 </style>
