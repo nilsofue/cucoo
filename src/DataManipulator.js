@@ -21,4 +21,19 @@ export default class DataManipulator {
   static getStatusInDataSetById(dataSet, statusId) {
     return dataSet.status.find(x => x.id === statusId);
   }
+
+  static addNoteByIndexCardId(dataSet, indexCardId, noteData) {
+    this.getIndexCardById(dataSet, indexCardId).notes.push(noteData);
+    console.log(dataSet);
+  }
+
+  static getIndexCardById(dataset, indexCardId) {
+    for (let i = 0; i < dataset.status.length; i++) {
+      for (let indexCard of dataset.status[i].entries)
+        if (indexCard.id === indexCardId) {
+          return indexCard;
+        }
+    }
+    return null;
+  }
 }
