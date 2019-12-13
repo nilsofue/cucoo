@@ -23,10 +23,27 @@ export default {
           if (indexCard.id === data.indexCardId) {
             // find index card
             indexCard.notes.push(data.noteData);
+            return;
+          }
+      }
+    },
+    deleteNoteByNoteId(state, data) {
+      for (let i = 0; i < state.data.status.length; i++) {
+        for (let indexCard of state.data.status[i].entries)
+          if (indexCard.id === data.indexCardId) {
+            // find index card
+            for (let i = 0; i < indexCard.notes.length; i++) {
+              if (data.noteId == indexCard.notes[i].id) {
+                // find note
+                indexCard.notes.splice(i, 1);
+                return;
+              }
+            }
           }
       }
     }
   },
+
   actions: {
     async getData({ commit }) {
       if (useBackend) {
@@ -64,6 +81,10 @@ export default {
     },
     async addNoteByIndexCardId({ dispatch, commit }, data) {
       commit("addNoteByIndexCardId", data);
+      await dispatch("saveData");
+    },
+    async deleteNoteByNoteId({ dispatch, commit }, data) {
+      commit("deleteNoteByNoteId", data);
       await dispatch("saveData");
     }
   },

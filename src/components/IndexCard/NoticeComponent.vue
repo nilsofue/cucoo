@@ -1,18 +1,23 @@
 <template>
   <div class="noticeComponent">
-    <h2>Notizen</h2>
-    <b-button
-      v-if="editMode && !createNote"
-      :pressed.sync="createNote"
-      class="addButtonClass"
-      variant="outline-success"
-      >Neue Notiz</b-button
-    >
+    <div class="noticeOverviewHead">
+      <h3>Notizen</h3>
+      <b-button
+        v-if="editMode && !createNote"
+        :pressed.sync="createNote"
+        class="addButtonClass"
+        variant="outline-success"
+      >
+        <font-awesome-icon icon="plus" />
+      </b-button>
+    </div>
+
     <b-form-textarea
       v-if="createNote"
       id="textarea-default"
       v-model="message"
       placeholder="Neue Notiz..."
+      @keyup="onKeyPress"
     ></b-form-textarea>
     <b-button
       v-if="createNote"
@@ -31,7 +36,17 @@
     >
     <b-list-group>
       <b-list-group-item v-for="note in noticeDataArray" :key="note.text">
-        <p class="timeclass">{{ getDate(note.time) }}</p>
+        <div class="noticeHeadlineClass">
+          <p class="timeclass">{{ getDate(note.time) }}</p>
+          <b-button
+            v-if="editMode"
+            class="deleteButtonClass"
+            variant="outline-danger"
+            @click="deleteNote(note.id)"
+          >
+            <font-awesome-icon icon="times" />
+          </b-button>
+        </div>
         {{ note.text }}
       </b-list-group-item>
     </b-list-group>
@@ -40,6 +55,10 @@
 
 <script>
 import { mapActions } from "vuex";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPlus, faTimes]);
 
 export default {
   name: "NoticeComponent",
@@ -55,7 +74,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addNoteByIndexCardId"]),
+    ...mapActions(["addNoteByIndexCardId", "deleteNoteByNoteId"]),
     getDate(dateObject) {
       dateObject = new Date(dateObject);
       let hours = dateObject.getHours();
@@ -78,6 +97,12 @@ export default {
         dateObject.getFullYear()
       );
     },
+    deleteNote(id) {
+      this.deleteNoteByNoteId({
+        noteId: id,
+        indexCardId: this.indexCardId
+      });
+    },
     saveNote() {
       var newNote = {
         text: this.message,
@@ -88,7 +113,14 @@ export default {
         noteData: newNote,
         indexCardId: this.indexCardId
       });
-      //this.DataHandler.saveData();
+    },
+    onKeyPress(event) {
+      if (event.keyCode === 13) {
+        // Enter key
+        this.saveNote();
+        this.createNote = false;
+        this.message = "";
+      }
     }
   }
 };
@@ -102,11 +134,28 @@ export default {
 }
 
 .addButtonClass {
-  margin-bottom: 10px;
+  margin-left: 10px;
+  border: none;
+  margin-top: -4px;
 }
 
 .createNoteButton {
   margin: 12px;
   margin-left: 0px;
+}
+
+.noticeHeadlineClass {
+  display: flex;
+}
+.deleteButtonClass {
+  margin-left: auto;
+  border: none;
+  margin-right: -18px;
+  margin-top: -8px;
+}
+
+.noticeOverviewHead {
+  display: flex;
+  margin-bottom: 3px;
 }
 </style>

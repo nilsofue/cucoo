@@ -6,6 +6,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import DataHandler from "./DataHandler.js";
 import store from "./store";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.use(BootstrapVue);
 Vue.prototype.DataHandler = DataHandler; // make data handler public
