@@ -17,6 +17,7 @@
       id="textarea-default"
       v-model="message"
       placeholder="Neue Notiz..."
+      @keyup="onKeyPress"
     ></b-form-textarea>
     <b-button
       v-if="createNote"
@@ -38,6 +39,7 @@
         <div class="noticeHeadlineClass">
           <p class="timeclass">{{ getDate(note.time) }}</p>
           <b-button
+            v-if="editMode"
             class="deleteButtonClass"
             variant="outline-danger"
             @click="deleteNote(note.id)"
@@ -111,6 +113,14 @@ export default {
         noteData: newNote,
         indexCardId: this.indexCardId
       });
+    },
+    onKeyPress(event) {
+      if (event.keyCode === 13) {
+        // Enter key
+        this.saveNote();
+        this.createNote = false;
+        this.message = "";
+      }
     }
   }
 };
