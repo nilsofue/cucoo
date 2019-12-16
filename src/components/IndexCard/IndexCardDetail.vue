@@ -13,9 +13,9 @@
         <b-dropdown-item>kein Interesse</b-dropdown-item>
       </b-dropdown>
       <NoticeComponent
-        :noticeDataArray="indexCardData.notes"
-        :indexCardId="indexCardData.id"
-        :editMode="true"
+        :notice-data-array="indexCardData.notes"
+        :index-card-id="indexCardData.id"
+        :edit-mode="true"
       ></NoticeComponent>
     </b-modal>
   </div>
