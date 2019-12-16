@@ -37,12 +37,17 @@ export default {
 
 <style scoped lang="scss">
 .indexCard {
-  width: 25%;
-  min-width: 25%;
+  width: 20%;
+  min-width: 20%;
   float: left;
-  padding: 5px;
+  padding: 10px;
 }
 .card-body {
   height: 200px;
+}
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 7px 1px rgba(179, 179, 179, 0.12);
 }
 </style>

@@ -185,4 +185,10 @@ export default {
 .toolbarTextLabelClass {
   margin-left: 0.5rem !important;
 }
+
+.bg-light {
+  background-color: #ffffff !important;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 7px 1px rgba(179, 179, 179, 0.18);
+}
 </style>
