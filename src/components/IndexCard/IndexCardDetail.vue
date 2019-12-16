@@ -25,7 +25,8 @@ export default {
     NoticeComponent
   },
   props: {
-    indexCardData: Object
+    indexCardData: Object,
+    editMode: Boolean
   }
 };
 </script>

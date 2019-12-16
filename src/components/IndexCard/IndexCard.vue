@@ -35,4 +35,14 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.indexCard {
+  width: 25%;
+  min-width: 25%;
+  float: left;
+  padding: 5px;
+}
+.card-body {
+  height: 200px;
+}
+</style>
