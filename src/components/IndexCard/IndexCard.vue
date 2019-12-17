@@ -1,14 +1,25 @@
 <template>
   <div class="indexCard" @click="openModal">
-    <b-card
-      :title="indexCardData.company"
-      :sub-title="'Tel: ' + indexCardData.phone"
-    >
+    <b-card>
       <b-card-text>
-        <br />
-        {{ indexCardData.adress.street }} {{ indexCardData.adress.houseNumber }}
-        <br />
-        {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
+        <h5>{{ indexCardData.company }}</h5>
+        <p>
+          <font-awesome-icon icon="phone" />
+          {{ indexCardData.phone }}
+        </p>
+        <div class="mapContainer">
+          <div class="pinContainer">
+            <span>
+              <font-awesome-icon icon="map-pin" />
+            </span>
+          </div>
+          <div>
+            {{ indexCardData.adress.street }}
+            {{ indexCardData.adress.houseNumber }}
+            <br />
+            {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
+          </div>
+        </div>
       </b-card-text>
     </b-card>
     <indexCardDetail :index-card-data="indexCardData"></indexCardDetail>
@@ -17,6 +28,10 @@
 
 <script>
 import IndexCardDetail from "@/components/IndexCard/IndexCardDetail.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPhone, faMapPin } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPhone, faMapPin]);
 
 export default {
   name: "IndexCard",
@@ -49,5 +64,20 @@ export default {
   border: none;
   border-radius: 0.5rem;
   box-shadow: 0px 0px 7px 1px rgba(179, 179, 179, 0.12);
+}
+
+.mapContainer {
+  display: flex;
+}
+
+.pinContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.pinContainer span {
 }
 </style>
