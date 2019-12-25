@@ -30,10 +30,6 @@ export default {
     };
   },
   mounted() {
-    /*     this.DataHandler.getData().then(result => {
-      this.loading = false;
-      this.data = result;
-    }); */
     this.getData();
   },
   methods: {
