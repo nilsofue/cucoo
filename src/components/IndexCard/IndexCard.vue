@@ -3,7 +3,7 @@
     <b-card>
       <b-card-text>
         <h5>{{ indexCardData.company }}</h5>
-        <p>
+        <p class="phoneNumberClass">
           <font-awesome-icon icon="phone" />
           {{ indexCardData.phone }}
         </p>
@@ -13,7 +13,7 @@
               <font-awesome-icon icon="map-pin" />
             </span>
           </div>
-          <div>
+          <div class="adressTextClass">
             {{ indexCardData.adress.street }}
             {{ indexCardData.adress.houseNumber }}
             <br />
@@ -75,9 +75,18 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 18px;
 }
 
 .pinContainer span {
+}
+
+.phoneNumberClass {
+  color: grey;
+  font-size: 14px;
+}
+
+.adressTextClass {
+  font-size: 14px;
 }
 </style>
