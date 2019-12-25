@@ -3,6 +3,10 @@
     <b-navbar toggleable="lg" type="primary" variant="light">
       <b-navbar-nav>
         <b-nav-item-dropdown :text="selectedStatusName">
+          <b-dropdown-item @click="handleSelection(allStates)"
+            >Alle Status</b-dropdown-item
+          >
+          <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item
             v-for="(status, i) in statusData"
             :key="i"
@@ -55,6 +59,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
@@ -95,6 +100,9 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapGetters(["allStates"])
+  },
   watch: {
     firstVisitSearchValue: function() {
       this.handleSearch();
@@ -111,7 +119,7 @@ export default {
   mounted: function() {
     // selection of first status value
     if (this.statusData.length) {
-      this.handleSelection(this.statusData[0]);
+      this.handleSelection(this.allStates);
     }
 
     document
