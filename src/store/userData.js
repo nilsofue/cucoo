@@ -94,6 +94,21 @@ export default {
     },
     loading: state => {
       return state.loading;
+    },
+    allStates: state => {
+      let dummyState = {
+        id: "id_all_states",
+        name: "Alle Status",
+        color: "FFFF00",
+        entries: []
+      };
+
+      for (let stateEntry of state.data.status) {
+        for (let indexCardData of stateEntry.entries) {
+          dummyState.entries.push(indexCardData);
+        }
+      }
+      return dummyState;
     }
   }
 };
