@@ -13,26 +13,26 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Straße:</b-nav-text>
           <b-form-input
             v-model="streetSearchValue"
             size="sm"
+            placeholder="Straße"
             class="mr-sm-2"
             @keyup="handleSearch()"
           ></b-form-input>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Ort:</b-nav-text>
           <b-form-input
             v-model="citySearchValue"
+            placeholder="Ort"
             size="sm"
             class="mr-sm-2"
             @keyup="handleSearch()"
           ></b-form-input>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
           <date-pick
+            id="dateElementInputField"
             v-model="dateSearchValue"
             :weekdays="weekdays"
             :months="month"
@@ -40,8 +40,8 @@
           ></date-pick>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Erster Besuch:</b-nav-text>
           <date-pick
+            id="firstVisitElementInputField"
             v-model="firstVisitSearchValue"
             :months="month"
             :weekdays="weekdays"
@@ -113,6 +113,14 @@ export default {
     if (this.statusData.length) {
       this.handleSelection(this.statusData[0]);
     }
+
+    document
+      .getElementById("dateElementInputField")
+      .firstElementChild.setAttribute("placeholder", "Termin");
+
+    document
+      .getElementById("firstVisitElementInputField")
+      .firstElementChild.setAttribute("placeholder", "Erster Besuch");
   },
   methods: {
     handleSelection(selectedData) {
@@ -182,7 +190,26 @@ export default {
   margin-left: 0.5rem !important;
 }
 
+.form-control {
+  color: #495057;
+  background-color: #f5f5f5;
+  border: 0px solid #ced4da;
+}
+.form-control-sm {
+  border-radius: 0.5rem;
+}
+
 .toolbarTextLabelClass {
   margin-left: 0.5rem !important;
+}
+
+.bg-light {
+  background-color: #ffffff !important;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 7px 1px rgba(179, 179, 179, 0.18);
+}
+
+#dateElementInputField input {
+  border: 0px solid #ced4da !important;
 }
 </style>

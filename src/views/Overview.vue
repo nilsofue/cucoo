@@ -53,4 +53,7 @@ export default {
   text-align: center;
   padding: 40px;
 }
+.overview {
+  background-color: #f5f9fa;
+}
 </style>
