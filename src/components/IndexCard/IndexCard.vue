@@ -52,11 +52,25 @@ export default {
 
 <style scoped lang="scss">
 .indexCard {
-  width: 20%;
-  min-width: 20%;
   float: left;
   padding: 10px;
 }
+@media (min-width: 1200px) {
+  .indexCard {
+    width: 20%;
+    min-width: 20%;
+    max-width: 20%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .indexCard {
+    width: 25%;
+    max-width: 25%;
+    min-width: 25%;
+  }
+}
+
 .card-body {
   height: 200px;
 }
