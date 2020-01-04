@@ -109,6 +109,16 @@ export default {
         }
       }
       return dummyState;
+    },
+    getStatusDataByIndexCardId: state => indexCardId => {
+      for (let stateEntry of state.data.status) {
+        for (let indexCardData of stateEntry.entries) {
+          if (indexCardId === indexCardData.id) {
+            return stateEntry;
+          }
+        }
+      }
+      return null;
     }
   }
 };
