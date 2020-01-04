@@ -6,7 +6,7 @@
     {
       "id": "id_status123",
       "name": "Chef nicht da",
-      "color": "FFFF00",
+      "color": "#dc3545",
       "entries": [
         {
           "id": "id_entry12367676",
@@ -183,7 +183,7 @@
     {
       "id": "id_status456",
       "name": "Kein Interesse",
-      "color": "FFF48E",
+      "color": "#17a2b8",
       "entries": [
         {
           "id": "id_entry123",
