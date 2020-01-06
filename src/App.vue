@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar toggleable="lg" type="dark">
         <b-navbar-brand href="#/">CuCoo</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
@@ -16,4 +16,8 @@
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.navbar {
+  background-color: #3084ee !important;
+}
+</style>
