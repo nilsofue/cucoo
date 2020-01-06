@@ -8,10 +8,7 @@
       <b-spinner variant="primary" label="Spinning"></b-spinner>
       <p>Lade Daten...</p>
     </div>
-    <IndexCardHandler
-      :index-card-data-array="indexCardArray"
-      :card-status-i-d="cardStatus"
-    />
+    <IndexCardHandler :index-card-data-array="indexCardArray" />
   </div>
 </template>
 
@@ -39,9 +36,6 @@ export default {
     ...mapActions(["getData"]),
     updateIndexCards(indexCardArray) {
       this.indexCardArray = indexCardArray;
-    },
-    updateCardStatus(id) {
-      this.cardStatus = id;
     }
   },
   computed: {

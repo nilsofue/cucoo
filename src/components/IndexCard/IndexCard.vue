@@ -54,10 +54,7 @@
         </div>
       </b-card-text>
     </b-card>
-    <indexCardDetail
-      :index-card-data="indexCardData"
-      :card-status-i-c-d="cardStatusIC"
-    ></indexCardDetail>
+    <indexCardDetail :index-card-data="indexCardData"></indexCardDetail>
   </div>
 </template>
 
