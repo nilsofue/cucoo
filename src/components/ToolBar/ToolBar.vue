@@ -112,7 +112,7 @@ export default {
     },
     statusData: function() {
       if (this.statusData.length) {
-        this.handleSelection(this.statusData[0]);
+        this.handleSelection(this.allStates);
       }
     }
   },
