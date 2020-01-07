@@ -112,15 +112,15 @@ export default {
     },
     statusData: function() {
       if (this.statusData.length) {
-        this.handleSelection(this.statusData[0]);
+        this.handleSelection(this.allStates);
       }
     }
   },
   mounted: function() {
     // selection of first status value
-    if (this.statusData.length) {
-      this.handleSelection(this.allStates);
-    }
+    //if (this.statusData.length) {
+    /*   this.handleSelection(this.allStates);
+    } */
 
     document
       .getElementById("dateElementInputField")

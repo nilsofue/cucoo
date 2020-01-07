@@ -88,6 +88,8 @@ export default {
       await dispatch("saveData");
     }
   },
+
+  // Zugriff über mapGetters
   getters: {
     data: state => {
       return state.data;

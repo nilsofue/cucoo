@@ -7,11 +7,20 @@
         <br />
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </p>
+      <b-nav-item-dropdown
+        :text="getStatusDataByIndexCardId(indexCardData.id).name"
+      >
+        <b-dropdown-item v-for="(status, i) in data.status" :key="i">
+          {{ status.name }}
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
+      <!--
+         
       <b-dropdown id="dropdown-1" :text="cardStatusICD" class="m-md-2">
         <b-dropdown-item>{{ cardStatusICD }}</b-dropdown-item>
         <b-dropdown-item>Termin</b-dropdown-item>
         <b-dropdown-item>kein Interesse</b-dropdown-item>
-      </b-dropdown>
+      </b-dropdown> -->
       <NoticeComponent
         :notice-data-array="indexCardData.notes"
         :index-card-id="indexCardData.id"
@@ -23,6 +32,7 @@
 
 <script>
 import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "IndexCardDetail",
@@ -30,8 +40,15 @@ export default {
     NoticeComponent
   },
   props: {
-    indexCardData: Object,
-    cardStatusICD: String
+    indexCardData: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
+  },
+  computed: {
+    ...mapGetters(["getStatusDataByIndexCardId", "data"])
   }
 };
 
