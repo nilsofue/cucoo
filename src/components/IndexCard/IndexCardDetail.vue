@@ -1,6 +1,6 @@
 <template>
   <div class="indexCardDetail">
-    <b-modal :id="indexCardData.id" :title="indexCardData.company">
+    <b-modal :id="indexCardData.id" :title="indexCardData.company" hide-footer>
       <p>
         <br />
         {{ indexCardData.adress.street }} {{ indexCardData.adress.houseNumber }}
@@ -20,15 +20,14 @@
       <b-navbar-nav>
         <b-nav-form>
           <date-pick
+            id="dateAppEl"
             v-model="dateAppointment"
-            :pick-time="true"
             :format="'YYYY-MM-DD HH:mm'"
           ></date-pick>
         </b-nav-form>
 
         <b-nav-form>
           <date-pick
-            id="DetailDateBesuch"
             v-model="dateVisit"
             :format="'YYYY-MM-DD HH:mm'"
           ></date-pick>
@@ -40,6 +39,12 @@
         :index-card-id="indexCardData.id"
         :edit-mode="true"
       ></NoticeComponent>
+
+      <footer>
+        <b-button>
+          Edit
+        </b-button>
+      </footer>
     </b-modal>
   </div>
 </template>
@@ -64,7 +69,6 @@ export default {
     }
   },
   data: () => ({
-    date: "2019-01-01 00:00",
     dateVisit: "Besuch",
     dateAppointment: "Termin"
   }),
@@ -76,4 +80,8 @@ export default {
 // timestamp: new Date().getTime()
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+footer {
+  margin-top: 5%;
+}
+</style>
