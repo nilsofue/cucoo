@@ -7,13 +7,15 @@
         <br />
         {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
       </p>
-      <b-nav-item-dropdown
-        :text="getStatusDataByIndexCardId(indexCardData.id).name"
-      >
-        <b-dropdown-item v-for="(status, i) in data.status" :key="i">
-          {{ status.name }}
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
+      <b-navbar-nav>
+        <b-nav-item-dropdown
+          :text="getStatusDataByIndexCardId(indexCardData.id).name"
+        >
+          <b-dropdown-item v-for="(status, i) in data.status" :key="i">
+            {{ status.name }}
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
       <!--
          
       <b-dropdown id="dropdown-1" :text="cardStatusICD" class="m-md-2">
