@@ -11,8 +11,17 @@
             v-for="(status, i) in statusData"
             :key="i"
             @click="handleSelection(status)"
-            >{{ status.name }}</b-dropdown-item
           >
+            <div class="statusListItemContainer">
+              <div
+                class="circleClass"
+                :style="{
+                  backgroundColor: status.color
+                }"
+              ></div>
+              <div>{{ status.name }}</div>
+            </div>
+          </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -236,5 +245,18 @@ export default {
 
 #dateElementInputField input {
   border: 0px solid #ced4da !important;
+}
+
+.circleClass {
+  margin-top: 6.5px;
+  margin-right: 5px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+}
+
+.statusListItemContainer {
+  display: flex;
 }
 </style>
