@@ -1,38 +1,54 @@
 <template>
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id" :title="indexCardData.company" hide-footer>
-      <p>
-        <br />
-        {{ indexCardData.adress.street }} {{ indexCardData.adress.houseNumber }}
-        <br />
-        {{ indexCardData.adress.postCode }} {{ indexCardData.adress.city }}
-      </p>
-      <b-navbar-nav>
-        <b-nav-item-dropdown
-          :text="getStatusDataByIndexCardId(indexCardData.id).name"
-        >
-          <b-dropdown-item v-for="(status, i) in data.status" :key="i">
-            {{ status.name }}
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+      <table id="myTable">
+        <tr>
+          <td>
+            <p>
+              <br />
+              {{ indexCardData.adress.street }}
+              {{ indexCardData.adress.houseNumber }}
+              <br />
+              {{ indexCardData.adress.postCode }}
+              {{ indexCardData.adress.city }}
+              <br />
+              {{ indexCardData.phone }}
+            </p>
+          </td>
+          <td>
+            <b-navbar-nav>
+              <b-nav-form>
+                <date-pick
+                  id="dateAppEl"
+                  v-model="dateAppointment"
+                  :format="'YYYY-MM-DD HH:mm'"
+                ></date-pick>
+              </b-nav-form>
 
-      <b-navbar-nav>
-        <b-nav-form>
-          <date-pick
-            id="dateAppEl"
-            v-model="dateAppointment"
-            :format="'YYYY-MM-DD HH:mm'"
-          ></date-pick>
-        </b-nav-form>
+              <b-nav-form>
+                <date-pick
+                  v-model="dateVisit"
+                  :format="'YYYY-MM-DD HH:mm'"
+                ></date-pick>
+              </b-nav-form>
+            </b-navbar-nav>
+          </td>
+        </tr>
 
-        <b-nav-form>
-          <date-pick
-            v-model="dateVisit"
-            :format="'YYYY-MM-DD HH:mm'"
-          ></date-pick>
-        </b-nav-form>
-      </b-navbar-nav>
+        <tr>
+          <td>
+            <b-navbar-nav>
+              <b-nav-item-dropdown
+                :text="getStatusDataByIndexCardId(indexCardData.id).name"
+              >
+                <b-dropdown-item v-for="(status, i) in data.status" :key="i">
+                  {{ status.name }}
+                </b-dropdown-item>
+              </b-nav-item-dropdown>
+            </b-navbar-nav>
+          </td>
+        </tr>
+      </table>
 
       <NoticeComponent
         :notice-data-array="indexCardData.notes"
@@ -64,14 +80,20 @@ export default {
     indexCardData: {
       type: Object,
       default: () => {
-        return {};
+        return {
+          date: 0
+        };
       }
     }
   },
   data: () => ({
     dateVisit: "Besuch",
-    dateAppointment: "Termin"
+    dateAppointment: ""
   }),
+
+  mounted() {
+    this.dateAppointment = new Date(this.indexCardData.date).toString();
+  },
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
   }
