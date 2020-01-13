@@ -16,13 +16,25 @@
           </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-      <!--
-         
-      <b-dropdown id="dropdown-1" :text="cardStatusICD" class="m-md-2">
-        <b-dropdown-item>{{ cardStatusICD }}</b-dropdown-item>
-        <b-dropdown-item>Termin</b-dropdown-item>
-        <b-dropdown-item>kein Interesse</b-dropdown-item>
-      </b-dropdown> -->
+
+      <b-navbar-nav>
+        <b-nav-form>
+          <date-pick
+            v-model="dateAppointment"
+            :pick-time="true"
+            :format="'YYYY-MM-DD HH:mm'"
+          ></date-pick>
+        </b-nav-form>
+
+        <b-nav-form>
+          <date-pick
+            id="DetailDateBesuch"
+            v-model="dateVisit"
+            :format="'YYYY-MM-DD HH:mm'"
+          ></date-pick>
+        </b-nav-form>
+      </b-navbar-nav>
+
       <NoticeComponent
         :notice-data-array="indexCardData.notes"
         :index-card-id="indexCardData.id"
@@ -35,11 +47,13 @@
 <script>
 import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
 import { mapGetters } from "vuex";
+import DatePick from "vue-date-pick";
 
 export default {
   name: "IndexCardDetail",
   components: {
-    NoticeComponent
+    NoticeComponent,
+    DatePick
   },
   props: {
     indexCardData: {
@@ -49,6 +63,11 @@ export default {
       }
     }
   },
+  data: () => ({
+    date: "2019-01-01 00:00",
+    dateVisit: "Besuch",
+    dateAppointment: "Termin"
+  }),
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
   }
