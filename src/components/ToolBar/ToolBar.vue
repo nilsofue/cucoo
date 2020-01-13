@@ -249,7 +249,7 @@ export default {
 
 .circleClass {
   margin-top: 6.5px;
-  margin-right: 5px;
+  margin-right: 7px;
   border-radius: 50%;
   width: 10px;
   height: 10px;
