@@ -34,8 +34,12 @@
       @click="saveNote()"
       >Speichern</b-button
     >
-    <b-list-group>
-      <b-list-group-item v-for="note in noticeDataArray" :key="note.text">
+    <div>
+      <div
+        v-for="note in noticeDataArray"
+        :key="note.text"
+        class="noticeEntryClass"
+      >
         <div class="noticeHeadlineClass">
           <p class="timeclass">{{ getDate(note.time) }}</p>
           <b-button
@@ -48,8 +52,8 @@
           </b-button>
         </div>
         {{ note.text }}
-      </b-list-group-item>
-    </b-list-group>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -150,12 +154,21 @@ export default {
 .deleteButtonClass {
   margin-left: auto;
   border: none;
-  margin-right: -18px;
-  margin-top: -8px;
+  margin-right: -13px;
+  margin-top: -16px;
 }
 
 .noticeOverviewHead {
   display: flex;
-  margin-bottom: 3px;
+  margin-bottom: 7px;
+}
+.noticeEntryClass {
+  background-color: #eaeaea;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+#textarea-default {
+  border-radius: 10px;
 }
 </style>
