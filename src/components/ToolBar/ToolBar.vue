@@ -11,11 +11,29 @@
             v-for="(status, i) in statusData"
             :key="i"
             @click="handleSelection(status)"
-            >{{ status.name }}</b-dropdown-item
           >
+            <div class="statusListItemContainer">
+              <div
+                class="circleClass"
+                :style="{
+                  backgroundColor: status.color
+                }"
+              ></div>
+              <div>{{ status.name }}</div>
+            </div>
+          </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
+        <b-nav-form>
+          <b-form-input
+            v-model="companySearchValue"
+            size="sm"
+            placeholder="Firma"
+            class="mr-sm-2"
+            @keyup="handleSearch()"
+          ></b-form-input>
+        </b-nav-form>
         <b-nav-form>
           <b-form-input
             v-model="streetSearchValue"
@@ -79,6 +97,7 @@ export default {
     return {
       selectedStatusName: "Status",
       selectedStatusData: null,
+      companySearchValue: "",
       streetSearchValue: "",
       citySearchValue: "",
       dateSearchValue: "",
@@ -112,7 +131,7 @@ export default {
     },
     statusData: function() {
       if (this.statusData.length) {
-        this.handleSelection(this.statusData[0]);
+        this.handleSelection(this.allStates);
       }
     }
   },
@@ -133,6 +152,7 @@ export default {
   methods: {
     handleSelection(selectedData) {
       //clear search inputs
+      this.companySearchValue = "";
       this.streetSearchValue = "";
       this.citySearchValue = "";
       this.dateSearchValue = "";
@@ -159,6 +179,12 @@ export default {
         indexCardData.adress.street
           .toLowerCase()
           .indexOf(this.streetSearchValue.toLowerCase()) === -1
+      )
+        return false;
+      if (
+        indexCardData.company
+          .toLowerCase()
+          .indexOf(this.companySearchValue.toLowerCase()) === -1
       )
         return false;
       if (!this.isSameDate(this.dateSearchValue, indexCardData.date))
@@ -219,5 +245,18 @@ export default {
 
 #dateElementInputField input {
   border: 0px solid #ced4da !important;
+}
+
+.circleClass {
+  margin-top: 6.5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+}
+
+.statusListItemContainer {
+  display: flex;
 }
 </style>
