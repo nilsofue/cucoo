@@ -99,7 +99,7 @@ export default {
       let dummyState = {
         id: "id_all_states",
         name: "Alle Status",
-        color: "FFFF00",
+        color: "#007bff",
         entries: []
       };
 
