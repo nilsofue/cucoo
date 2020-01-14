@@ -2,7 +2,7 @@
   <div class="toolBar">
     <b-navbar toggleable="lg" type="primary" variant="light">
       <b-navbar-nav>
-        <b-nav-item-dropdown :text="selectedStatusName">
+        <b-nav-item-dropdown class="dropdownClass" :text="selectedStatusName">
           <b-dropdown-item @click="handleSelection(allStates)"
             >Alle Status</b-dropdown-item
           >
@@ -24,7 +24,7 @@
           </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="mr-auto">
         <b-nav-form>
           <b-form-input
             v-model="companySearchValue"
@@ -72,6 +72,10 @@
           ></date-pick>
         </b-nav-form>
       </b-navbar-nav>
+
+      <b-button variant="outline-primary">
+        <font-awesome-icon class="addIcon" icon="plus" />Neuer Kunde
+      </b-button>
     </b-navbar>
   </div>
 </template>
@@ -81,6 +85,10 @@ import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPlus]);
 
 export default {
   name: "ToolBar",
@@ -258,5 +266,21 @@ export default {
 
 .statusListItemContainer {
   display: flex;
+}
+
+.dropdownClass {
+  border-radius: 0.5rem;
+  background-color: #007bff;
+  height: 31px;
+  margin-right: 10px;
+}
+
+::v-deep .dropdownClass .nav-link {
+  color: white !important;
+  line-height: 14px;
+}
+
+.addIcon {
+  margin-right: 5px;
 }
 </style>
