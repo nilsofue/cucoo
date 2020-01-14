@@ -22,6 +22,7 @@ router.get("/data", function(req, res, next) {
 router.post("/dataPost", function(req, res) {
   updateUserData(req.body);
   console.log(req.body);
+  res.end("Get data successfull.");
 });
 
 module.exports = router;

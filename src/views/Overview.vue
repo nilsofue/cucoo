@@ -30,10 +30,6 @@ export default {
     };
   },
   mounted() {
-    /*     this.DataHandler.getData().then(result => {
-      this.loading = false;
-      this.data = result;
-    }); */
     this.getData();
   },
   methods: {
@@ -52,5 +48,8 @@ export default {
 .loadingSpinner {
   text-align: center;
   padding: 40px;
+}
+.overview {
+  background-color: #f5f9fa;
 }
 </style>

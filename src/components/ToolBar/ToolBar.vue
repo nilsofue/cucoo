@@ -3,36 +3,58 @@
     <b-navbar toggleable="lg" type="primary" variant="light">
       <b-navbar-nav>
         <b-nav-item-dropdown :text="selectedStatusName">
+          <b-dropdown-item @click="handleSelection(allStates)"
+            >Alle Status</b-dropdown-item
+          >
+          <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item
             v-for="(status, i) in statusData"
             :key="i"
             @click="handleSelection(status)"
-            >{{ status.name }}</b-dropdown-item
           >
+            <div class="statusListItemContainer">
+              <div
+                class="circleClass"
+                :style="{
+                  backgroundColor: status.color
+                }"
+              ></div>
+              <div>{{ status.name }}</div>
+            </div>
+          </b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Straße:</b-nav-text>
+          <b-form-input
+            v-model="companySearchValue"
+            size="sm"
+            placeholder="Firma"
+            class="mr-sm-2"
+            @keyup="handleSearch()"
+          ></b-form-input>
+        </b-nav-form>
+        <b-nav-form>
           <b-form-input
             v-model="streetSearchValue"
             size="sm"
+            placeholder="Straße"
             class="mr-sm-2"
             @keyup="handleSearch()"
           ></b-form-input>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Ort:</b-nav-text>
           <b-form-input
             v-model="citySearchValue"
+            placeholder="Ort"
             size="sm"
             class="mr-sm-2"
             @keyup="handleSearch()"
           ></b-form-input>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Termin:</b-nav-text>
           <date-pick
+            id="dateElementInputField"
             v-model="dateSearchValue"
             :weekdays="weekdays"
             :months="month"
@@ -40,8 +62,8 @@
           ></date-pick>
         </b-nav-form>
         <b-nav-form>
-          <b-nav-text class="toolbarTextLabelClass">Erster Besuch:</b-nav-text>
           <date-pick
+            id="firstVisitElementInputField"
             v-model="firstVisitSearchValue"
             :months="month"
             :weekdays="weekdays"
@@ -55,6 +77,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
@@ -74,6 +97,7 @@ export default {
     return {
       selectedStatusName: "Status",
       selectedStatusData: null,
+      companySearchValue: "",
       streetSearchValue: "",
       citySearchValue: "",
       dateSearchValue: "",
@@ -95,6 +119,9 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapGetters(["allStates"])
+  },
   watch: {
     firstVisitSearchValue: function() {
       this.handleSearch();
@@ -104,19 +131,28 @@ export default {
     },
     statusData: function() {
       if (this.statusData.length) {
-        this.handleSelection(this.statusData[0]);
+        this.handleSelection(this.allStates);
       }
     }
   },
   mounted: function() {
     // selection of first status value
     if (this.statusData.length) {
-      this.handleSelection(this.statusData[0]);
+      this.handleSelection(this.allStates);
     }
+
+    document
+      .getElementById("dateElementInputField")
+      .firstElementChild.setAttribute("placeholder", "Termin");
+
+    document
+      .getElementById("firstVisitElementInputField")
+      .firstElementChild.setAttribute("placeholder", "Erster Besuch");
   },
   methods: {
     handleSelection(selectedData) {
       //clear search inputs
+      this.companySearchValue = "";
       this.streetSearchValue = "";
       this.citySearchValue = "";
       this.dateSearchValue = "";
@@ -143,6 +179,12 @@ export default {
         indexCardData.adress.street
           .toLowerCase()
           .indexOf(this.streetSearchValue.toLowerCase()) === -1
+      )
+        return false;
+      if (
+        indexCardData.company
+          .toLowerCase()
+          .indexOf(this.companySearchValue.toLowerCase()) === -1
       )
         return false;
       if (!this.isSameDate(this.dateSearchValue, indexCardData.date))
@@ -182,7 +224,39 @@ export default {
   margin-left: 0.5rem !important;
 }
 
+.form-control {
+  color: #495057;
+  background-color: #f5f5f5;
+  border: 0px solid #ced4da;
+}
+.form-control-sm {
+  border-radius: 0.5rem;
+}
+
 .toolbarTextLabelClass {
   margin-left: 0.5rem !important;
+}
+
+.bg-light {
+  background-color: #ffffff !important;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 7px 1px rgba(179, 179, 179, 0.18);
+}
+
+#dateElementInputField input {
+  border: 0px solid #ced4da !important;
+}
+
+.circleClass {
+  margin-top: 6.5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+}
+
+.statusListItemContainer {
+  display: flex;
 }
 </style>

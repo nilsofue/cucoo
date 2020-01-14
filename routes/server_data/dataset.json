@@ -1,1 +1,241 @@
-{"timestamp":1571773063655,"id":"id_foo123","name":"Max Mustermanns Kunden-Dashboard","status":[{"id":"id_status123","name":"Chef nicht da","color":"FFFF00","entries":[{"id":"id_entry12367676","createTime":1571773063655,"date":1571773063655,"company":"Med Trust GmbH","adress":{"street":"Zur Wetterwarte","houseNumber":"337c","postCode":"01109","city":"Leipzig"},"phone":"0351885280","notes":[{"time":1571773063644,"text":"Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen","id":"bf7ab710-902e-467d-aec9-230c11d536"},{"time":1571773064321,"text":"Nur Azubi angetroffen, konnte Info geben","id":"bf7ab710-902e-467d-aec9-230c11d5369"},{"text":"blaa\n","time":1576268739617,"id":"a8e5cce1-8a8f-4cbd-89ad-c55e95af3f5a"}]},{"id":"id_entry456434","createTime":1571773063655,"date":1571773063655,"company":"Spezialtechnik Dresden Service GmbH","adress":{"street":"Großenhainer Straße","houseNumber":"5","postCode":"01127","city":"Chemnitz"},"phone":"0351885123","notes":[{"time":1571773063644,"text":"Nächste Woche nochmal nachfragen","id":"ff68762f-3148-445b-9a8a-b5e3c24f"}]}]},{"id":"id_status456","name":"Kein Interesse","color":"FFF48E","entries":[{"id":"id_entry123","company":"Saxony Media Solutions GmbH","createTime":1571773063655,"date":1571773063655,"adress":{"street":"Zur Wetterwarte","houseNumber":"337c","postCode":"01109","city":"Dresden"},"phone":"0351885280","notes":[{"time":1571773063644,"text":"Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen","id":"ff68762f-38-445b-9a8a-b5e3c24fc540"},{"time":1571773064321,"text":"Nur Azubi angetroffen, konnte Info geben","id":"ff662f-3148-445b-9a8a-b5e3c24fc540"}]},{"id":"id_entry456","company":"HTW Dresden","createTime":1571773063655,"date":1571773063655,"adress":{"street":"Großenhainer Straße","houseNumber":"5","postCode":"01127","city":"Dresden"},"phone":"0351885123","notes":[{"time":1571773063644,"text":"Nächste Woche nochmal nachfragen","id":"32782d55-06ce-4e46-1d-3aaf227872b4"}]}]}]}
+{
+  "timestamp": 1571773063655,
+  "id": "id_foo123",
+  "name": "Max Mustermanns Kunden-Dashboard",
+  "status": [
+    {
+      "id": "id_status123",
+      "name": "Chef nicht da",
+      "color": "#dc3545",
+      "entries": [
+        {
+          "id": "id_entry12367676",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "company": "Med Trust GmbH",
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Leipzig"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "bf7ab710-902e-467d-aec9-230c11d536"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "bf7ab710-902e-467d-aec9-230c11d5369"
+            }
+          ]
+        },
+        {
+          "id": "id_entry12367676tt",
+          "createTime": 1571773063655,
+          "date": 1578149153678,
+          "company": "Loscher GmbH",
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Leipzig"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "bf7ab7d10-902e-467d-aec9-230dc11d536"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "bf7ab710-902e-46f7d-aec9-230c11d5369"
+            }
+          ]
+        },
+        {
+          "id": "id_entry1236jht7676",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "company": "Media GmbH",
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Leipzig"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "bf7ab710-902e-467d-aecsdf9-230c11d536"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "bf7ab710-902e-46sdf7d-aec9-230c11d5369"
+            }
+          ]
+        },
+        {
+          "id": "id_entry12gfg367676",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "company": "Kantine GmbH",
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Leipzig"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "bf7ab710-9gf02e-467d-aec9-230c11d536"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "bf7ab710-90fh2e-467d-aec9-230c11d5369"
+            }
+          ]
+        },
+        {
+          "id": "id_entry12ewe367676",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "company": "Flughafen ABC GmbH",
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Leipzig"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "bf7ab710-9fh02e-467d-aec9-230c11d536"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "bf7ab710-fgh902e-467d-aec9-230c11d5369"
+            }
+          ]
+        },
+        {
+          "id": "id_entry1236fd7676",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "company": "Firma XYZ GmbH",
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Leipzig"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "bf7ab710-9fh02e-467d-aec9-230c11d536"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "bf7ab710-9fgh02e-467d-aec9-230c11d5369"
+            }
+          ]
+        },
+        {
+          "id": "id_entry456434",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "company": "Spezialtechnik Dresden Service GmbH",
+          "adress": {
+            "street": "Großenhainer Straße",
+            "houseNumber": "5",
+            "postCode": "01127",
+            "city": "Chemnitz"
+          },
+          "phone": "0351885123",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Nächste Woche nochmal nachfragen",
+              "id": "ff68762f-3148-445b-9a8a-b5e3c24f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "id_status456",
+      "name": "Kein Interesse",
+      "color": "#17a2b8",
+      "entries": [
+        {
+          "id": "id_entry123",
+          "company": "Saxony Media Solutions GmbH",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "adress": {
+            "street": "Zur Wetterwarte",
+            "houseNumber": "337c",
+            "postCode": "01109",
+            "city": "Dresden"
+          },
+          "phone": "0351885280",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
+              "id": "ff68762f-38-445b-9a8a-b5e3c24fc540"
+            },
+            {
+              "time": 1571773064321,
+              "text": "Nur Azubi angetroffen, konnte Info geben",
+              "id": "ff662f-3148-445b-9a8a-b5e3c24fc540"
+            }
+          ]
+        },
+        {
+          "id": "id_entry456",
+          "company": "HTW Dresden",
+          "createTime": 1571773063655,
+          "date": 1571773063655,
+          "adress": {
+            "street": "Großenhainer Straße",
+            "houseNumber": "5",
+            "postCode": "01127",
+            "city": "Dresden"
+          },
+          "phone": "0351885123",
+          "notes": [
+            {
+              "time": 1571773063644,
+              "text": "Nächste Woche nochmal nachfragen",
+              "id": "32782d55-06ce-4e46-1d-3aaf227872b4"
+            },
+            {
+              "text": "Das ist ein Test",
+              "time": 1577272528801,
+              "id": "7633cfda-e8eb-449b-a002-1b2c831d95af"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
