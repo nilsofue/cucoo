@@ -122,6 +122,7 @@ export default {
 .indexCard {
   float: left;
   padding: 10px;
+  cursor: pointer;
 }
 
 .indexCard h5 {
