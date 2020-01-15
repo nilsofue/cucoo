@@ -4,7 +4,7 @@
       <div>
         <table>
           <tr>
-            <td>Bezeichnung:</td>
+            <td height="50">Bezeichnung:</td>
             <td>
               <b-form-input
                 v-model="statusName"
@@ -13,12 +13,17 @@
             </td>
           </tr>
           <tr>
-            <td>Farbe des Status:</td>
+            <td height="50">Farbe des Status:</td>
             <td>
               <verte picker="wheel" value="#f0f"></verte>
             </td>
           </tr>
         </table>
+
+        <div class="buttonClass">
+          <b-button variant="primary">Speichern</b-button>
+          <b-button variant="outline-danger">Verwerfen</b-button>
+        </div>
       </div>
     </b-modal>
   </div>
@@ -39,4 +44,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.buttonClass {
+  display: flex;
+}
+</style>
