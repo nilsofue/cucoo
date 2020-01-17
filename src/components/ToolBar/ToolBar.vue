@@ -1,59 +1,94 @@
 <template>
   <div class="toolBar">
     <b-navbar toggleable="lg" type="primary" variant="light">
-      <b-navbar-nav>
-        <b-nav-item-dropdown :text="selectedStatusName">
-          <b-dropdown-item @click="handleSelection(allStates)"
-            >Alle Status</b-dropdown-item
+      <div
+        class="searchBar"
+        :style="{
+          backgroundColor: statusColor + '30'
+        }"
+      >
+        <b-navbar-nav>
+          <b-nav-item-dropdown
+            :style="{
+              backgroundColor: statusColor
+            }"
+            class="dropdownClass"
+            :text="selectedStatusName"
           >
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item
-            v-for="(status, i) in statusData"
-            :key="i"
-            @click="handleSelection(status)"
-            >{{ status.name }}</b-dropdown-item
-          >
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-form>
-          <b-form-input
-            v-model="streetSearchValue"
-            size="sm"
-            placeholder="Straße"
-            class="mr-sm-2"
-            @keyup="handleSearch()"
-          ></b-form-input>
-        </b-nav-form>
-        <b-nav-form>
-          <b-form-input
-            v-model="citySearchValue"
-            placeholder="Ort"
-            size="sm"
-            class="mr-sm-2"
-            @keyup="handleSearch()"
-          ></b-form-input>
-        </b-nav-form>
-        <b-nav-form>
-          <date-pick
-            id="dateElementInputField"
-            v-model="dateSearchValue"
-            :weekdays="weekdays"
-            :months="month"
-            :display-format="'DD.MM.YYYY'"
-          ></date-pick>
-        </b-nav-form>
-        <b-nav-form>
-          <date-pick
-            id="firstVisitElementInputField"
-            v-model="firstVisitSearchValue"
-            :months="month"
-            :weekdays="weekdays"
-            :display-format="'DD.MM.YYYY'"
-            @click="handleSearch()"
-          ></date-pick>
-        </b-nav-form>
-      </b-navbar-nav>
+            <b-dropdown-item @click="handleSelection(allStates)"
+              >Alle Status</b-dropdown-item
+            >
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item
+              v-for="(status, i) in statusData"
+              :key="i"
+              @click="handleSelection(status)"
+            >
+              <div class="statusListItemContainer">
+                <div
+                  class="circleClass"
+                  :style="{
+                    backgroundColor: status.color
+                  }"
+                ></div>
+                <div>{{ status.name }}</div>
+              </div>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+        <b-navbar-nav class="mr-auto">
+          <b-nav-form>
+            <b-form-input
+              v-model="companySearchValue"
+              size="sm"
+              placeholder="Firma"
+              class="mr-sm-2"
+              @keyup="handleSearch()"
+            ></b-form-input>
+          </b-nav-form>
+          <b-nav-form>
+            <b-form-input
+              v-model="streetSearchValue"
+              size="sm"
+              placeholder="Straße"
+              class="mr-sm-2"
+              @keyup="handleSearch()"
+            ></b-form-input>
+          </b-nav-form>
+          <b-nav-form>
+            <b-form-input
+              v-model="citySearchValue"
+              placeholder="Ort"
+              size="sm"
+              class="mr-sm-2"
+              @keyup="handleSearch()"
+            ></b-form-input>
+          </b-nav-form>
+          <b-nav-form>
+            <date-pick
+              id="dateElementInputField"
+              v-model="dateSearchValue"
+              :weekdays="weekdays"
+              :months="month"
+              :display-format="'DD.MM.YYYY'"
+            ></date-pick>
+          </b-nav-form>
+          <b-nav-form>
+            <date-pick
+              id="firstVisitElementInputField"
+              v-model="firstVisitSearchValue"
+              :months="month"
+              :weekdays="weekdays"
+              :display-format="'DD.MM.YYYY'"
+              @click="handleSearch()"
+            ></date-pick>
+          </b-nav-form>
+        </b-navbar-nav>
+      </div>
+
+      <b-button class="addButtonClass" variant="outline-primary">
+        <font-awesome-icon class="addIcon" icon="plus" />Neuer Kunde
+      </b-button>
     </b-navbar>
   </div>
 </template>
@@ -63,6 +98,10 @@ import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+library.add([faPlus]);
 
 export default {
   name: "ToolBar",
@@ -78,7 +117,9 @@ export default {
   data() {
     return {
       selectedStatusName: "Status",
+      statusColor: "",
       selectedStatusData: null,
+      companySearchValue: "",
       streetSearchValue: "",
       citySearchValue: "",
       dateSearchValue: "",
@@ -133,11 +174,13 @@ export default {
   methods: {
     handleSelection(selectedData) {
       //clear search inputs
+      this.companySearchValue = "";
       this.streetSearchValue = "";
       this.citySearchValue = "";
       this.dateSearchValue = "";
       this.firstVisitSearchValue = "";
 
+      this.statusColor = selectedData.color;
       this.selectedStatusData = selectedData;
       this.selectedStatusName = selectedData.name;
       this.$emit("update-Index-Cards", selectedData.entries);
@@ -160,6 +203,12 @@ export default {
         indexCardData.adress.street
           .toLowerCase()
           .indexOf(this.streetSearchValue.toLowerCase()) === -1
+      )
+        return false;
+      if (
+        indexCardData.company
+          .toLowerCase()
+          .indexOf(this.companySearchValue.toLowerCase()) === -1
       )
         return false;
       if (!this.isSameDate(this.dateSearchValue, indexCardData.date))
@@ -220,5 +269,48 @@ export default {
 
 #dateElementInputField input {
   border: 0px solid #ced4da !important;
+}
+
+.circleClass {
+  margin-top: 6.5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+}
+
+.statusListItemContainer {
+  display: flex;
+}
+
+.dropdownClass {
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  background-color: #007bff;
+  // height: 31px;
+  margin-right: 10px;
+}
+
+::v-deep .dropdownClass .nav-link {
+  color: white !important;
+  // line-height: 14px;
+}
+
+.addIcon {
+  margin-right: 5px;
+}
+
+.searchBar {
+  display: flex;
+  background-color: #007bff30;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.addButtonClass {
+  margin-left: auto;
 }
 </style>
