@@ -2,29 +2,21 @@
   <div class="newStatus">
     <b-modal id="createNewStatus" title="Neuen Status anlegen" hide-footer>
       <div>
-        <table>
-          <tr>
-            <td height="50">Bezeichnung:</td>
-            <td>
-              <b-form-input
-                v-model="statusName"
-                placeholder="Bezeichnung eingeben"
-              ></b-form-input>
-            </td>
-          </tr>
-          <tr>
-            <td height="50">Farbe des Status:</td>
-            <td>
-              <div>
-                <swatches v-model="colorValue" shapes="circles" />
-              </div>
-            </td>
-          </tr>
-        </table>
+        <div class="itemsClass">
+          <b-form-input
+            v-model="statusName"
+            class="statusNameInput"
+            placeholder="Status-Bezeichnung eingeben"
+          ></b-form-input>
+
+          <div class="swatchesClass">
+            <swatches v-model="colorValue" shapes="circles" />
+          </div>
+        </div>
 
         <div class="buttonClass">
           <b-button
-            :disabled="isStatusNameEmpty()"
+            :disabled="isStatusNameAndColorEmpty()"
             variant="primary"
             @click="saveData()"
             >Speichern</b-button
@@ -52,7 +44,7 @@ export default {
   data() {
     return {
       statusName: "",
-      colorValue: "#f0f"
+      colorValue: ""
     };
   },
   methods: {
@@ -65,11 +57,17 @@ export default {
       });
       this.onClose();
     },
-    isStatusNameEmpty() {
-      return !this.statusName || 0 === this.statusName.length;
+    isStatusNameAndColorEmpty() {
+      return (
+        !this.statusName ||
+        0 === this.statusName.length ||
+        (!this.colorValue || 0 === this.colorValue.length)
+      );
     },
     onClose() {
       this.$bvModal.hide("createNewStatus");
+      this.colorValue = "";
+      this.statusName = "";
     }
   }
 };
@@ -87,5 +85,17 @@ export default {
 
 #createNewStatus {
   border-radius: 0.5rem;
+}
+.itemsClass {
+  display: flex;
+}
+
+.statusNameInput {
+  width: 70%;
+  margin-right: 58px;
+}
+
+.swatchesClass {
+  margin-right: 38px;
 }
 </style>
