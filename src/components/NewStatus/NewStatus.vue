@@ -14,7 +14,11 @@
           </tr>
           <tr>
             <td height="50">Farbe des Status:</td>
-            <td></td>
+            <td>
+              <div>
+                <swatches v-model="colorValue" shapes="circles" />
+              </div>
+            </td>
           </tr>
         </table>
 
@@ -39,10 +43,12 @@
 
 <script>
 import { mapActions } from "vuex";
+import Swatches from "vue-swatches";
+import "vue-swatches/dist/vue-swatches.min.css";
 
 export default {
   name: "NewStatus",
-  components: {},
+  components: { Swatches },
   data() {
     return {
       statusName: "",
