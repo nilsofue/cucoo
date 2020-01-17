@@ -80,7 +80,7 @@ export default {
 }
 
 .discardButtonClass {
-  margin-left: 20px;
+  margin-left: 12px;
 }
 
 #createNewStatus {
