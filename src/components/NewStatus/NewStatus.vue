@@ -22,7 +22,9 @@
 
         <div class="buttonClass">
           <b-button variant="primary">Speichern</b-button>
-          <b-button variant="outline-danger">Verwerfen</b-button>
+          <b-button class="discardButtonClass" variant="outline-danger"
+            >Verwerfen</b-button
+          >
         </div>
       </div>
     </b-modal>
@@ -47,5 +49,14 @@ export default {
 <style>
 .buttonClass {
   display: flex;
+  margin-top: 30px;
+}
+
+.discardButtonClass {
+  margin-left: 20px;
+}
+
+#createNewStatus {
+  border-radius: 0.5rem;
 }
 </style>
