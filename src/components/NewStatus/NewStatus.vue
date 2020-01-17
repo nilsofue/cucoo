@@ -14,9 +14,7 @@
           </tr>
           <tr>
             <td height="50">Farbe des Status:</td>
-            <td>
-              <verte v-model="colorValue" picker="wheel"></verte>
-            </td>
+            <td></td>
           </tr>
         </table>
 
@@ -40,13 +38,11 @@
 </template>
 
 <script>
-import Verte from "verte";
 import { mapActions } from "vuex";
-import "verte/dist/verte.css";
 
 export default {
   name: "NewStatus",
-  components: { Verte },
+  components: {},
   data() {
     return {
       statusName: "",
