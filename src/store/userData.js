@@ -27,9 +27,9 @@ export default {
           }
       }
     },
-    addNewStatus(state, { data, getters }) {
+    addNewStatus(state, data) {
       let newStatusData = {
-        id: getters.uuidv4,
+        id: data.id,
         name: data.name,
         color: data.color,
         entries: []

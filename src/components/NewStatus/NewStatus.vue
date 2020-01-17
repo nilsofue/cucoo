@@ -15,14 +15,22 @@
           <tr>
             <td height="50">Farbe des Status:</td>
             <td>
-              <verte picker="wheel" value="#f0f"></verte>
+              <verte v-model="colorValue" picker="wheel"></verte>
             </td>
           </tr>
         </table>
 
         <div class="buttonClass">
-          <b-button variant="primary">Speichern</b-button>
-          <b-button class="discardButtonClass" variant="outline-danger"
+          <b-button
+            :disabled="isStatusNameEmpty()"
+            variant="primary"
+            @click="saveData()"
+            >Speichern</b-button
+          >
+          <b-button
+            class="discardButtonClass"
+            variant="outline-danger"
+            @click="onClose()"
             >Verwerfen</b-button
           >
         </div>
@@ -33,6 +41,7 @@
 
 <script>
 import Verte from "verte";
+import { mapActions } from "vuex";
 import "verte/dist/verte.css";
 
 export default {
@@ -40,8 +49,26 @@ export default {
   components: { Verte },
   data() {
     return {
-      statusName: ""
+      statusName: "",
+      colorValue: "#f0f"
     };
+  },
+  methods: {
+    ...mapActions(["addNewStatus"]),
+    saveData() {
+      this.addNewStatus({
+        color: this.colorValue,
+        name: this.statusName,
+        id: this.DataHandler.uuidv4()
+      });
+      this.onClose();
+    },
+    isStatusNameEmpty() {
+      return !this.statusName || 0 === this.statusName.length;
+    },
+    onClose() {
+      this.$bvModal.hide("createNewStatus");
+    }
   }
 };
 </script>
