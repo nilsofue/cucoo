@@ -1,42 +1,34 @@
 <template>
   <div class="indexCardDetail">
-    <b-modal :id="indexCardData.id" :title="indexCardData.company">
+    <b-modal :id="indexCardData.id">
+      <b-form-input v-model="companyValue" class="adressInput"> </b-form-input>
       <table id="myTable">
         <tr>
           <td id="tabRowLeft">
             <div>
-              <b-form-input
-                v-model="streetValue"
-                class="adressInput"
-                :placeholder="indexCardData.adress.street"
-              ></b-form-input>
+              <b-form-input v-model="streetValue" class="adressInput">
+              </b-form-input>
             </div>
             <div>
-              <b-form-input
-                v-model="houseNumberValue"
-                class="adressInput"
-                :placeholder="indexCardData.adress.houseNumber"
-              ></b-form-input>
+              <b-form-input v-model="houseNumberValue" class="adressInput">
+              </b-form-input>
             </div>
             <div>
               <b-form-input
                 v-model="postCodeValue"
                 class="adressInput"
-                :placeholder="indexCardData.adress.postCode"
               ></b-form-input>
             </div>
             <div>
               <b-form-input
                 v-model="cityValue"
                 class="adressInput"
-                :placeholder="indexCardData.adress.city"
               ></b-form-input>
             </div>
             <div>
               <b-form-input
                 v-model="phoneValue"
                 class="adressInput"
-                :placeholder="indexCardData.phone"
               ></b-form-input>
             </div>
             <br />
@@ -82,6 +74,10 @@
         </tr>
       </table>
 
+      <b-button variant="outline-primary" @click="saveChanges()">
+        Save
+      </b-button>
+
       <NoticeComponent
         :notice-data-array="indexCardData.notes"
         :index-card-id="indexCardData.id"
@@ -93,7 +89,7 @@
 
 <script>
 import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import DatePick from "vue-date-pick";
 
 export default {
@@ -114,6 +110,7 @@ export default {
   },
   data: () => ({
     dateAppointment: "2019-01-01 14:30",
+    companyValue: "",
     streetValue: "",
     houseNumberValue: "",
     postCodeValue: "",
@@ -123,6 +120,7 @@ export default {
 
   mounted() {
     this.dateAppointment = new Date(this.indexCardData.date).toString();
+    this.companyValue = this.indexCardData.company;
     this.streetValue = this.indexCardData.adress.street;
     this.houseNumberValue = this.indexCardData.adress.houseNumber;
     this.postCodeValue = this.indexCardData.adress.postCode;
@@ -131,22 +129,25 @@ export default {
   },
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
+  },
+  methods: {
+    ...mapActions(["changeIndexCardData"])
+  },
+  saveChanges() {
+    let changeData = {
+      id: this.indexCardData.id,
+      date: new Date(this.dateAppointment).getTime(),
+      company: this.companyValue,
+      adress: {
+        street: this.streetValue,
+        houseNumber: this.houseNumberValue,
+        postCode: this.postCodeValue,
+        city: this.cityValue
+      },
+      phone: this.phoneValue
+    };
+    this.changeIndexCardData(changeData);
   }
-  /*methods: {
-    detailHandleSelection(selectedStatusID) {
-      //clear search inputs
-      this.companyIDDetail = indexCardData.id;
-      this.streetNameDetail = indexCardData.name;
-      this.streetNameDetail = indexCardData.name;
-      this.citySearchValue = "";
-      this.dateSearchValue = "";
-      this.firstVisitSearchValue = "";
-
-      this.statusColor = selectedData.color;
-      this.selectedStatusData = selectedData;
-      this.selectedStatusName = selectedData.name;
-    }
-  }*/
 };
 
 // timestamp: new Date().getTime()

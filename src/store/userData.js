@@ -11,6 +11,26 @@ export default {
     loading: true
   },
   mutations: {
+    changeIndexCardData(state, newData) {
+      for (let i = 0; i < state.data.status.length; i++) {
+        for (let indexCard of state.data.status[i].entries) {
+          if (indexCard.id === newData.id) {
+            // find index card
+            indexCard.adress.street = newData.adress.street;
+            indexCard.adress.houseNumber = newData.adress.houseNumber;
+            indexCard.adress.postCode = newData.adress.postCode;
+            indexCard.adress.city = newData.adress.city;
+            indexCard.phone = newData.phone;
+
+            indexCard.date = newData.date;
+            indexCard.company = newData.company;
+
+            return;
+          }
+        }
+      }
+    },
+
     updateData(state, newData) {
       state.data = newData;
     },
@@ -45,6 +65,11 @@ export default {
   },
 
   actions: {
+    async changeIndexCardData({ dispatch, commit }, data) {
+      commit("changeIndexCardData", data);
+      await dispatch("saveData");
+    },
+
     async getData({ commit }) {
       if (useBackend) {
         try {
