@@ -3,32 +3,62 @@
     <b-modal :id="indexCardData.id" :title="indexCardData.company">
       <table id="myTable">
         <tr>
-          <td>
-            <p>
-              {{ indexCardData.adress.street }}
-              {{ indexCardData.adress.houseNumber }}
-              <br />
-              {{ indexCardData.adress.postCode }}
-              {{ indexCardData.adress.city }}
-              <br />
-              {{ indexCardData.phone }}
-            </p>
-          </td>
-          <td id="dropdownTermin">
+          <td id="tabRowLeft">
             <div>
-              Termin
-              <br />
+              <b-form-input
+                v-model="streetValue"
+                class="adressInput"
+                :placeholder="indexCardData.adress.street"
+              ></b-form-input>
             </div>
-            <b-navbar-nav>
-              <b-nav-form>
-                <date-pick
-                  id="dateAppEl"
-                  v-model="dateAppointment"
-                  :pick-time="true"
-                  :format="'YYYY-MM-DD HH:mm'"
-                ></date-pick>
-              </b-nav-form>
-            </b-navbar-nav>
+            <div>
+              <b-form-input
+                v-model="houseNumberValue"
+                class="adressInput"
+                :placeholder="indexCardData.adress.houseNumber"
+              ></b-form-input>
+            </div>
+            <div>
+              <b-form-input
+                v-model="postCodeValue"
+                class="adressInput"
+                :placeholder="indexCardData.adress.postCode"
+              ></b-form-input>
+            </div>
+            <div>
+              <b-form-input
+                v-model="cityValue"
+                class="adressInput"
+                :placeholder="indexCardData.adress.city"
+              ></b-form-input>
+            </div>
+            <div>
+              <b-form-input
+                v-model="phoneValue"
+                class="adressInput"
+                :placeholder="indexCardData.phone"
+              ></b-form-input>
+            </div>
+            <br />
+          </td>
+          <td>
+            <div id="dropdownTermin">
+              <div>
+                Termin
+                <br />
+              </div>
+
+              <b-navbar-nav>
+                <b-nav-form>
+                  <date-pick
+                    id="dateAppEl"
+                    v-model="dateAppointment"
+                    :pick-time="true"
+                    :format="'YYYY-MM-DD HH:mm'"
+                  ></date-pick>
+                </b-nav-form>
+              </b-navbar-nav>
+            </div>
           </td>
         </tr>
 
@@ -83,11 +113,21 @@ export default {
     }
   },
   data: () => ({
-    dateAppointment: "2019-01-01 14:30"
+    dateAppointment: "2019-01-01 14:30",
+    streetValue: "",
+    houseNumberValue: "",
+    postCodeValue: "",
+    cityValue: "",
+    phoneValue: ""
   }),
 
   mounted() {
     this.dateAppointment = new Date(this.indexCardData.date).toString();
+    this.streetValue = this.indexCardData.adress.street;
+    this.houseNumberValue = this.indexCardData.adress.houseNumber;
+    this.postCodeValue = this.indexCardData.adress.postCode;
+    this.cityValue = this.indexCardData.adress.city;
+    this.phoneValue = this.indexCardData.phone;
   },
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
@@ -113,17 +153,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-footer {
-  margin-top: 5%;
-}
-
 table {
   width: 100%;
 }
 
-th {
+#tabRowLeft {
   width: 50%;
-  background-color: grey;
 }
 
 #dateAppEl {
@@ -131,10 +166,25 @@ th {
   margin-bottom: 5%;
 }
 
+#dropdownTermin {
+  margin-top: 0px;
+  margin-left: 5%;
+}
+
+.adressInput {
+  margin-bottom: 2%;
+  margin-right: 2%;
+}
+
 ::v-deep .vdpClearInput {
   visibility: hidden;
 }
 ::v-deep .btn-secondary {
   visibility: hidden;
+}
+
+::v-deep.vdpComponent.vdpWithInput input {
+  width: 180px;
+  margin-left: 0rem !important;
 }
 </style>
