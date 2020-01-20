@@ -34,6 +34,10 @@
                 <div>{{ status.name }}</div>
               </div>
             </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item @click="$bvModal.show('createNewStatus')">
+              <font-awesome-icon class="addIcon" icon="plus" />Status
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="mr-auto">
@@ -90,12 +94,14 @@
         <font-awesome-icon class="addIcon" icon="plus" />Neuer Kunde
       </b-button>
     </b-navbar>
+    <new-status></new-status>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
+import NewStatus from "@/components/NewStatus/NewStatus.vue";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -105,7 +111,7 @@ library.add([faPlus]);
 
 export default {
   name: "ToolBar",
-  components: { DatePick },
+  components: { DatePick, NewStatus },
   props: {
     statusData: {
       type: Array,

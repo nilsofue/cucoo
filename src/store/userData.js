@@ -27,6 +27,15 @@ export default {
           }
       }
     },
+    addNewStatus(state, data) {
+      let newStatusData = {
+        id: data.id,
+        name: data.name,
+        color: data.color,
+        entries: []
+      };
+      state.data.status.push(newStatusData);
+    },
     deleteNoteByNoteId(state, data) {
       for (let i = 0; i < state.data.status.length; i++) {
         for (let indexCard of state.data.status[i].entries)
@@ -86,6 +95,10 @@ export default {
     async deleteNoteByNoteId({ dispatch, commit }, data) {
       commit("deleteNoteByNoteId", data);
       await dispatch("saveData");
+    },
+    async addNewStatus({ dispatch, commit }, data) {
+      commit("addNewStatus", data);
+      await dispatch("saveData");
     }
   },
   getters: {
@@ -120,5 +133,12 @@ export default {
       }
       return null;
     }
+  },
+  uuidv4: () => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+      let r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 };
