@@ -1,11 +1,10 @@
 <template>
   <div class="indexCardDetail">
-    <b-modal :id="indexCardData.id" :title="indexCardData.company" hide-footer>
+    <b-modal :id="indexCardData.id" :title="indexCardData.company">
       <table id="myTable">
         <tr>
           <td>
             <p>
-              <br />
               {{ indexCardData.adress.street }}
               {{ indexCardData.adress.houseNumber }}
               <br />
@@ -15,19 +14,17 @@
               {{ indexCardData.phone }}
             </p>
           </td>
-          <td>
+          <td id="dropdownTermin">
+            <div>
+              Termin
+              <br />
+            </div>
             <b-navbar-nav>
               <b-nav-form>
                 <date-pick
                   id="dateAppEl"
                   v-model="dateAppointment"
-                  :format="'YYYY-MM-DD HH:mm'"
-                ></date-pick>
-              </b-nav-form>
-
-              <b-nav-form>
-                <date-pick
-                  v-model="dateVisit"
+                  :pick-time="true"
                   :format="'YYYY-MM-DD HH:mm'"
                 ></date-pick>
               </b-nav-form>
@@ -39,9 +36,14 @@
           <td>
             <b-navbar-nav>
               <b-nav-item-dropdown
+                class="nav-item"
                 :text="getStatusDataByIndexCardId(indexCardData.id).name"
               >
-                <b-dropdown-item v-for="(status, i) in data.status" :key="i">
+                <b-dropdown-item
+                  v-for="(status, i) in data.status"
+                  :key="i"
+                  @click="detailHandleSelection(status.id)"
+                >
                   {{ status.name }}
                 </b-dropdown-item>
               </b-nav-item-dropdown>
@@ -55,12 +57,6 @@
         :index-card-id="indexCardData.id"
         :edit-mode="true"
       ></NoticeComponent>
-
-      <footer>
-        <b-button>
-          Edit
-        </b-button>
-      </footer>
     </b-modal>
   </div>
 </template>
@@ -87,8 +83,7 @@ export default {
     }
   },
   data: () => ({
-    dateVisit: "Besuch",
-    dateAppointment: ""
+    dateAppointment: "2019-01-01 14:30"
   }),
 
   mounted() {
@@ -97,6 +92,21 @@ export default {
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
   }
+  /*methods: {
+    detailHandleSelection(selectedStatusID) {
+      //clear search inputs
+      this.companyIDDetail = indexCardData.id;
+      this.streetNameDetail = indexCardData.name;
+      this.streetNameDetail = indexCardData.name;
+      this.citySearchValue = "";
+      this.dateSearchValue = "";
+      this.firstVisitSearchValue = "";
+
+      this.statusColor = selectedData.color;
+      this.selectedStatusData = selectedData;
+      this.selectedStatusName = selectedData.name;
+    }
+  }*/
 };
 
 // timestamp: new Date().getTime()
@@ -105,5 +115,26 @@ export default {
 <style scoped lang="scss">
 footer {
   margin-top: 5%;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  width: 50%;
+  background-color: grey;
+}
+
+#dateAppEl {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+::v-deep .vdpClearInput {
+  visibility: hidden;
+}
+::v-deep .btn-secondary {
+  visibility: hidden;
 }
 </style>
