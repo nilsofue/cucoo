@@ -86,16 +86,25 @@
         </b-navbar-nav>
       </div>
 
-      <b-button class="addButtonClass" variant="outline-primary">
+      <b-button
+        class="addButtonClass"
+        variant="outline-primary"
+        @click="createNewIndexCard()"
+      >
         <font-awesome-icon class="addIcon" icon="plus" />Neuer Kunde
       </b-button>
     </b-navbar>
+    <indexCardDetail
+      :index-card-data="newIndexCardData"
+      :create="true"
+    ></indexCardDetail>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
+import IndexCardDetail from "@/components/IndexCard/IndexCardDetail.vue";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -105,7 +114,7 @@ library.add([faPlus]);
 
 export default {
   name: "ToolBar",
-  components: { DatePick },
+  components: { DatePick, IndexCardDetail },
   props: {
     statusData: {
       type: Array,
@@ -138,7 +147,10 @@ export default {
         "Oktober",
         "November",
         "Dezember"
-      ]
+      ],
+      newIndexCardData: {
+        id: "createNewIndexCardID"
+      }
     };
   },
   computed: {
@@ -172,6 +184,9 @@ export default {
       .firstElementChild.setAttribute("placeholder", "Erster Besuch");
   },
   methods: {
+    createNewIndexCard() {
+      this.$bvModal.show("createNewIndexCardID");
+    },
     handleSelection(selectedData) {
       //clear search inputs
       this.companySearchValue = "";

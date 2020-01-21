@@ -30,6 +30,28 @@ export default {
         }
       }
     },
+    addNewIndexCard(state, newData) {
+      let newIndexCardData = {
+        id: newData.id,
+        createTime: new Date().getTime(),
+        date: newData.date,
+        company: newData.company,
+        adress: {
+          street: newData.adress.street,
+          houseNumber: newData.adress.houseNumber,
+          postCode: newData.adress.postCode,
+          city: newData.adress.city
+        },
+        phone: newData.phone,
+        notes: []
+      };
+      for (let i = 0; i < state.data.status.length; i++) {
+        if (state.data.status[i].id === newData.statusId) {
+          state.data.status[i].entries.push(newIndexCardData);
+          return;
+        }
+      }
+    },
     changeIndexCardStatus(state, newStatusData) {
       let entryData;
       let breakFlag = false;
@@ -88,6 +110,10 @@ export default {
   },
 
   actions: {
+    async addNewIndexCard({ dispatch, commit }, data) {
+      commit("addNewIndexCard", data);
+      await dispatch("saveData");
+    },
     async changeIndexCardData({ dispatch, commit }, data) {
       commit("changeIndexCardData", data);
       await dispatch("saveData");

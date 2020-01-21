@@ -104,10 +104,16 @@ export default {
           date: 0
         };
       }
+    },
+    create: {
+      type: Boolean,
+      default: () => {
+        return false;
+      }
     }
   },
   data: () => ({
-    dateAppointment: "2019-01-01 14:30",
+    dateAppointment: "",
     companyValue: "",
     streetValue: "",
     houseNumberValue: "",
@@ -117,8 +123,18 @@ export default {
     currentStatusId: "",
     currentStatusName: ""
   }),
-
+  computed: {
+    ...mapGetters(["getStatusDataByIndexCardId", "data"])
+  },
   mounted() {
+    if (this.create) {
+      this.dateAppointment = new Date().toString();
+      // console.log(this.data.status[0]);
+      // let statusData = this.data.status;
+      // this.currentStatusId = statusData.id;
+      // this.currentStatusName = statusData.name;
+      return;
+    }
     this.dateAppointment = new Date(this.indexCardData.date).toString();
     this.companyValue = this.indexCardData.company;
     this.streetValue = this.indexCardData.adress.street;
@@ -130,11 +146,12 @@ export default {
     this.currentStatusId = statusData.id;
     this.currentStatusName = statusData.name;
   },
-  computed: {
-    ...mapGetters(["getStatusDataByIndexCardId", "data"])
-  },
   methods: {
-    ...mapActions(["changeIndexCardData", "changeIndexCardStatus"]),
+    ...mapActions([
+      "changeIndexCardData",
+      "changeIndexCardStatus",
+      "addNewIndexCard"
+    ]),
     detailHandleSelection(statusId, statusName) {
       this.currentStatusId = statusId;
       this.currentStatusName = statusName;
@@ -152,11 +169,18 @@ export default {
         },
         phone: this.phoneValue
       };
-      this.changeIndexCardData(changeData);
-      this.changeIndexCardStatus({
-        statusId: this.currentStatusId,
-        indexCardId: this.indexCardData.id
-      });
+
+      if (!this.create) {
+        this.changeIndexCardData(changeData);
+        this.changeIndexCardStatus({
+          statusId: this.currentStatusId,
+          indexCardId: this.indexCardData.id
+        });
+      } else {
+        changeData.id = this.DataHandler.uuidv4();
+        changeData.statusId = this.currentStatusId;
+        this.addNewIndexCard(changeData);
+      }
     }
   }
 };
