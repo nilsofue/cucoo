@@ -30,6 +30,31 @@ export default {
         }
       }
     },
+    changeIndexCardStatus(state, newStatusData) {
+      let entryData;
+      let breakFlag = false;
+      for (let i = 0; i < state.data.status.length; i++) {
+        for (let indexOfindexCard in state.data.status[i].entries) {
+          let indexCard = state.data.status[i].entries[indexOfindexCard];
+          if (indexCard.id === newStatusData.indexCardId) {
+            // find index card
+            entryData = JSON.parse(JSON.stringify(indexCard));
+            state.data.status[i].entries.splice(indexOfindexCard, 1);
+            breakFlag = true;
+            break;
+          }
+        }
+        if (breakFlag) break;
+      }
+      console.log(entryData);
+      for (let i = 0; i < state.data.status.length; i++) {
+        if (state.data.status[i].id == newStatusData.statusId) {
+          state.data.status[i].entries.push(entryData);
+          console.log(state.data.status[i]);
+          return;
+        }
+      }
+    },
 
     updateData(state, newData) {
       state.data = newData;
@@ -69,7 +94,10 @@ export default {
       commit("changeIndexCardData", data);
       await dispatch("saveData");
     },
-
+    async changeIndexCardStatus({ dispatch, commit }, data) {
+      commit("changeIndexCardStatus", data);
+      await dispatch("saveData");
+    },
     async getData({ commit }) {
       if (useBackend) {
         try {

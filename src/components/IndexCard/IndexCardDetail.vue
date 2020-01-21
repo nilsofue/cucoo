@@ -1,17 +1,21 @@
 <template>
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id">
-      <b-form-input v-model="companyValue" class="adressInput"> </b-form-input>
+      <b-form-input v-model="companyValue" class="adressInput"></b-form-input>
       <table id="myTable">
         <tr>
           <td id="tabRowLeft">
             <div>
-              <b-form-input v-model="streetValue" class="adressInput">
-              </b-form-input>
+              <b-form-input
+                v-model="streetValue"
+                class="adressInput"
+              ></b-form-input>
             </div>
             <div>
-              <b-form-input v-model="houseNumberValue" class="adressInput">
-              </b-form-input>
+              <b-form-input
+                v-model="houseNumberValue"
+                class="adressInput"
+              ></b-form-input>
             </div>
             <div>
               <b-form-input
@@ -65,18 +69,15 @@
                   v-for="(status, i) in data.status"
                   :key="i"
                   @click="detailHandleSelection(status.id)"
+                  >{{ status.name }}</b-dropdown-item
                 >
-                  {{ status.name }}
-                </b-dropdown-item>
               </b-nav-item-dropdown>
             </b-navbar-nav>
           </td>
         </tr>
       </table>
 
-      <b-button variant="outline-primary" @click="saveChanges()">
-        Save
-      </b-button>
+      <b-button variant="outline-primary" @click="saveChanges()">Save</b-button>
 
       <NoticeComponent
         :notice-data-array="indexCardData.notes"
@@ -115,7 +116,8 @@ export default {
     houseNumberValue: "",
     postCodeValue: "",
     cityValue: "",
-    phoneValue: ""
+    phoneValue: "",
+    currentStatus: ""
   }),
 
   mounted() {
@@ -126,27 +128,37 @@ export default {
     this.postCodeValue = this.indexCardData.adress.postCode;
     this.cityValue = this.indexCardData.adress.city;
     this.phoneValue = this.indexCardData.phone;
+    this.currentStatus = this.getStatusDataByIndexCardId(
+      this.indexCardData.id
+    ).id;
   },
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
   },
   methods: {
-    ...mapActions(["changeIndexCardData"])
-  },
-  saveChanges() {
-    let changeData = {
-      id: this.indexCardData.id,
-      date: new Date(this.dateAppointment).getTime(),
-      company: this.companyValue,
-      adress: {
-        street: this.streetValue,
-        houseNumber: this.houseNumberValue,
-        postCode: this.postCodeValue,
-        city: this.cityValue
-      },
-      phone: this.phoneValue
-    };
-    this.changeIndexCardData(changeData);
+    ...mapActions(["changeIndexCardData", "changeIndexCardStatus"]),
+    detailHandleSelection(statusId) {
+      this.currentStatus = statusId;
+    },
+    saveChanges() {
+      let changeData = {
+        id: this.indexCardData.id,
+        date: new Date(this.dateAppointment).getTime(),
+        company: this.companyValue,
+        adress: {
+          street: this.streetValue,
+          houseNumber: this.houseNumberValue,
+          postCode: this.postCodeValue,
+          city: this.cityValue
+        },
+        phone: this.phoneValue
+      };
+      this.changeIndexCardData(changeData);
+      this.changeIndexCardStatus({
+        statusId: this.currentStatus,
+        indexCardId: this.indexCardData.id
+      });
+    }
   }
 };
 
