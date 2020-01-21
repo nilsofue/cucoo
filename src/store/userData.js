@@ -46,11 +46,9 @@ export default {
         }
         if (breakFlag) break;
       }
-      console.log(entryData);
       for (let i = 0; i < state.data.status.length; i++) {
-        if (state.data.status[i].id == newStatusData.statusId) {
+        if (state.data.status[i].id === newStatusData.statusId) {
           state.data.status[i].entries.push(entryData);
-          console.log(state.data.status[i]);
           return;
         }
       }

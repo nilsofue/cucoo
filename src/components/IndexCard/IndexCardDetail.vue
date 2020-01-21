@@ -61,14 +61,11 @@
         <tr>
           <td>
             <b-navbar-nav>
-              <b-nav-item-dropdown
-                class="nav-item"
-                :text="getStatusDataByIndexCardId(indexCardData.id).name"
-              >
+              <b-nav-item-dropdown class="nav-item" :text="currentStatusName">
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
-                  @click="detailHandleSelection(status.id)"
+                  @click="detailHandleSelection(status.id, status.name)"
                   >{{ status.name }}</b-dropdown-item
                 >
               </b-nav-item-dropdown>
@@ -117,7 +114,8 @@ export default {
     postCodeValue: "",
     cityValue: "",
     phoneValue: "",
-    currentStatus: ""
+    currentStatusId: "",
+    currentStatusName: ""
   }),
 
   mounted() {
@@ -128,17 +126,18 @@ export default {
     this.postCodeValue = this.indexCardData.adress.postCode;
     this.cityValue = this.indexCardData.adress.city;
     this.phoneValue = this.indexCardData.phone;
-    this.currentStatus = this.getStatusDataByIndexCardId(
-      this.indexCardData.id
-    ).id;
+    let statusData = this.getStatusDataByIndexCardId(this.indexCardData.id);
+    this.currentStatusId = statusData.id;
+    this.currentStatusName = statusData.name;
   },
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
   },
   methods: {
     ...mapActions(["changeIndexCardData", "changeIndexCardStatus"]),
-    detailHandleSelection(statusId) {
-      this.currentStatus = statusId;
+    detailHandleSelection(statusId, statusName) {
+      this.currentStatusId = statusId;
+      this.currentStatusName = statusName;
     },
     saveChanges() {
       let changeData = {
@@ -155,7 +154,7 @@ export default {
       };
       this.changeIndexCardData(changeData);
       this.changeIndexCardStatus({
-        statusId: this.currentStatus,
+        statusId: this.currentStatusId,
         indexCardId: this.indexCardData.id
       });
     }
