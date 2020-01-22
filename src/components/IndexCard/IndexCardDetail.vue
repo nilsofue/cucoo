@@ -1,10 +1,14 @@
 <template>
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id">
-      <b-form-input v-model="companyValue" class="adressInput"></b-form-input>
       <table id="myTable">
         <tr>
           <td id="tabRowLeft">
+            <b-form-input
+              v-model="companyValue"
+              class="adressInput"
+            ></b-form-input>
+            <div><span class="glyphicon glyphicon-pencil"></span></div>
             <div>
               <b-form-input
                 v-model="streetValue"
@@ -26,8 +30,10 @@
             <div>
               <b-form-input
                 v-model="cityValue"
+                :disabled="disabled"
                 class="adressInput"
-              ></b-form-input>
+              >
+              </b-form-input>
             </div>
             <div>
               <b-form-input
@@ -35,7 +41,8 @@
                 class="adressInput"
               ></b-form-input>
             </div>
-            <br />
+
+            >
           </td>
           <td>
             <div id="dropdownTermin">
@@ -55,6 +62,7 @@
                 </b-nav-form>
               </b-navbar-nav>
             </div>
+            <button @click="disabled = !disabled">Edit</button>
           </td>
         </tr>
 
@@ -121,7 +129,8 @@ export default {
     cityValue: "",
     phoneValue: "",
     currentStatusId: "",
-    currentStatusName: ""
+    currentStatusName: "",
+    disabled: false
   }),
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
@@ -152,6 +161,9 @@ export default {
       "changeIndexCardStatus",
       "addNewIndexCard"
     ]),
+
+    changeInEditMode() {},
+
     detailHandleSelection(statusId, statusName) {
       this.currentStatusId = statusId;
       this.currentStatusName = statusName;
