@@ -6,24 +6,32 @@
           <td id="tabRowLeft">
             <b-form-input
               v-model="companyValue"
+              :disabled="disabled"
               class="adressInput"
             ></b-form-input>
-            <div><span class="glyphicon glyphicon-pencil"></span></div>
+          </td>
+          <td><button @click="disabled = !disabled">Edit</button></td>
+        </tr>
+        <tr>
+          <td>
             <div>
               <b-form-input
                 v-model="streetValue"
+                :disabled="disabled"
                 class="adressInput"
               ></b-form-input>
             </div>
             <div>
               <b-form-input
                 v-model="houseNumberValue"
+                :disabled="disabled"
                 class="adressInput"
               ></b-form-input>
             </div>
             <div>
               <b-form-input
                 v-model="postCodeValue"
+                :disabled="disabled"
                 class="adressInput"
               ></b-form-input>
             </div>
@@ -38,11 +46,10 @@
             <div>
               <b-form-input
                 v-model="phoneValue"
+                :disabled="disabled"
                 class="adressInput"
               ></b-form-input>
             </div>
-
-            >
           </td>
           <td>
             <div id="dropdownTermin">
@@ -62,7 +69,6 @@
                 </b-nav-form>
               </b-navbar-nav>
             </div>
-            <button @click="disabled = !disabled">Edit</button>
           </td>
         </tr>
 
@@ -82,7 +88,12 @@
         </tr>
       </table>
 
-      <b-button variant="outline-primary" @click="saveChanges()">Save</b-button>
+      <b-button
+        variant="outline-primary"
+        class="btn btn-secondary"
+        @click="saveChanges()"
+        >Save</b-button
+      >
 
       <NoticeComponent
         :notice-data-array="indexCardData.notes"
@@ -130,7 +141,7 @@ export default {
     phoneValue: "",
     currentStatusId: "",
     currentStatusName: "",
-    disabled: false
+    disabled: true
   }),
   computed: {
     ...mapGetters(["getStatusDataByIndexCardId", "data"])
@@ -222,6 +233,8 @@ table {
 .adressInput {
   margin-bottom: 2%;
   margin-right: 2%;
+  background-color: white;
+  border-color: white;
 }
 
 ::v-deep .vdpClearInput {
@@ -234,5 +247,13 @@ table {
 ::v-deep.vdpComponent.vdpWithInput input {
   width: 180px;
   margin-left: 0rem !important;
+}
+
+::v-deep.adressInput.form-control:disabled {
+  background-color: white;
+  border-color: white;
+  margin-bottom: 0px;
+  padding: 0px;
+  height: calc(1.5em + 2px);
 }
 </style>
