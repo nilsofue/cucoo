@@ -5,6 +5,7 @@
         <b-form-input
           id="companyInput"
           v-model="companyValue"
+          placeholder="Firma"
           :disabled="disabled"
           class="adressInput"
           :style="{ backgroundColor: `${getTextFieldBackground()}` }"
@@ -18,63 +19,23 @@
         </b-button>
       </template>
 
-      <div>
-        <div>
-          <div class="field-next">
-            <div class="field-next">
-              <div>
-                <b-form-input
-                  v-model="streetValue"
-                  :disabled="disabled"
-                  class="adressInput"
-                  :style="{
-                    backgroundColor: `${getTextFieldBackground()}`
-                  }"
-                ></b-form-input>
-              </div>
-              <div id="nr">
-                <b-form-input
-                  v-model="houseNumberValue"
-                  :disabled="disabled"
-                  class="adressInput"
-                  :style="{
-                    backgroundColor: `${getTextFieldBackground()}`
-                  }"
-                ></b-form-input>
-              </div>
-            </div>
-            <div>
-              <font-awesome-icon
-                :icon="['fas', 'edit']"
-                @click="disabled = !disabled"
-              />
-            </div>
-          </div>
-          <div class="field-next">
-            <div>
-              <b-form-input
-                v-model="postCodeValue"
-                :disabled="disabled"
-                class="adressInput"
-                :style="{
-                  backgroundColor: `${getTextFieldBackground()}`
-                }"
-              ></b-form-input>
-            </div>
-            <div>
-              <b-form-input
-                v-model="cityValue"
-                :disabled="disabled"
-                class="adressInput"
-                :style="{
-                  backgroundColor: `${getTextFieldBackground()}`
-                }"
-              ></b-form-input>
-            </div>
-          </div>
+      <div class="field-next">
+        <div class="field-next">
           <div>
             <b-form-input
-              v-model="phoneValue"
+              v-model="streetValue"
+              placeholder="Straße"
+              :disabled="disabled"
+              class="adressInput"
+              :style="{
+                backgroundColor: `${getTextFieldBackground()}`
+              }"
+            ></b-form-input>
+          </div>
+          <div id="nr">
+            <b-form-input
+              v-model="houseNumberValue"
+              placeholder="Hausnr."
               :disabled="disabled"
               class="adressInput"
               :style="{
@@ -83,6 +44,48 @@
             ></b-form-input>
           </div>
         </div>
+        <div>
+          <font-awesome-icon
+            v-if="!create"
+            :icon="['fas', 'edit']"
+            @click="disabled = !disabled"
+          />
+        </div>
+      </div>
+      <div class="field-next">
+        <div>
+          <b-form-input
+            v-model="postCodeValue"
+            placeholder="PLZ"
+            :disabled="disabled"
+            class="adressInput"
+            :style="{
+              backgroundColor: `${getTextFieldBackground()}`
+            }"
+          ></b-form-input>
+        </div>
+        <div>
+          <b-form-input
+            v-model="cityValue"
+            placeholder="Ort"
+            :disabled="disabled"
+            class="adressInput"
+            :style="{
+              backgroundColor: `${getTextFieldBackground()}`
+            }"
+          ></b-form-input>
+        </div>
+      </div>
+      <div>
+        <b-form-input
+          v-model="phoneValue"
+          placeholder="Telefon"
+          :disabled="disabled"
+          class="adressInput"
+          :style="{
+            backgroundColor: `${getTextFieldBackground()}`
+          }"
+        ></b-form-input>
       </div>
 
       <div>
@@ -125,6 +128,7 @@
       <div id="tab-Notice">
         <div>
           <NoticeComponent
+            v-if="!create"
             :notice-data-array="indexCardData.notes"
             :index-card-id="indexCardData.id"
             :edit-mode="true"
@@ -132,7 +136,12 @@
         </div>
         <div>
           <div id="but-OK">
-            <b-button variant="primary" @click="saveChanges()">OK</b-button>
+            <b-button
+              :disabled="!currentStatusId"
+              variant="primary"
+              @click="saveChanges()"
+              >OK</b-button
+            >
           </div>
         </div>
       </div>
@@ -199,7 +208,10 @@ export default {
   },
   mounted() {
     if (this.create) {
-      this.dateAppointment = new Date().toString();
+      this.dateEl = new Date().toISOString();
+      this.disabled = false;
+      this.currentStatusName = "Status auswählen";
+
       return;
     }
     this.dateEl = new Date(this.indexCardData.date).toISOString();
@@ -253,6 +265,7 @@ export default {
         changeData.statusId = this.currentStatusId;
         this.addNewIndexCard(changeData);
       }
+      this.$bvModal.hide(this.indexCardData.id);
     }
   }
 };
