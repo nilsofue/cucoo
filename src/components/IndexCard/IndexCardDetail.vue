@@ -1,16 +1,22 @@
 <template>
   <div class="indexCardDetail">
-    <b-modal :id="indexCardData.id">
+    <b-modal :id="indexCardData.id" hide-footer>
       <table id="myTable">
         <tr>
           <td id="tabRowLeft">
             <b-form-input
+              id="companyInput"
               v-model="companyValue"
               :disabled="disabled"
               class="adressInput"
             ></b-form-input>
           </td>
-          <td><button @click="disabled = !disabled">Edit</button></td>
+          <td>
+            <font-awesome-icon
+              :icon="['fas', 'edit']"
+              @click="disabled = !disabled"
+            />
+          </td>
         </tr>
         <tr>
           <td>
@@ -51,55 +57,54 @@
               ></b-form-input>
             </div>
           </td>
-          <td>
-            <div id="dropdownTermin">
-              <div>
-                Termin
-                <br />
-              </div>
-
-              <b-navbar-nav>
-                <b-nav-form>
-                  <date-pick
-                    id="dateAppEl"
-                    v-model="dateAppointment"
-                    :pick-time="true"
-                    :format="'YYYY-MM-DD HH:mm'"
-                  ></date-pick>
-                </b-nav-form>
-              </b-navbar-nav>
-            </div>
-          </td>
         </tr>
 
         <tr>
-          <td>
+          <td id="status-pick">
             <b-navbar-nav>
               <b-nav-item-dropdown class="nav-item" :text="currentStatusName">
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
-                  @click="detailHandleSelection(status.id, status.name)"
+                  @click="
+                    detailHandleSelection(status.id, status.name, status.color)
+                  "
                   >{{ status.name }}</b-dropdown-item
                 >
               </b-nav-item-dropdown>
             </b-navbar-nav>
           </td>
+          <td>
+            <div id="dropdownTermin">
+              <div>
+                Termin
+                <br />
+                <date-pick
+                  v-model="dateEl"
+                  :pick-time="true"
+                  :format="'YYYY-MM-DD HH-mm'"
+                >
+                </date-pick>
+              </div>
+            </div>
+          </td>
         </tr>
       </table>
 
-      <b-button
-        variant="outline-primary"
-        class="btn btn-secondary"
-        @click="saveChanges()"
-        >Save</b-button
-      >
-
-      <NoticeComponent
-        :notice-data-array="indexCardData.notes"
-        :index-card-id="indexCardData.id"
-        :edit-mode="true"
-      ></NoticeComponent>
+      <table>
+        <tr>
+          <NoticeComponent
+            :notice-data-array="indexCardData.notes"
+            :index-card-id="indexCardData.id"
+            :edit-mode="true"
+          ></NoticeComponent>
+        </tr>
+        <tr>
+          <div id="but-OK">
+            <b-button variant="primary" @click="saveChanges()">OK</b-button>
+          </div>
+        </tr>
+      </table>
     </b-modal>
   </div>
 </template>
@@ -108,6 +113,10 @@
 import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
 import { mapGetters, mapActions } from "vuex";
 import DatePick from "vue-date-pick";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faEdit);
 
 export default {
   name: "IndexCardDetail",
@@ -132,7 +141,9 @@ export default {
     }
   },
   data: () => ({
-    dateAppointment: "",
+    date: "2019-01-01 14:30",
+    dateEl: "2019-01-01 14:30",
+    dateElem: "2019-03-03 13:33",
     companyValue: "",
     streetValue: "",
     houseNumberValue: "",
@@ -155,7 +166,7 @@ export default {
       // this.currentStatusName = statusData.name;
       return;
     }
-    this.dateAppointment = new Date(this.indexCardData.date).toString();
+    //this.dateEl = new Date(this.indexCardData.date).toString();
     this.companyValue = this.indexCardData.company;
     this.streetValue = this.indexCardData.adress.street;
     this.houseNumberValue = this.indexCardData.adress.houseNumber;
@@ -165,6 +176,7 @@ export default {
     let statusData = this.getStatusDataByIndexCardId(this.indexCardData.id);
     this.currentStatusId = statusData.id;
     this.currentStatusName = statusData.name;
+    this.currentStatusColor = statusData.color;
   },
   methods: {
     ...mapActions([
@@ -173,11 +185,10 @@ export default {
       "addNewIndexCard"
     ]),
 
-    changeInEditMode() {},
-
-    detailHandleSelection(statusId, statusName) {
+    detailHandleSelection(statusId, statusName, statusColor) {
       this.currentStatusId = statusId;
       this.currentStatusName = statusName;
+      this.currentStatusColor = statusColor;
     },
     saveChanges() {
       let changeData = {
@@ -220,11 +231,6 @@ table {
   width: 50%;
 }
 
-#dateAppEl {
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-
 #dropdownTermin {
   margin-top: 0px;
   margin-left: 5%;
@@ -252,8 +258,36 @@ table {
 ::v-deep.adressInput.form-control:disabled {
   background-color: white;
   border-color: white;
-  margin-bottom: 0px;
+  margin-bottom: 2px;
   padding: 0px;
   height: calc(1.5em + 2px);
+}
+::v-deep.adressInput.form-control {
+  background-color: rgb(245, 245, 245);
+  margin-bottom: 2px;
+  padding: 0px;
+  padding-left: 2px;
+  height: calc(1.5em + 2px);
+}
+::v-deep.modal-body {
+  padding: 1.5rem;
+}
+#companyInput {
+  font-weight: bold;
+}
+
+::v-deep.nav-link {
+  padding-top: 2.1rem;
+}
+
+#status-pick {
+  padding-top: 1.2rem;
+  padding-bottom: 0px;
+}
+
+#but-OK {
+  float: right;
+  margin-left: -50%;
+  margin-top: 0.5rem;
 }
 </style>
