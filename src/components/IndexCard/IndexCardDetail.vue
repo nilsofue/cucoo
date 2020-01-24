@@ -5,6 +5,7 @@
         <b-form-input
           id="companyInput"
           v-model="companyValue"
+          placeholder="Firma"
           :disabled="disabled"
           class="adressInput"
           :style="{ backgroundColor: `${getTextFieldBackground()}` }"
@@ -25,6 +26,7 @@
               <div>
                 <b-form-input
                   v-model="streetValue"
+                  placeholder="Straße"
                   :disabled="disabled"
                   class="adressInput"
                   :style="{
@@ -35,6 +37,7 @@
               <div id="nr">
                 <b-form-input
                   v-model="houseNumberValue"
+                  placeholder="Hausnr."
                   :disabled="disabled"
                   class="adressInput"
                   :style="{
@@ -47,6 +50,7 @@
               <div>
                 <b-form-input
                   v-model="postCodeValue"
+                  placeholder="PLZ"
                   :disabled="disabled"
                   class="adressInput"
                   :style="{
@@ -57,6 +61,7 @@
               <div>
                 <b-form-input
                   v-model="cityValue"
+                  placeholder="Ort"
                   :disabled="disabled"
                   class="adressInput"
                   :style="{
@@ -68,6 +73,7 @@
             <div>
               <b-form-input
                 v-model="phoneValue"
+                placeholder="Telefon"
                 :disabled="disabled"
                 class="adressInput"
                 :style="{
@@ -78,6 +84,7 @@
           </td>
           <td>
             <font-awesome-icon
+              v-if="!create"
               :icon="['fas', 'edit']"
               @click="disabled = !disabled"
             />
@@ -114,6 +121,7 @@
       <table id="tab-Notice">
         <tr>
           <NoticeComponent
+            v-if="!create"
             :notice-data-array="indexCardData.notes"
             :index-card-id="indexCardData.id"
             :edit-mode="true"
@@ -121,7 +129,12 @@
         </tr>
         <tr>
           <div id="but-OK">
-            <b-button variant="primary" @click="saveChanges()">OK</b-button>
+            <b-button
+              :disabled="!currentStatusId"
+              variant="primary"
+              @click="saveChanges()"
+              >OK</b-button
+            >
           </div>
         </tr>
       </table>
@@ -188,7 +201,10 @@ export default {
   },
   mounted() {
     if (this.create) {
-      this.dateAppointment = new Date().toString();
+      this.dateEl = new Date().toISOString();
+      this.disabled = false;
+      this.currentStatusName = "Status auswählen";
+
       return;
     }
     this.dateEl = new Date(this.indexCardData.date).toISOString();
