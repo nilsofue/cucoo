@@ -90,10 +90,18 @@
         </b-navbar-nav>
       </div>
 
-      <b-button class="addButtonClass" variant="outline-primary">
+      <b-button
+        class="addButtonClass"
+        variant="outline-primary"
+        @click="createNewIndexCard()"
+      >
         <font-awesome-icon class="addIcon" icon="plus" />Neuer Kunde
       </b-button>
     </b-navbar>
+    <indexCardDetail
+      :index-card-data="newIndexCardData"
+      :create="true"
+    ></indexCardDetail>
     <new-status></new-status>
   </div>
 </template>
@@ -101,6 +109,7 @@
 <script>
 import { mapGetters } from "vuex";
 import DatePick from "vue-date-pick";
+import IndexCardDetail from "@/components/IndexCard/IndexCardDetail.vue";
 import NewStatus from "@/components/NewStatus/NewStatus.vue";
 //import "vue-date-pick/dist/vueDatePick.css";
 import "./vueDatePick.css";
@@ -111,7 +120,7 @@ library.add([faPlus]);
 
 export default {
   name: "ToolBar",
-  components: { DatePick, NewStatus },
+  components: { DatePick, NewStatus, IndexCardDetail },
   props: {
     statusData: {
       type: Array,
@@ -144,7 +153,10 @@ export default {
         "Oktober",
         "November",
         "Dezember"
-      ]
+      ],
+      newIndexCardData: {
+        id: "createNewIndexCardID"
+      }
     };
   },
   computed: {
@@ -165,9 +177,9 @@ export default {
   },
   mounted: function() {
     // selection of first status value
-    if (this.statusData.length) {
-      this.handleSelection(this.allStates);
-    }
+    //if (this.statusData.length) {
+    /*   this.handleSelection(this.allStates);
+    } */
 
     document
       .getElementById("dateElementInputField")
@@ -178,6 +190,9 @@ export default {
       .firstElementChild.setAttribute("placeholder", "Erster Besuch");
   },
   methods: {
+    createNewIndexCard() {
+      this.$bvModal.show("createNewIndexCardID");
+    },
     handleSelection(selectedData) {
       //clear search inputs
       this.companySearchValue = "";
@@ -190,6 +205,7 @@ export default {
       this.selectedStatusData = selectedData;
       this.selectedStatusName = selectedData.name;
       this.$emit("update-Index-Cards", selectedData.entries);
+      this.$emit("update-Card-Status", selectedData.id);
     },
     handleSearch() {
       this.$emit(

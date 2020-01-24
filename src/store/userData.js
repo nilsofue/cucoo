@@ -11,6 +11,71 @@ export default {
     loading: true
   },
   mutations: {
+    changeIndexCardData(state, newData) {
+      for (let i = 0; i < state.data.status.length; i++) {
+        for (let indexCard of state.data.status[i].entries) {
+          if (indexCard.id === newData.id) {
+            // find index card
+            indexCard.adress.street = newData.adress.street;
+            indexCard.adress.houseNumber = newData.adress.houseNumber;
+            indexCard.adress.postCode = newData.adress.postCode;
+            indexCard.adress.city = newData.adress.city;
+            indexCard.phone = newData.phone;
+
+            indexCard.date = newData.date;
+            indexCard.company = newData.company;
+
+            return;
+          }
+        }
+      }
+    },
+    addNewIndexCard(state, newData) {
+      let newIndexCardData = {
+        id: newData.id,
+        createTime: new Date().getTime(),
+        date: newData.date,
+        company: newData.company,
+        adress: {
+          street: newData.adress.street,
+          houseNumber: newData.adress.houseNumber,
+          postCode: newData.adress.postCode,
+          city: newData.adress.city
+        },
+        phone: newData.phone,
+        notes: []
+      };
+      for (let i = 0; i < state.data.status.length; i++) {
+        if (state.data.status[i].id === newData.statusId) {
+          state.data.status[i].entries.push(newIndexCardData);
+          return;
+        }
+      }
+    },
+    changeIndexCardStatus(state, newStatusData) {
+      let entryData;
+      let breakFlag = false;
+      for (let i = 0; i < state.data.status.length; i++) {
+        for (let indexOfindexCard in state.data.status[i].entries) {
+          let indexCard = state.data.status[i].entries[indexOfindexCard];
+          if (indexCard.id === newStatusData.indexCardId) {
+            // find index card
+            entryData = JSON.parse(JSON.stringify(indexCard));
+            state.data.status[i].entries.splice(indexOfindexCard, 1);
+            breakFlag = true;
+            break;
+          }
+        }
+        if (breakFlag) break;
+      }
+      for (let i = 0; i < state.data.status.length; i++) {
+        if (state.data.status[i].id === newStatusData.statusId) {
+          state.data.status[i].entries.push(entryData);
+          return;
+        }
+      }
+    },
+
     updateData(state, newData) {
       state.data = newData;
     },
@@ -54,6 +119,18 @@ export default {
   },
 
   actions: {
+    async addNewIndexCard({ dispatch, commit }, data) {
+      commit("addNewIndexCard", data);
+      await dispatch("saveData");
+    },
+    async changeIndexCardData({ dispatch, commit }, data) {
+      commit("changeIndexCardData", data);
+      await dispatch("saveData");
+    },
+    async changeIndexCardStatus({ dispatch, commit }, data) {
+      commit("changeIndexCardStatus", data);
+      await dispatch("saveData");
+    },
     async getData({ commit }) {
       if (useBackend) {
         try {
@@ -101,6 +178,8 @@ export default {
       await dispatch("saveData");
     }
   },
+
+  // Zugriff über mapGetters
   getters: {
     data: state => {
       return state.data;

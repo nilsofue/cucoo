@@ -45,18 +45,7 @@
             "city": "Leipzig"
           },
           "phone": "0351885280",
-          "notes": [
-            {
-              "time": 1571773063644,
-              "text": "Assistentin vom Chef angetroffen, nächste Woche nochmal nachfragen",
-              "id": "bf7ab7d10-902e-467d-aec9-230dc11d536"
-            },
-            {
-              "time": 1571773064321,
-              "text": "Nur Azubi angetroffen, konnte Info geben",
-              "id": "bf7ab710-902e-46f7d-aec9-230c11d5369"
-            }
-          ]
+          "notes": []
         },
         {
           "id": "id_entry1236jht7676",
