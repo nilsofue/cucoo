@@ -52,6 +52,17 @@ export default {
         }
       }
     },
+    removeIndexCardById(state, indexCardId) {
+      for (let i = 0; i < state.data.status.length; i++) {
+        for (let indexCardIndex in state.data.status[i].entries) {
+          if (state.data.status[i].entries[indexCardIndex].id === indexCardId) {
+            // find index card
+            state.data.status[i].entries.splice(indexCardIndex, 1);
+            return;
+          }
+        }
+      }
+    },
     changeIndexCardStatus(state, newStatusData) {
       let entryData;
       let breakFlag = false;
@@ -121,6 +132,10 @@ export default {
   actions: {
     async addNewIndexCard({ dispatch, commit }, data) {
       commit("addNewIndexCard", data);
+      await dispatch("saveData");
+    },
+    async removeIndexCardById({ dispatch, commit }, id) {
+      commit("removeIndexCardById", id);
       await dispatch("saveData");
     },
     async changeIndexCardData({ dispatch, commit }, data) {
