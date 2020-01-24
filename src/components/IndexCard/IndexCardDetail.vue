@@ -21,15 +21,7 @@
       <table id="myTable">
         <tr>
           <td>
-            <font-awesome-icon
-              :icon="['fas', 'edit']"
-              @click="disabled = !disabled"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div id="street-nr">
+            <div class="field-next">
               <div>
                 <b-form-input
                   v-model="streetValue"
@@ -51,25 +43,27 @@
                 ></b-form-input>
               </div>
             </div>
-            <div>
-              <b-form-input
-                v-model="postCodeValue"
-                :disabled="disabled"
-                class="adressInput"
-                :style="{
-                  backgroundColor: `${getTextFieldBackground()}`
-                }"
-              ></b-form-input>
-            </div>
-            <div>
-              <b-form-input
-                v-model="cityValue"
-                :disabled="disabled"
-                class="adressInput"
-                :style="{
-                  backgroundColor: `${getTextFieldBackground()}`
-                }"
-              ></b-form-input>
+            <div class="field-next">
+              <div>
+                <b-form-input
+                  v-model="postCodeValue"
+                  :disabled="disabled"
+                  class="adressInput"
+                  :style="{
+                    backgroundColor: `${getTextFieldBackground()}`
+                  }"
+                ></b-form-input>
+              </div>
+              <div>
+                <b-form-input
+                  v-model="cityValue"
+                  :disabled="disabled"
+                  class="adressInput"
+                  :style="{
+                    backgroundColor: `${getTextFieldBackground()}`
+                  }"
+                ></b-form-input>
+              </div>
             </div>
             <div>
               <b-form-input
@@ -81,6 +75,12 @@
                 }"
               ></b-form-input>
             </div>
+          </td>
+          <td>
+            <font-awesome-icon
+              :icon="['fas', 'edit']"
+              @click="disabled = !disabled"
+            />
           </td>
         </tr>
 
@@ -324,7 +324,7 @@ table {
   margin-top: 1rem;
 }
 
-#street-nr {
+.field-next {
   display: flex;
 }
 
