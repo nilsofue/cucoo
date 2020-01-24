@@ -265,6 +265,7 @@ export default {
         changeData.id = this.DataHandler.uuidv4();
         changeData.statusId = this.currentStatusId;
         this.addNewIndexCard(changeData);
+        window.location.reload();
       }
       this.$bvModal.hide(this.indexCardData.id);
     }
