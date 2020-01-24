@@ -51,6 +51,13 @@
             @click="disabled = !disabled"
           />
         </div>
+        <div>
+          <font-awesome-icon
+            v-if="!create"
+            :icon="['fas', 'trash']"
+            @click="removeIndexCard()"
+          />
+        </div>
       </div>
       <div class="field-next">
         <div>
@@ -155,9 +162,9 @@ import { mapGetters, mapActions } from "vuex";
 import { Datetime } from "vue-datetime";
 import "vue-datetime/dist/vue-datetime.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faEdit);
+library.add([faEdit, faTrash]);
 
 export default {
   name: "IndexCardDetail",
@@ -231,8 +238,14 @@ export default {
     ...mapActions([
       "changeIndexCardData",
       "changeIndexCardStatus",
-      "addNewIndexCard"
+      "addNewIndexCard",
+      "removeIndexCardById"
     ]),
+    removeIndexCard() {
+      this.$bvModal.hide(this.indexCardData.id);
+      this.removeIndexCardById(this.indexCardData.id);
+      window.location.reload();
+    },
     getTextFieldBackground() {
       return this.disabled ? "white" : "#eaeaea";
     },
