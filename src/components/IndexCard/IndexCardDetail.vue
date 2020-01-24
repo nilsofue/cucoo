@@ -7,6 +7,7 @@
           v-model="companyValue"
           :disabled="disabled"
           class="adressInput"
+          :style="{ backgroundColor: `${getTextFieldBackground()}` }"
         ></b-form-input>
         <b-button
           size="sm"
@@ -34,6 +35,9 @@
                   v-model="streetValue"
                   :disabled="disabled"
                   class="adressInput"
+                  :style="{
+                    backgroundColor: `${getTextFieldBackground()}`
+                  }"
                 ></b-form-input>
               </div>
               <div id="nr">
@@ -41,6 +45,9 @@
                   v-model="houseNumberValue"
                   :disabled="disabled"
                   class="adressInput"
+                  :style="{
+                    backgroundColor: `${getTextFieldBackground()}`
+                  }"
                 ></b-form-input>
               </div>
             </div>
@@ -49,6 +56,9 @@
                 v-model="postCodeValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
             <div>
@@ -56,14 +66,19 @@
                 v-model="cityValue"
                 :disabled="disabled"
                 class="adressInput"
-              >
-              </b-form-input>
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
+              ></b-form-input>
             </div>
             <div>
               <b-form-input
                 v-model="phoneValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
           </td>
@@ -87,13 +102,9 @@
               <div>
                 Termin
                 <br />
-                <date-pick
-                  id="edit-icon"
-                  v-model="dateEl"
-                  :pick-time="true"
-                  :format="'YYYY-MM-DD HH-mm'"
-                >
-                </date-pick>
+                <div>
+                  <datetime v-model="dateEl" type="datetime"></datetime>
+                </div>
               </div>
             </div>
           </td>
@@ -121,7 +132,8 @@
 <script>
 import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
 import { mapGetters, mapActions } from "vuex";
-import DatePick from "vue-date-pick";
+import { Datetime } from "vue-datetime";
+import "vue-datetime/dist/vue-datetime.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
@@ -131,7 +143,7 @@ export default {
   name: "IndexCardDetail",
   components: {
     NoticeComponent,
-    DatePick
+    Datetime
   },
   props: {
     indexCardData: {
@@ -154,7 +166,7 @@ export default {
     }
   },
   data: () => ({
-    dateEl: "2019-01-01 14:30",
+    dateEl: "",
     companyValue: "",
     streetValue: "",
     houseNumberValue: "",
@@ -177,13 +189,9 @@ export default {
   mounted() {
     if (this.create) {
       this.dateAppointment = new Date().toString();
-      // console.log(this.data.status[0]);
-      // let statusData = this.data.status;
-      // this.currentStatusId = statusData.id;
-      // this.currentStatusName = statusData.name;
       return;
     }
-    //this.dateEl = new Date(this.indexCardData.date).toString();
+    this.dateEl = new Date(this.indexCardData.date).toISOString();
     this.companyValue = this.indexCardData.company;
     this.streetValue = this.indexCardData.adress.street;
     this.houseNumberValue = this.indexCardData.adress.houseNumber;
@@ -201,7 +209,9 @@ export default {
       "changeIndexCardStatus",
       "addNewIndexCard"
     ]),
-
+    getTextFieldBackground() {
+      return this.disabled ? "white" : "#eaeaea";
+    },
     detailHandleSelection(statusId, statusName, statusColor) {
       this.currentStatusId = statusId;
       this.currentStatusName = statusName;
@@ -210,7 +220,7 @@ export default {
     saveChanges() {
       let changeData = {
         id: this.indexCardData.id,
-        date: new Date(this.dateAppointment).getTime(),
+        date: new Date(this.dateEl).getTime(),
         company: this.companyValue,
         adress: {
           street: this.streetValue,
@@ -256,34 +266,20 @@ table {
   border-color: white;
 }
 
-::v-deep .vdpClearInput {
-  visibility: hidden;
-}
-::v-deep .btn-secondary {
-  visibility: hidden;
-}
-
 ::v-deep.vdpComponent.vdpWithInput input {
   width: 128px;
   margin-left: 0rem !important;
 }
 
-::v-deep.adressInput.form-control:disabled {
-  background-color: white;
-  border-color: white;
-  margin-bottom: 4px;
-  width: 90%;
-  padding: 0px;
-  padding-left: 5px;
-  height: calc(1.5em + 4px);
-}
-::v-deep.adressInput.form-control {
-  background-color: rgb(245, 245, 245);
-  margin-bottom: 4px;
-  width: 90%;
-  padding: 0px;
-  padding-left: 5px;
-  height: calc(1.5em + 4px);
+.adressInput {
+  color: #495057;
+  border: 0px solid #ced4da;
+  border-radius: 0.5rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
 }
 ::v-deep.modal-body {
   padding: 1.5rem;
@@ -307,6 +303,16 @@ table {
   margin-top: 0.5rem;
 }
 
+::v-deep .vdatetime input {
+  color: #495057;
+  background-color: #eaeaea;
+  border: 0px solid #ced4da;
+  border-radius: 0.5rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
 .fa-edit {
   color: rgb(45, 141, 196);
   font-size: 1.7rem;
