@@ -9,6 +9,7 @@
               v-model="companyValue"
               :disabled="disabled"
               class="adressInput"
+              :style="{ backgroundColor: `${getTextFieldBackground()}` }"
             ></b-form-input>
           </td>
           <td>
@@ -25,6 +26,9 @@
                 v-model="streetValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
             <div>
@@ -32,6 +36,9 @@
                 v-model="houseNumberValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
             <div>
@@ -39,6 +46,9 @@
                 v-model="postCodeValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
             <div>
@@ -46,6 +56,9 @@
                 v-model="cityValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
             <div>
@@ -53,6 +66,9 @@
                 v-model="phoneValue"
                 :disabled="disabled"
                 class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
               ></b-form-input>
             </div>
           </td>
@@ -79,11 +95,7 @@
                 Termin
                 <br />
                 <div>
-                  <datetime
-                    :id="indexCardData.id + 'DatePick'"
-                    v-model="dateEl"
-                    type="datetime"
-                  ></datetime>
+                  <datetime v-model="dateEl" type="datetime"></datetime>
                 </div>
               </div>
             </div>
@@ -142,9 +154,7 @@ export default {
     }
   },
   data: () => ({
-    date123: "2019-01-01 14:30",
-    dateEl: "2019-01-01 14:30",
-    dateElem: "2019-03-03 13:33",
+    dateEl: "",
     companyValue: "",
     streetValue: "",
     houseNumberValue: "",
@@ -161,10 +171,6 @@ export default {
   mounted() {
     if (this.create) {
       this.dateAppointment = new Date().toString();
-      // console.log(this.data.status[0]);
-      // let statusData = this.data.status;
-      // this.currentStatusId = statusData.id;
-      // this.currentStatusName = statusData.name;
       return;
     }
     this.dateEl = new Date(this.indexCardData.date).toISOString();
@@ -185,7 +191,9 @@ export default {
       "changeIndexCardStatus",
       "addNewIndexCard"
     ]),
-
+    getTextFieldBackground() {
+      return this.disabled ? "white" : "#eaeaea";
+    },
     detailHandleSelection(statusId, statusName, statusColor) {
       this.currentStatusId = statusId;
       this.currentStatusName = statusName;
@@ -244,31 +252,20 @@ table {
   border-color: white;
 }
 
-::v-deep .vdpClearInput {
-  visibility: hidden;
-}
-::v-deep .btn-secondary {
-  visibility: hidden;
-}
-
 ::v-deep.vdpComponent.vdpWithInput input {
   width: 180px;
   margin-left: 0rem !important;
 }
 
-::v-deep.adressInput.form-control:disabled {
-  background-color: white;
-  border-color: white;
-  margin-bottom: 2px;
-  padding: 0px;
-  height: calc(1.5em + 2px);
-}
-::v-deep.adressInput.form-control {
-  background-color: rgb(245, 245, 245);
-  margin-bottom: 2px;
-  padding: 0px;
-  padding-left: 2px;
-  height: calc(1.5em + 2px);
+.adressInput {
+  color: #495057;
+  border: 0px solid #ced4da;
+  border-radius: 0.5rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
 }
 ::v-deep.modal-body {
   padding: 1.5rem;
@@ -290,5 +287,16 @@ table {
   float: right;
   margin-left: -50%;
   margin-top: 0.5rem;
+}
+
+::v-deep .vdatetime input {
+  color: #495057;
+  background-color: #eaeaea;
+  border: 0px solid #ced4da;
+  border-radius: 0.5rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 </style>
