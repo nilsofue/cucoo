@@ -18,9 +18,9 @@
         </b-button>
       </template>
 
-      <table id="myTable">
-        <tr>
-          <td>
+      <div>
+        <div>
+          <div class="field-next">
             <div class="field-next">
               <div>
                 <b-form-input
@@ -43,31 +43,17 @@
                 ></b-form-input>
               </div>
             </div>
-            <div class="field-next">
-              <div>
-                <b-form-input
-                  v-model="postCodeValue"
-                  :disabled="disabled"
-                  class="adressInput"
-                  :style="{
-                    backgroundColor: `${getTextFieldBackground()}`
-                  }"
-                ></b-form-input>
-              </div>
-              <div>
-                <b-form-input
-                  v-model="cityValue"
-                  :disabled="disabled"
-                  class="adressInput"
-                  :style="{
-                    backgroundColor: `${getTextFieldBackground()}`
-                  }"
-                ></b-form-input>
-              </div>
+            <div>
+              <font-awesome-icon
+                :icon="['fas', 'edit']"
+                @click="disabled = !disabled"
+              />
             </div>
+          </div>
+          <div class="field-next">
             <div>
               <b-form-input
-                v-model="phoneValue"
+                v-model="postCodeValue"
                 :disabled="disabled"
                 class="adressInput"
                 :style="{
@@ -75,29 +61,54 @@
                 }"
               ></b-form-input>
             </div>
-          </td>
-          <td>
-            <font-awesome-icon
-              :icon="['fas', 'edit']"
-              @click="disabled = !disabled"
-            />
-          </td>
-        </tr>
+            <div>
+              <b-form-input
+                v-model="cityValue"
+                :disabled="disabled"
+                class="adressInput"
+                :style="{
+                  backgroundColor: `${getTextFieldBackground()}`
+                }"
+              ></b-form-input>
+            </div>
+          </div>
+          <div>
+            <b-form-input
+              v-model="phoneValue"
+              :disabled="disabled"
+              class="adressInput"
+              :style="{
+                backgroundColor: `${getTextFieldBackground()}`
+              }"
+            ></b-form-input>
+          </div>
+        </div>
+      </div>
 
-        <tr>
-          <td id="status-pick">
+      <div>
+        <div class="field-next">
+          <div id="status-pick">
             <b-navbar-nav>
-              <b-nav-item-dropdown class="nav-item" :text="currentStatusName">
+              <b-nav-item-dropdown
+                class="nav-item"
+                :text="currentStatusName"
+                :style="{
+                  backgroundColor: currentStatusColor
+                }"
+              >
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
+                  :style="{
+                    backgroundColor: status.color
+                  }"
                   @click="detailHandleSelection(status.id, status.name)"
                   >{{ status.name }}</b-dropdown-item
                 >
               </b-nav-item-dropdown>
             </b-navbar-nav>
-          </td>
-          <td>
+          </div>
+          <div>
             <div id="dropdownTermin">
               <div>
                 Termin
@@ -107,24 +118,24 @@
                 </div>
               </div>
             </div>
-          </td>
-        </tr>
-      </table>
+          </div>
+        </div>
+      </div>
 
-      <table id="tab-Notice">
-        <tr>
+      <div id="tab-Notice">
+        <div>
           <NoticeComponent
             :notice-data-array="indexCardData.notes"
             :index-card-id="indexCardData.id"
             :edit-mode="true"
           ></NoticeComponent>
-        </tr>
-        <tr>
+        </div>
+        <div>
           <div id="but-OK">
             <b-button variant="primary" @click="saveChanges()">OK</b-button>
           </div>
-        </tr>
-      </table>
+        </div>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -250,10 +261,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-table {
-  width: 100%;
-}
-
 #dropdownTermin {
   margin-top: 0px;
   margin-left: 5%;
