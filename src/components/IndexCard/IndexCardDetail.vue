@@ -1,17 +1,25 @@
 <template>
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id" hide-footer>
+      <template v-slot:modal-header="{ close }" :style="headerColor">
+        <b-form-input
+          id="companyInput"
+          v-model="companyValue"
+          :disabled="disabled"
+          class="adressInput"
+          :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+        ></b-form-input>
+        <b-button
+          size="sm"
+          variant="outline-danger"
+          class="button button-close"
+          @click="close()"
+          >x
+        </b-button>
+      </template>
+
       <table id="myTable">
         <tr>
-          <td id="tabRowLeft">
-            <b-form-input
-              id="companyInput"
-              v-model="companyValue"
-              :disabled="disabled"
-              class="adressInput"
-              :style="{ backgroundColor: `${getTextFieldBackground()}` }"
-            ></b-form-input>
-          </td>
           <td>
             <font-awesome-icon
               :icon="['fas', 'edit']"
@@ -21,25 +29,27 @@
         </tr>
         <tr>
           <td>
-            <div>
-              <b-form-input
-                v-model="streetValue"
-                :disabled="disabled"
-                class="adressInput"
-                :style="{
-                  backgroundColor: `${getTextFieldBackground()}`
-                }"
-              ></b-form-input>
-            </div>
-            <div>
-              <b-form-input
-                v-model="houseNumberValue"
-                :disabled="disabled"
-                class="adressInput"
-                :style="{
-                  backgroundColor: `${getTextFieldBackground()}`
-                }"
-              ></b-form-input>
+            <div id="street-nr">
+              <div>
+                <b-form-input
+                  v-model="streetValue"
+                  :disabled="disabled"
+                  class="adressInput"
+                  :style="{
+                    backgroundColor: `${getTextFieldBackground()}`
+                  }"
+                ></b-form-input>
+              </div>
+              <div id="nr">
+                <b-form-input
+                  v-model="houseNumberValue"
+                  :disabled="disabled"
+                  class="adressInput"
+                  :style="{
+                    backgroundColor: `${getTextFieldBackground()}`
+                  }"
+                ></b-form-input>
+              </div>
             </div>
             <div>
               <b-form-input
@@ -81,9 +91,7 @@
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
-                  @click="
-                    detailHandleSelection(status.id, status.name, status.color)
-                  "
+                  @click="detailHandleSelection(status.id, status.name)"
                   >{{ status.name }}</b-dropdown-item
                 >
               </b-nav-item-dropdown>
@@ -103,7 +111,7 @@
         </tr>
       </table>
 
-      <table>
+      <table id="tab-Notice">
         <tr>
           <NoticeComponent
             :notice-data-array="indexCardData.notes"
@@ -151,6 +159,10 @@ export default {
       default: () => {
         return false;
       }
+    },
+    bgColor: {
+      type: String,
+      default: "#0099CC"
     }
   },
   data: () => ({
@@ -166,7 +178,13 @@ export default {
     disabled: true
   }),
   computed: {
-    ...mapGetters(["getStatusDataByIndexCardId", "data"])
+    ...mapGetters(["getStatusDataByIndexCardId", "data"]),
+
+    headerColor() {
+      return {
+        "background-color": this.bgColor
+      };
+    }
   },
   mounted() {
     if (this.create) {
@@ -236,10 +254,6 @@ table {
   width: 100%;
 }
 
-#tabRowLeft {
-  width: 50%;
-}
-
 #dropdownTermin {
   margin-top: 0px;
   margin-left: 5%;
@@ -253,7 +267,7 @@ table {
 }
 
 ::v-deep.vdpComponent.vdpWithInput input {
-  width: 180px;
+  width: 128px;
   margin-left: 0rem !important;
 }
 
@@ -298,5 +312,23 @@ table {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
+}
+.fa-edit {
+  color: rgb(45, 141, 196);
+  font-size: 1.7rem;
+  padding: 0px;
+  margin-bottom: 8px;
+}
+
+#tab-Notice {
+  margin-top: 1rem;
+}
+
+#street-nr {
+  display: flex;
+}
+
+#id {
+  width: 10%;
 }
 </style>
