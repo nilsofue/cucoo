@@ -195,6 +195,7 @@ export default {
     phoneValue: "",
     currentStatusId: "",
     currentStatusName: "",
+    currentStatusColor: "",
     disabled: true
   }),
   computed: {
