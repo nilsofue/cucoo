@@ -242,6 +242,7 @@ export default {
         changeData.statusId = this.currentStatusId;
         this.addNewIndexCard(changeData);
       }
+      this.$bvModal.hide(this.indexCardData.id);
     }
   }
 };
