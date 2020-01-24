@@ -46,8 +46,7 @@
                 v-model="cityValue"
                 :disabled="disabled"
                 class="adressInput"
-              >
-              </b-form-input>
+              ></b-form-input>
             </div>
             <div>
               <b-form-input
@@ -79,12 +78,13 @@
               <div>
                 Termin
                 <br />
-                <date-pick
-                  v-model="dateEl"
-                  :pick-time="true"
-                  :format="'YYYY-MM-DD HH-mm'"
-                >
-                </date-pick>
+                <div>
+                  <datetime
+                    :id="indexCardData.id + 'DatePick'"
+                    v-model="dateEl"
+                    type="datetime"
+                  ></datetime>
+                </div>
               </div>
             </div>
           </td>
@@ -112,7 +112,8 @@
 <script>
 import NoticeComponent from "@/components/IndexCard/NoticeComponent.vue";
 import { mapGetters, mapActions } from "vuex";
-import DatePick from "vue-date-pick";
+import { Datetime } from "vue-datetime";
+import "vue-datetime/dist/vue-datetime.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
@@ -122,7 +123,7 @@ export default {
   name: "IndexCardDetail",
   components: {
     NoticeComponent,
-    DatePick
+    Datetime
   },
   props: {
     indexCardData: {
@@ -141,7 +142,7 @@ export default {
     }
   },
   data: () => ({
-    date: "2019-01-01 14:30",
+    date123: "2019-01-01 14:30",
     dateEl: "2019-01-01 14:30",
     dateElem: "2019-03-03 13:33",
     companyValue: "",
@@ -166,7 +167,7 @@ export default {
       // this.currentStatusName = statusData.name;
       return;
     }
-    //this.dateEl = new Date(this.indexCardData.date).toString();
+    this.dateEl = new Date(this.indexCardData.date).toISOString();
     this.companyValue = this.indexCardData.company;
     this.streetValue = this.indexCardData.adress.street;
     this.houseNumberValue = this.indexCardData.adress.houseNumber;
@@ -193,7 +194,7 @@ export default {
     saveChanges() {
       let changeData = {
         id: this.indexCardData.id,
-        date: new Date(this.dateAppointment).getTime(),
+        date: new Date(this.dateEl).getTime(),
         company: this.companyValue,
         adress: {
           street: this.streetValue,
