@@ -176,11 +176,6 @@ export default {
     }
   },
   mounted: function() {
-    // selection of first status value
-    //if (this.statusData.length) {
-    /*   this.handleSelection(this.allStates);
-    } */
-
     document
       .getElementById("dateElementInputField")
       .firstElementChild.setAttribute("placeholder", "Termin");

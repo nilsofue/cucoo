@@ -275,7 +275,7 @@ export default {
     removeIndexCard() {
       this.$bvModal.hide(this.indexCardData.id);
       this.removeIndexCardById(this.indexCardData.id);
-      window.location.reload();
+      //window.location.reload();
     },
     getTextFieldBackground() {
       return this.disabled ? "white" : "#eaeaea";
@@ -309,7 +309,7 @@ export default {
         changeData.id = this.ToolHandler.uuidv4();
         changeData.statusId = this.currentStatusId;
         this.addNewIndexCard(changeData);
-        window.location.reload();
+        //window.location.reload();
       }
       this.init();
       this.$bvModal.hide(this.indexCardData.id);

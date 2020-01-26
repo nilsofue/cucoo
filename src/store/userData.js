@@ -8,7 +8,13 @@ export default {
   namespace: true,
   state: {
     data: {},
-    loading: true
+    loading: true,
+    allStates: {
+      id: "id_all_states",
+      name: "Alle Status",
+      color: "#007bff",
+      entries: []
+    }
   },
   mutations: {
     changeIndexCardData(state, newData) {
@@ -27,6 +33,14 @@ export default {
 
             return;
           }
+        }
+      }
+    },
+    generateAllStates(state) {
+      state.allStates.entries.length = 0;
+      for (let stateEntry of state.data.status) {
+        for (let indexCardData of stateEntry.entries) {
+          state.allStates.entries.push(indexCardData);
         }
       }
     },
@@ -132,10 +146,12 @@ export default {
   actions: {
     async addNewIndexCard({ dispatch, commit }, data) {
       commit("addNewIndexCard", data);
+      dispatch("generateAllStates");
       await dispatch("saveData");
     },
     async removeIndexCardById({ dispatch, commit }, id) {
       commit("removeIndexCardById", id);
+      dispatch("generateAllStates");
       await dispatch("saveData");
     },
     async changeIndexCardData({ dispatch, commit }, data) {
@@ -161,6 +177,7 @@ export default {
       } else {
         commit("updateData", inputData);
       }
+      commit("generateAllStates");
     },
     async saveData({ state }) {
       if (useBackend) {
@@ -191,6 +208,9 @@ export default {
     async addNewStatus({ dispatch, commit }, data) {
       commit("addNewStatus", data);
       await dispatch("saveData");
+    },
+    generateAllStates({ commit }) {
+      commit("generateAllStates");
     }
   },
 
@@ -203,19 +223,7 @@ export default {
       return state.loading;
     },
     allStates: state => {
-      let dummyState = {
-        id: "id_all_states",
-        name: "Alle Status",
-        color: "#007bff",
-        entries: []
-      };
-
-      for (let stateEntry of state.data.status) {
-        for (let indexCardData of stateEntry.entries) {
-          dummyState.entries.push(indexCardData);
-        }
-      }
-      return dummyState;
+      return state.allStates;
     },
     getStatusDataByIndexCardId: state => indexCardId => {
       for (let stateEntry of state.data.status) {
