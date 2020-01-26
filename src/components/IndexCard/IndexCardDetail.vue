@@ -96,7 +96,7 @@
         />
       </div>
 
-      <div>
+      <div class="editInfosClass">
         <div class="field-next">
           <div id="status-pick">
             <b-navbar-nav>
@@ -108,19 +108,27 @@
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
-                  :style="{ backgroundColor: status.color }"
+                  class="dropdownItemClass"
                   @click="
                     detailHandleSelection(status.id, status.name, status.color)
                   "
-                  >{{ status.name }}</b-dropdown-item
-                >
+                  ><div class="statusListItemContainer">
+                    <div
+                      class="circleClass"
+                      :style="{
+                        backgroundColor: status.color
+                      }"
+                    ></div>
+                    <div>{{ status.name }}</div>
+                  </div>
+                </b-dropdown-item>
               </b-nav-item-dropdown>
             </b-navbar-nav>
           </div>
           <div>
             <div id="dropdownTermin">
               <div>
-                Termin
+                Nächster Termin
                 <br />
                 <div>
                   <datetime v-model="dateEl" type="datetime"></datetime>
@@ -360,12 +368,7 @@ export default {
 }
 
 ::v-deep a {
-  color: white;
   font-size: 14px;
-}
-
-::v-deep a:hover {
-  color: rgb(175, 170, 170);
 }
 
 #status-pick {
@@ -427,6 +430,12 @@ export default {
   padding-left: 0.5rem;
 }
 
+::v-deep .dropdownClass a {
+  color: white;
+}
+::v-deep .dropdownItemClass a {
+  color: black;
+}
 .closeIconClass {
   cursor: pointer;
   color: rgb(189, 0, 0);
@@ -434,5 +443,31 @@ export default {
 
 .footerButtonClass {
   margin-top: 30px;
+}
+
+.editInfosClass {
+  margin-top: 10px;
+}
+
+::v-deep .modal-content {
+  border-radius: 12px;
+}
+::v-deep .vdatetime-popup {
+  border-radius: 12px;
+}
+::v-deep .vdatetime-popup__header {
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.circleClass {
+  margin-top: 1.5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+}
+.statusListItemContainer {
+  display: flex;
 }
 </style>
