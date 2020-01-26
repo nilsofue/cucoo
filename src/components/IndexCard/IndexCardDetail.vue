@@ -1,7 +1,7 @@
 <template>
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id" hide-footer>
-      <template v-slot:modal-header="{ close }" :style="headerColor">
+      <template v-slot:modal-header="{}" :style="headerColor">
         <input
           id="companyInput"
           v-model="companyValue"
@@ -12,7 +12,10 @@
           :style="{ backgroundColor: `${getTextFieldBackground()}` }"
         />
 
-        <b-button variant="danger" class="button button-close" @click="close()"
+        <b-button
+          variant="danger"
+          class="button button-close"
+          @click="onCloseModal()"
           >x</b-button
         >
       </template>
@@ -232,25 +235,7 @@ export default {
     }
   },
   mounted() {
-    if (this.create) {
-      this.dateEl = new Date().toISOString();
-      this.disabled = false;
-      this.currentStatusName = "Status auswählen";
-      this.currentStatusColor = "#eaeaea";
-
-      return;
-    }
-    this.dateEl = new Date(this.indexCardData.date).toISOString();
-    this.companyValue = this.indexCardData.company;
-    this.streetValue = this.indexCardData.adress.street;
-    this.houseNumberValue = this.indexCardData.adress.houseNumber;
-    this.postCodeValue = this.indexCardData.adress.postCode;
-    this.cityValue = this.indexCardData.adress.city;
-    this.phoneValue = this.indexCardData.phone;
-    let statusData = this.getStatusDataByIndexCardId(this.indexCardData.id);
-    this.currentStatusId = statusData.id;
-    this.currentStatusName = statusData.name;
-    this.currentStatusColor = statusData.color;
+    this.init();
   },
   methods: {
     ...mapActions([
@@ -259,6 +244,34 @@ export default {
       "addNewIndexCard",
       "removeIndexCardById"
     ]),
+    init() {
+      if (this.create) {
+        this.dateEl = new Date().toISOString();
+        this.disabled = false;
+        this.currentStatusName = "Status auswählen";
+        this.currentStatusColor = "#eaeaea";
+        this.companyValue = "";
+        this.streetValue = "";
+        this.houseNumberValue = "";
+        this.postCodeValue = "";
+        this.cityValue = "";
+        this.phoneValue = "";
+
+        return;
+      }
+      this.disabled = true;
+      this.dateEl = new Date(this.indexCardData.date).toISOString();
+      this.companyValue = this.indexCardData.company;
+      this.streetValue = this.indexCardData.adress.street;
+      this.houseNumberValue = this.indexCardData.adress.houseNumber;
+      this.postCodeValue = this.indexCardData.adress.postCode;
+      this.cityValue = this.indexCardData.adress.city;
+      this.phoneValue = this.indexCardData.phone;
+      let statusData = this.getStatusDataByIndexCardId(this.indexCardData.id);
+      this.currentStatusId = statusData.id;
+      this.currentStatusName = statusData.name;
+      this.currentStatusColor = statusData.color;
+    },
     removeIndexCard() {
       this.$bvModal.hide(this.indexCardData.id);
       this.removeIndexCardById(this.indexCardData.id);
@@ -298,6 +311,11 @@ export default {
         this.addNewIndexCard(changeData);
         window.location.reload();
       }
+      this.init();
+      this.$bvModal.hide(this.indexCardData.id);
+    },
+    onCloseModal() {
+      this.init();
       this.$bvModal.hide(this.indexCardData.id);
     }
   }
@@ -354,7 +372,6 @@ export default {
 
 #status-pick {
   padding-top: 23px;
-
   padding-bottom: 0px;
   height: 31px;
   line-height: 16px;
