@@ -111,7 +111,7 @@ export default {
       var newNote = {
         text: this.message,
         time: new Date().getTime(),
-        id: this.DataHandler.uuidv4()
+        id: this.ToolHandler.uuidv4()
       };
       this.addNoteByIndexCardId({
         noteData: newNote,

@@ -275,7 +275,7 @@ export default {
           indexCardId: this.indexCardData.id
         });
       } else {
-        changeData.id = this.DataHandler.uuidv4();
+        changeData.id = this.ToolHandler.uuidv4();
         changeData.statusId = this.currentStatusId;
         this.addNewIndexCard(changeData);
         window.location.reload();
