@@ -2,97 +2,103 @@
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id" hide-footer>
       <template v-slot:modal-header="{ close }" :style="headerColor">
-        <b-form-input
+        <input
           id="companyInput"
           v-model="companyValue"
+          v-autowidth="{ maxWidth: '960px', minWidth: '20px', comfortZone: 0 }"
+          class="adressInput"
           placeholder="Firma"
           :disabled="disabled"
-          class="adressInput"
           :style="{ backgroundColor: `${getTextFieldBackground()}` }"
-        ></b-form-input>
-        <b-button
-          size="sm"
-          variant="outline-danger"
-          class="button button-close"
-          @click="close()"
-          >x
-        </b-button>
+        />
+
+        <b-button variant="danger" class="button button-close" @click="close()"
+          >x</b-button
+        >
       </template>
 
       <div class="field-next">
         <div class="field-next">
           <div>
-            <b-form-input
+            <input
               v-model="streetValue"
-              placeholder="Straße"
+              v-autowidth="{
+                maxWidth: '960px',
+                minWidth: '20px',
+                comfortZone: 0
+              }"
+              placeholder="Straﬂe"
               :disabled="disabled"
               class="adressInput"
               :style="{
                 backgroundColor: `${getTextFieldBackground()}`
               }"
-            ></b-form-input>
+            />
           </div>
           <div id="nr">
-            <b-form-input
+            <input
               v-model="houseNumberValue"
+              v-autowidth="{
+                maxWidth: '960px',
+                minWidth: '20px',
+                comfortZone: 0
+              }"
               placeholder="Hausnr."
               :disabled="disabled"
               class="adressInput"
               :style="{
                 backgroundColor: `${getTextFieldBackground()}`
               }"
-            ></b-form-input>
+            />
           </div>
         </div>
-        <div>
+        <div id="iconedit">
           <font-awesome-icon
             v-if="!create"
             :icon="['fas', 'edit']"
             @click="disabled = !disabled"
           />
         </div>
-        <div>
-          <font-awesome-icon
-            v-if="!create"
-            :icon="['fas', 'trash']"
-            @click="removeIndexCard()"
-          />
-        </div>
       </div>
       <div class="field-next">
         <div>
-          <b-form-input
+          <input
             v-model="postCodeValue"
+            v-autowidth="{
+              maxWidth: '960px',
+              minWidth: '20px',
+              comfortZone: 0
+            }"
             placeholder="PLZ"
             :disabled="disabled"
             class="adressInput"
-            :style="{
-              backgroundColor: `${getTextFieldBackground()}`
-            }"
-          ></b-form-input>
+            :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+          />
         </div>
         <div>
-          <b-form-input
+          <input
             v-model="cityValue"
+            v-autowidth="{
+              maxWidth: '960px',
+              minWidth: '20px',
+              comfortZone: 0
+            }"
             placeholder="Ort"
             :disabled="disabled"
             class="adressInput"
-            :style="{
-              backgroundColor: `${getTextFieldBackground()}`
-            }"
-          ></b-form-input>
+            :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+          />
         </div>
       </div>
       <div>
-        <b-form-input
+        <input
           v-model="phoneValue"
+          v-autowidth="{ maxWidth: '960px', minWidth: '20px', comfortZone: 0 }"
           placeholder="Telefon"
           :disabled="disabled"
           class="adressInput"
-          :style="{
-            backgroundColor: `${getTextFieldBackground()}`
-          }"
-        ></b-form-input>
+          :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+        />
       </div>
 
       <div>
@@ -100,19 +106,17 @@
           <div id="status-pick">
             <b-navbar-nav>
               <b-nav-item-dropdown
-                class="nav-item"
+                class="dropdownClass"
                 :text="currentStatusName"
-                :style="{
-                  backgroundColor: currentStatusColor
-                }"
+                :style="{ backgroundColor: currentStatusColor }"
               >
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
-                  :style="{
-                    backgroundColor: status.color
-                  }"
-                  @click="detailHandleSelection(status.id, status.name)"
+                  :style="{ backgroundColor: status.color }"
+                  @click="
+                    detailHandleSelection(status.id, status.name, status.color)
+                  "
                   >{{ status.name }}</b-dropdown-item
                 >
               </b-nav-item-dropdown>
@@ -142,8 +146,16 @@
           ></NoticeComponent>
         </div>
         <div>
-          <div id="but-OK">
+          <div>
+            <font-awesome-icon
+              v-if="!create"
+              id="icontrash"
+              :icon="['fas', 'trash']"
+              @click="removeIndexCard()"
+            />
+
             <b-button
+              id="but-OK"
               :disabled="!currentStatusId"
               variant="primary"
               @click="saveChanges()"
@@ -163,6 +175,10 @@ import { Datetime } from "vue-datetime";
 import "vue-datetime/dist/vue-datetime.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
+
+import VueInputAutowidth from "vue-input-autowidth";
+Vue.use(VueInputAutowidth);
 
 library.add([faEdit, faTrash]);
 
@@ -193,6 +209,7 @@ export default {
     }
   },
   data: () => ({
+    name: "",
     dateEl: "",
     companyValue: "",
     streetValue: "",
@@ -219,6 +236,7 @@ export default {
       this.dateEl = new Date().toISOString();
       this.disabled = false;
       this.currentStatusName = "Status auswählen";
+      this.currentStatusColor = "#eaeaea";
 
       return;
     }
@@ -294,48 +312,56 @@ export default {
   margin-left: 5%;
 }
 
-.adressInput {
-  margin-bottom: 2%;
-  margin-right: 2%;
-  background-color: white;
-  border-color: white;
+#iconedit {
+  position: right;
 }
 
-::v-deep.vdpComponent.vdpWithInput input {
-  width: 128px;
-  margin-left: 0rem !important;
+::v-deep.vdatetime input {
+  width: 150px;
+  padding-top: 1rem;
+  padding-right: 0.5rem;
+  padding-bottom: 1rem;
+  padding-left: 0.5rem;
 }
 
 .adressInput {
   color: #495057;
   border: 0px solid #ced4da;
   border-radius: 0.5rem;
-  height: calc(1.5em + 0.5rem + 2px);
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  height: calc(1.5em + 2px);
+  padding: 0 0.3rem 0 0.3rem;
+  font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  margin-right: 4px;
 }
 ::v-deep.modal-body {
-  padding: 1.5rem;
+  padding: 1.2rem;
 }
 #companyInput {
   font-weight: bold;
+  margin: 0px;
 }
 
-::v-deep.nav-link {
-  padding-top: 2.1rem;
+::v-deep a {
+  color: white;
+  font-size: 14px;
+}
+
+::v-deep a:hover {
+  color: rgb(175, 170, 170);
 }
 
 #status-pick {
-  padding-top: 1.2rem;
+  padding-top: 23px;
+
   padding-bottom: 0px;
+  height: 31px;
+  line-height: 16px;
 }
 
 #but-OK {
   float: right;
-  margin-left: -50%;
-  margin-top: 0.5rem;
 }
 
 ::v-deep .vdatetime input {
@@ -353,8 +379,18 @@ export default {
   font-size: 1.7rem;
   padding: 0px;
   margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 20px;
 }
 
+.fa-trash {
+  color: rgb(138, 139, 141);
+  font-size: 1.7rem;
+  padding: 0px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
 #tab-Notice {
   margin-top: 1rem;
 }
@@ -365,5 +401,20 @@ export default {
 
 #id {
   width: 10%;
+}
+#icontrash {
+  margin: 0px;
+  margin-top: 8px;
+  margin-left: 4px;
+}
+
+.dropdownClass {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  margin-right: 10px;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
 </style>
