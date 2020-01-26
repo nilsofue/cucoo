@@ -1,127 +1,134 @@
 <template>
   <div class="indexCardDetail">
     <b-modal :id="indexCardData.id" hide-footer>
-      <template v-slot:modal-header="{ close }" :style="headerColor">
-        <b-form-input
+      <template v-slot:modal-header="{}" :style="headerColor">
+        <input
           id="companyInput"
           v-model="companyValue"
+          v-autowidth="{ maxWidth: '960px', minWidth: '20px', comfortZone: 0 }"
+          class="adressInput"
           placeholder="Firma"
           :disabled="disabled"
-          class="adressInput"
           :style="{ backgroundColor: `${getTextFieldBackground()}` }"
-        ></b-form-input>
-        <b-button
-          size="sm"
-          variant="outline-danger"
-          class="button button-close"
-          @click="close()"
-          >x
-        </b-button>
+        />
+
+        <font-awesome-icon
+          class="closeIconClass"
+          icon="times"
+          @click="onCloseModal()"
+        />
       </template>
 
       <div class="field-next">
         <div class="field-next">
           <div>
-            <b-form-input
+            <input
               v-model="streetValue"
-              placeholder="Straße"
+              v-autowidth="{
+                maxWidth: '960px',
+                minWidth: '20px',
+                comfortZone: 0
+              }"
+              placeholder="Straﬂe"
               :disabled="disabled"
               class="adressInput"
               :style="{
                 backgroundColor: `${getTextFieldBackground()}`
               }"
-            ></b-form-input>
+            />
           </div>
           <div id="nr">
-            <b-form-input
+            <input
               v-model="houseNumberValue"
+              v-autowidth="{
+                maxWidth: '960px',
+                minWidth: '20px',
+                comfortZone: 0
+              }"
               placeholder="Hausnr."
               :disabled="disabled"
               class="adressInput"
               :style="{
                 backgroundColor: `${getTextFieldBackground()}`
               }"
-            ></b-form-input>
+            />
           </div>
-        </div>
-        <div>
-          <font-awesome-icon
-            v-if="!create"
-            :icon="['fas', 'edit']"
-            @click="disabled = !disabled"
-          />
-        </div>
-        <div>
-          <font-awesome-icon
-            v-if="!create"
-            :icon="['fas', 'trash']"
-            @click="removeIndexCard()"
-          />
         </div>
       </div>
       <div class="field-next">
         <div>
-          <b-form-input
+          <input
             v-model="postCodeValue"
+            v-autowidth="{
+              maxWidth: '960px',
+              minWidth: '20px',
+              comfortZone: 0
+            }"
             placeholder="PLZ"
             :disabled="disabled"
             class="adressInput"
-            :style="{
-              backgroundColor: `${getTextFieldBackground()}`
-            }"
-          ></b-form-input>
+            :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+          />
         </div>
         <div>
-          <b-form-input
+          <input
             v-model="cityValue"
+            v-autowidth="{
+              maxWidth: '960px',
+              minWidth: '20px',
+              comfortZone: 0
+            }"
             placeholder="Ort"
             :disabled="disabled"
             class="adressInput"
-            :style="{
-              backgroundColor: `${getTextFieldBackground()}`
-            }"
-          ></b-form-input>
+            :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+          />
         </div>
       </div>
       <div>
-        <b-form-input
+        <input
           v-model="phoneValue"
+          v-autowidth="{ maxWidth: '960px', minWidth: '20px', comfortZone: 0 }"
           placeholder="Telefon"
           :disabled="disabled"
           class="adressInput"
-          :style="{
-            backgroundColor: `${getTextFieldBackground()}`
-          }"
-        ></b-form-input>
+          :style="{ backgroundColor: `${getTextFieldBackground()}` }"
+        />
       </div>
 
-      <div>
+      <div class="editInfosClass">
         <div class="field-next">
           <div id="status-pick">
             <b-navbar-nav>
               <b-nav-item-dropdown
-                class="nav-item"
+                class="dropdownClass"
                 :text="currentStatusName"
-                :style="{
-                  backgroundColor: currentStatusColor
-                }"
+                :style="{ backgroundColor: currentStatusColor }"
               >
                 <b-dropdown-item
                   v-for="(status, i) in data.status"
                   :key="i"
-                  :style="{
-                    backgroundColor: status.color
-                  }"
-                  @click="detailHandleSelection(status.id, status.name)"
-                  >{{ status.name }}</b-dropdown-item
-                >
+                  class="dropdownItemClass"
+                  @click="
+                    detailHandleSelection(status.id, status.name, status.color)
+                  "
+                  ><div class="statusListItemContainer">
+                    <div
+                      class="circleClass"
+                      :style="{
+                        backgroundColor: status.color
+                      }"
+                    ></div>
+                    <div>{{ status.name }}</div>
+                  </div>
+                </b-dropdown-item>
               </b-nav-item-dropdown>
             </b-navbar-nav>
           </div>
           <div>
             <div id="dropdownTermin">
               <div>
-                Termin
+                Nächster Termin
                 <br />
                 <div>
                   <datetime v-model="dateEl" type="datetime"></datetime>
@@ -142,8 +149,25 @@
           ></NoticeComponent>
         </div>
         <div>
-          <div id="but-OK">
+          <div class="footerButtonClass">
+            <b-button variant="outline-secondary">
+              <font-awesome-icon
+                v-if="!create"
+                id="icontrash"
+                :icon="['fas', 'trash']"
+                @click="removeIndexCard()"
+              />
+            </b-button>
             <b-button
+              v-if="!create"
+              variant="outline-secondary"
+              :style="[disabled ? 'color: black' : 'color: #007bff']"
+              @click="disabled = !disabled"
+            >
+              <font-awesome-icon class="editIconClass" :icon="['fas', 'edit']"
+            /></b-button>
+            <b-button
+              id="but-OK"
               :disabled="!currentStatusId"
               variant="primary"
               @click="saveChanges()"
@@ -162,9 +186,13 @@ import { mapGetters, mapActions } from "vuex";
 import { Datetime } from "vue-datetime";
 import "vue-datetime/dist/vue-datetime.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
 
-library.add([faEdit, faTrash]);
+import VueInputAutowidth from "vue-input-autowidth";
+Vue.use(VueInputAutowidth);
+
+library.add([faEdit, faTrash, faTimes]);
 
 export default {
   name: "IndexCardDetail",
@@ -193,6 +221,7 @@ export default {
     }
   },
   data: () => ({
+    name: "",
     dateEl: "",
     companyValue: "",
     streetValue: "",
@@ -215,24 +244,7 @@ export default {
     }
   },
   mounted() {
-    if (this.create) {
-      this.dateEl = new Date().toISOString();
-      this.disabled = false;
-      this.currentStatusName = "Status auswählen";
-
-      return;
-    }
-    this.dateEl = new Date(this.indexCardData.date).toISOString();
-    this.companyValue = this.indexCardData.company;
-    this.streetValue = this.indexCardData.adress.street;
-    this.houseNumberValue = this.indexCardData.adress.houseNumber;
-    this.postCodeValue = this.indexCardData.adress.postCode;
-    this.cityValue = this.indexCardData.adress.city;
-    this.phoneValue = this.indexCardData.phone;
-    let statusData = this.getStatusDataByIndexCardId(this.indexCardData.id);
-    this.currentStatusId = statusData.id;
-    this.currentStatusName = statusData.name;
-    this.currentStatusColor = statusData.color;
+    this.init();
   },
   methods: {
     ...mapActions([
@@ -241,10 +253,38 @@ export default {
       "addNewIndexCard",
       "removeIndexCardById"
     ]),
+    init() {
+      if (this.create) {
+        this.dateEl = new Date().toISOString();
+        this.disabled = false;
+        this.currentStatusName = "Status auswählen";
+        this.currentStatusColor = "#eaeaea";
+        this.companyValue = "";
+        this.streetValue = "";
+        this.houseNumberValue = "";
+        this.postCodeValue = "";
+        this.cityValue = "";
+        this.phoneValue = "";
+
+        return;
+      }
+      this.disabled = true;
+      this.dateEl = new Date(this.indexCardData.date).toISOString();
+      this.companyValue = this.indexCardData.company;
+      this.streetValue = this.indexCardData.adress.street;
+      this.houseNumberValue = this.indexCardData.adress.houseNumber;
+      this.postCodeValue = this.indexCardData.adress.postCode;
+      this.cityValue = this.indexCardData.adress.city;
+      this.phoneValue = this.indexCardData.phone;
+      let statusData = this.getStatusDataByIndexCardId(this.indexCardData.id);
+      this.currentStatusId = statusData.id;
+      this.currentStatusName = statusData.name;
+      this.currentStatusColor = statusData.color;
+    },
     removeIndexCard() {
       this.$bvModal.hide(this.indexCardData.id);
       this.removeIndexCardById(this.indexCardData.id);
-      window.location.reload();
+      //window.location.reload();
     },
     getTextFieldBackground() {
       return this.disabled ? "white" : "#eaeaea";
@@ -275,11 +315,16 @@ export default {
           indexCardId: this.indexCardData.id
         });
       } else {
-        changeData.id = this.DataHandler.uuidv4();
+        changeData.id = this.ToolHandler.uuidv4();
         changeData.statusId = this.currentStatusId;
         this.addNewIndexCard(changeData);
-        window.location.reload();
+        //window.location.reload();
       }
+      this.init();
+      this.$bvModal.hide(this.indexCardData.id);
+    },
+    onCloseModal() {
+      this.init();
       this.$bvModal.hide(this.indexCardData.id);
     }
   }
@@ -294,48 +339,47 @@ export default {
   margin-left: 5%;
 }
 
-.adressInput {
-  margin-bottom: 2%;
-  margin-right: 2%;
-  background-color: white;
-  border-color: white;
-}
-
-::v-deep.vdpComponent.vdpWithInput input {
-  width: 128px;
-  margin-left: 0rem !important;
+::v-deep.vdatetime input {
+  width: 150px;
+  padding-top: 1rem;
+  padding-right: 0.5rem;
+  padding-bottom: 1rem;
+  padding-left: 0.5rem;
 }
 
 .adressInput {
   color: #495057;
   border: 0px solid #ced4da;
   border-radius: 0.5rem;
-  height: calc(1.5em + 0.5rem + 2px);
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  height: calc(1.5em + 2px);
+  padding: 0 0.3rem 0 0.3rem;
+  font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  margin-right: 4px;
 }
 ::v-deep.modal-body {
-  padding: 1.5rem;
+  padding: 1.2rem;
 }
 #companyInput {
   font-weight: bold;
+  margin: 0px;
+  font-size: 22px;
 }
 
-::v-deep.nav-link {
-  padding-top: 2.1rem;
+::v-deep a {
+  font-size: 14px;
 }
 
 #status-pick {
-  padding-top: 1.2rem;
+  padding-top: 23px;
   padding-bottom: 0px;
+  height: 31px;
+  line-height: 16px;
 }
 
 #but-OK {
   float: right;
-  margin-left: -50%;
-  margin-top: 0.5rem;
 }
 
 ::v-deep .vdatetime input {
@@ -348,12 +392,6 @@ export default {
   font-size: 0.875rem;
   line-height: 1.5;
 }
-.fa-edit {
-  color: rgb(45, 141, 196);
-  font-size: 1.7rem;
-  padding: 0px;
-  margin-bottom: 8px;
-}
 
 #tab-Notice {
   margin-top: 1rem;
@@ -365,5 +403,71 @@ export default {
 
 #id {
   width: 10%;
+}
+#icontrash {
+  font-size: 20px;
+  margin-bottom: 0px;
+  color: black;
+}
+
+.editIconClass {
+  font-size: 20px;
+  margin-bottom: 0px;
+  margin: auto;
+}
+
+.btn-outline-secondary {
+  border: 0;
+}
+
+.dropdownClass {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  margin-right: 10px;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+::v-deep .dropdownClass a {
+  color: white;
+}
+::v-deep .dropdownItemClass a {
+  color: black;
+}
+.closeIconClass {
+  cursor: pointer;
+  color: rgb(189, 0, 0);
+}
+
+.footerButtonClass {
+  margin-top: 30px;
+}
+
+.editInfosClass {
+  margin-top: 10px;
+}
+
+::v-deep .modal-content {
+  border-radius: 12px;
+}
+::v-deep .vdatetime-popup {
+  border-radius: 12px;
+}
+::v-deep .vdatetime-popup__header {
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.circleClass {
+  margin-top: 1.5px;
+  margin-right: 7px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+}
+.statusListItemContainer {
+  display: flex;
 }
 </style>

@@ -53,7 +53,7 @@ export default {
       this.addNewStatus({
         color: this.colorValue,
         name: this.statusName,
-        id: this.DataHandler.uuidv4()
+        id: this.ToolHandler.uuidv4()
       });
       this.onClose();
     },
