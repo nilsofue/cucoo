@@ -152,6 +152,7 @@ export default {
   display: flex;
 }
 .deleteButtonClass {
+  color: rgb(189, 0, 0);
   margin-left: auto;
   border: none;
   margin-right: -13px;
@@ -161,6 +162,7 @@ export default {
 .noticeOverviewHead {
   display: flex;
   margin-bottom: 7px;
+  margin-top: 32px;
 }
 .noticeEntryClass {
   background-color: #eaeaea;

@@ -12,12 +12,11 @@
           :style="{ backgroundColor: `${getTextFieldBackground()}` }"
         />
 
-        <b-button
-          variant="danger"
-          class="button button-close"
+        <font-awesome-icon
+          class="closeIconClass"
+          icon="times"
           @click="onCloseModal()"
-          >x</b-button
-        >
+        />
       </template>
 
       <div class="field-next">
@@ -54,13 +53,6 @@
               }"
             />
           </div>
-        </div>
-        <div id="iconedit">
-          <font-awesome-icon
-            v-if="!create"
-            :icon="['fas', 'edit']"
-            @click="disabled = !disabled"
-          />
         </div>
       </div>
       <div class="field-next">
@@ -149,14 +141,23 @@
           ></NoticeComponent>
         </div>
         <div>
-          <div>
-            <font-awesome-icon
+          <div class="footerButtonClass">
+            <b-button variant="outline-secondary">
+              <font-awesome-icon
+                v-if="!create"
+                id="icontrash"
+                :icon="['fas', 'trash']"
+                @click="removeIndexCard()"
+              />
+            </b-button>
+            <b-button
               v-if="!create"
-              id="icontrash"
-              :icon="['fas', 'trash']"
-              @click="removeIndexCard()"
-            />
-
+              variant="outline-secondary"
+              :style="[disabled ? 'color: black' : 'color: #007bff']"
+              @click="disabled = !disabled"
+            >
+              <font-awesome-icon class="editIconClass" :icon="['fas', 'edit']"
+            /></b-button>
             <b-button
               id="but-OK"
               :disabled="!currentStatusId"
@@ -177,13 +178,13 @@ import { mapGetters, mapActions } from "vuex";
 import { Datetime } from "vue-datetime";
 import "vue-datetime/dist/vue-datetime.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Vue from "vue";
 
 import VueInputAutowidth from "vue-input-autowidth";
 Vue.use(VueInputAutowidth);
 
-library.add([faEdit, faTrash]);
+library.add([faEdit, faTrash, faTimes]);
 
 export default {
   name: "IndexCardDetail",
@@ -330,10 +331,6 @@ export default {
   margin-left: 5%;
 }
 
-#iconedit {
-  position: right;
-}
-
 ::v-deep.vdatetime input {
   width: 150px;
   padding-top: 1rem;
@@ -359,6 +356,7 @@ export default {
 #companyInput {
   font-weight: bold;
   margin: 0px;
+  font-size: 22px;
 }
 
 ::v-deep a {
@@ -391,23 +389,7 @@ export default {
   font-size: 0.875rem;
   line-height: 1.5;
 }
-.fa-edit {
-  color: rgb(45, 141, 196);
-  font-size: 1.7rem;
-  padding: 0px;
-  margin-bottom: 8px;
-  margin-left: 8px;
-  margin-right: 20px;
-}
 
-.fa-trash {
-  color: rgb(138, 139, 141);
-  font-size: 1.7rem;
-  padding: 0px;
-  margin-bottom: 8px;
-  margin-left: 8px;
-  margin-right: 8px;
-}
 #tab-Notice {
   margin-top: 1rem;
 }
@@ -420,9 +402,19 @@ export default {
   width: 10%;
 }
 #icontrash {
-  margin: 0px;
-  margin-top: 8px;
-  margin-left: 4px;
+  font-size: 20px;
+  margin-bottom: 0px;
+  color: black;
+}
+
+.editIconClass {
+  font-size: 20px;
+  margin-bottom: 0px;
+  margin: auto;
+}
+
+.btn-outline-secondary {
+  border: 0;
 }
 
 .dropdownClass {
@@ -433,5 +425,14 @@ export default {
   margin-right: 10px;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+}
+
+.closeIconClass {
+  cursor: pointer;
+  color: rgb(189, 0, 0);
+}
+
+.footerButtonClass {
+  margin-top: 30px;
 }
 </style>
