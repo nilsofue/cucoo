@@ -6,6 +6,7 @@
           id="companyInput"
           v-model="companyValue"
           v-autowidth="{ maxWidth: '960px', minWidth: '20px', comfortZone: 0 }"
+          autocomplete="off"
           class="adressInput"
           placeholder="Firma"
           :disabled="disabled"
@@ -29,7 +30,8 @@
                 minWidth: '20px',
                 comfortZone: 0
               }"
-              placeholder="Straﬂe"
+              autocomplete="off"
+              placeholder="Straße"
               :disabled="disabled"
               class="adressInput"
               :style="{
@@ -45,6 +47,7 @@
                 minWidth: '20px',
                 comfortZone: 0
               }"
+              autocomplete="off"
               placeholder="Hausnr."
               :disabled="disabled"
               class="adressInput"
@@ -64,6 +67,7 @@
               minWidth: '20px',
               comfortZone: 0
             }"
+            autocomplete="off"
             placeholder="PLZ"
             :disabled="disabled"
             class="adressInput"
@@ -78,6 +82,7 @@
               minWidth: '20px',
               comfortZone: 0
             }"
+            autocomplete="off"
             placeholder="Ort"
             :disabled="disabled"
             class="adressInput"
@@ -89,6 +94,7 @@
         <input
           v-model="phoneValue"
           v-autowidth="{ maxWidth: '960px', minWidth: '20px', comfortZone: 0 }"
+          autocomplete="off"
           placeholder="Telefon"
           :disabled="disabled"
           class="adressInput"
@@ -112,7 +118,8 @@
                   @click="
                     detailHandleSelection(status.id, status.name, status.color)
                   "
-                  ><div class="statusListItemContainer">
+                >
+                  <div class="statusListItemContainer">
                     <div
                       class="circleClass"
                       :style="{
@@ -164,8 +171,11 @@
               :style="[disabled ? 'color: black' : 'color: #007bff']"
               @click="disabled = !disabled"
             >
-              <font-awesome-icon class="editIconClass" :icon="['fas', 'edit']"
-            /></b-button>
+              <font-awesome-icon
+                class="editIconClass"
+                :icon="['fas', 'edit']"
+              />
+            </b-button>
             <b-button
               id="but-OK"
               :disabled="!currentStatusId"

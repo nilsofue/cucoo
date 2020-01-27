@@ -24,6 +24,7 @@
       :pressed.sync="createNote"
       variant="outline-danger"
       class="createNoteButton"
+      @click="message = ''"
       >Verwerfen</b-button
     >
     <b-button
@@ -117,6 +118,7 @@ export default {
         noteData: newNote,
         indexCardId: this.indexCardId
       });
+      this.message = "";
     },
     onKeyPress(event) {
       if (event.keyCode === 13) {
